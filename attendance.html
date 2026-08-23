@@ -47,10 +47,11 @@
             padding: 20px;
             border-radius: 12px;
             margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
         }
 
-        input,
-        select {
+        select,
+        input {
             width: 100%;
             padding: 12px;
             margin: 8px 0;
@@ -106,9 +107,16 @@
             font-weight: bold;
         }
 
-        #message {
-            margin-top: 12px;
+        .success {
+            color: #198754;
             font-weight: bold;
+            margin-top: 12px;
+        }
+
+        .error {
+            color: #d9534f;
+            font-weight: bold;
+            margin-top: 12px;
         }
 
     </style>
@@ -138,7 +146,7 @@
     </div>
 
 
-    <!-- ATTENDANCE SUBMISSION -->
+    <!-- INSTRUCTOR SUBMISSION -->
 
     <div
         class="panel"
@@ -147,22 +155,26 @@
 
         <h2>Submit Attendance</h2>
 
-        <input
-            id="student"
-            type="text"
-            placeholder="Student Name"
-        >
 
-        <input
-            id="studentId"
-            type="text"
-            placeholder="Student ID"
-        >
+        <label>
+            Select Student
+        </label>
+
+
+        <select id="studentSelect">
+
+            <option value="">
+                Select a registered student
+            </option>
+
+        </select>
+
 
         <input
             id="date"
             type="date"
         >
+
 
         <select id="attendance">
 
@@ -184,9 +196,11 @@
 
         </select>
 
+
         <button onclick="submitAttendance()">
             Submit Attendance
         </button>
+
 
         <div id="message"></div>
 
@@ -210,9 +224,25 @@
 <script>
 
 
-const role =
-    localStorage.getItem("userRole");
+/* USER ROLE */
 
+const role =
+    localStorage.getItem(
+        "userRole"
+    );
+
+
+/* REGISTERED STUDENTS */
+
+let students =
+    JSON.parse(
+        localStorage.getItem(
+            "students"
+        )
+    ) || [];
+
+
+/* ATTENDANCE RECORDS */
 
 let attendanceRecords =
     JSON.parse(
@@ -222,12 +252,15 @@ let attendanceRecords =
     ) || [];
 
 
+/* SET ROLE */
+
 function setupRole() {
 
     const panel =
         document.getElementById(
             "submissionPanel"
         );
+
 
     if (role === "instructor") {
 
@@ -244,6 +277,61 @@ function setupRole() {
 }
 
 
+/* LOAD STUDENTS */
+
+function loadStudents() {
+
+    const select =
+        document.getElementById(
+            "studentSelect"
+        );
+
+
+    select.innerHTML =
+        '<option value="">Select a registered student</option>';
+
+
+    if (students.length === 0) {
+
+        select.innerHTML +=
+            '<option value="">No students registered</option>';
+
+        return;
+
+    }
+
+
+    students.forEach(
+        function(student) {
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+
+            option.value =
+                student.id;
+
+
+            option.textContent =
+                student.name
+                + " — "
+                + student.id;
+
+
+            select.appendChild(
+                option
+            );
+
+        }
+    );
+
+}
+
+
+/* SUBMIT ATTENDANCE */
+
 function submitAttendance() {
 
     if (role !== "instructor") {
@@ -253,19 +341,14 @@ function submitAttendance() {
         );
 
         return;
+
     }
-
-
-    const student =
-        document.getElementById(
-            "student"
-        ).value.trim();
 
 
     const studentId =
         document.getElementById(
-            "studentId"
-        ).value.trim();
+            "studentSelect"
+        ).value;
 
 
     const date =
@@ -287,27 +370,50 @@ function submitAttendance() {
 
 
     if (
-        student === "" ||
         studentId === "" ||
         date === "" ||
         attendance === ""
     ) {
 
-        message.style.color =
-            "red";
+        message.className =
+            "error";
 
         message.textContent =
-            "Please complete all fields.";
+            "Please select a student and complete all fields.";
 
         return;
+
+    }
+
+
+    const student =
+        students.find(
+            function(item) {
+
+                return item.id === studentId;
+
+            }
+        );
+
+
+    if (!student) {
+
+        message.className =
+            "error";
+
+        message.textContent =
+            "Student could not be found.";
+
+        return;
+
     }
 
 
     attendanceRecords.push({
 
-        student: student,
+        student: student.name,
 
-        studentId: studentId,
+        studentId: student.id,
 
         date: date,
 
@@ -332,12 +438,7 @@ function submitAttendance() {
 
 
     document.getElementById(
-        "student"
-    ).value = "";
-
-
-    document.getElementById(
-        "studentId"
+        "studentSelect"
     ).value = "";
 
 
@@ -351,8 +452,8 @@ function submitAttendance() {
     ).value = "";
 
 
-    message.style.color =
-        "green";
+    message.className =
+        "success";
 
 
     message.textContent =
@@ -363,6 +464,8 @@ function submitAttendance() {
 
 }
 
+
+/* DISPLAY RECORDS */
 
 function displayRecords() {
 
@@ -383,6 +486,7 @@ function displayRecords() {
             "<p>No attendance records yet.</p>";
 
         return;
+
     }
 
 
@@ -487,10 +591,14 @@ function displayRecords() {
 }
 
 
+/* APPROVE */
+
 function approveAttendance(index) {
 
     if (role !== "admin") {
+
         return;
+
     }
 
 
@@ -518,10 +626,14 @@ function approveAttendance(index) {
 }
 
 
+/* REJECT */
+
 function rejectAttendance(index) {
 
     if (role !== "admin") {
+
         return;
+
     }
 
 
@@ -549,6 +661,8 @@ function rejectAttendance(index) {
 }
 
 
+/* DASHBOARD */
+
 function goDashboard() {
 
     window.location.href =
@@ -557,7 +671,11 @@ function goDashboard() {
 }
 
 
+/* START */
+
 setupRole();
+
+loadStudents();
 
 displayRecords();
 
