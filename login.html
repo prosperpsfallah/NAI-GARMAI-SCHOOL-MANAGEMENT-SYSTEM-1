@@ -2,35 +2,41 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
     <title>NAI GARMAI | Login</title>
-
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
-
         body {
             font-family: Arial, sans-serif;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #071a2f, #0b3d62);
+            background:
+                linear-gradient(
+                    135deg,
+                    #071a2f,
+                    #0b3d62
+                );
             padding: 20px;
         }
-
         .login-box {
             width: 100%;
             max-width: 420px;
             background: #ffffff;
             padding: 35px;
             border-radius: 18px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+            box-shadow:
+                0 15px 40px
+                rgba(0, 0, 0, 0.25);
         }
-
         .logo {
             width: 75px;
             height: 75px;
@@ -44,44 +50,39 @@
             font-size: 24px;
             font-weight: bold;
         }
-
         h1 {
             text-align: center;
             color: #0b3d62;
             font-size: 24px;
             margin-bottom: 5px;
         }
-
         .subtitle {
             text-align: center;
             color: #777;
             margin-bottom: 28px;
         }
-
         label {
             display: block;
             margin-bottom: 7px;
             font-weight: bold;
             color: #333;
         }
-
         input,
         select {
             width: 100%;
             padding: 13px;
             margin-bottom: 18px;
-            border: 1px solid #ddd;
+            border:
+                1px solid #ddd;
             border-radius: 9px;
             font-size: 15px;
             background: white;
         }
-
         input:focus,
         select:focus {
             outline: none;
             border-color: #0b3d62;
         }
-
         button {
             width: 100%;
             padding: 14px;
@@ -93,51 +94,66 @@
             font-weight: bold;
             cursor: pointer;
         }
-
         button:hover {
             opacity: 0.9;
         }
-
         #message {
             text-align: center;
             margin-top: 15px;
             font-size: 14px;
         }
-
         .footer {
             text-align: center;
             margin-top: 25px;
             color: #888;
             font-size: 12px;
         }
+        .student-help {
+            display: none;
+            color: #666;
+            font-size: 12px;
+            margin-top: -10px;
+            margin-bottom: 15px;
+        }
     </style>
 </head>
-
 <body>
-
 <div class="login-box">
-
-    <div class="logo">NG</div>
-
-    <h1>NAI GARMAI</h1>
-
+    <div class="logo">
+        NG
+    </div>
+    <h1>
+        NAI GARMAI
+    </h1>
     <p class="subtitle">
         School System Management
     </p>
-
     <form id="loginForm">
-
-        <label for="role">Login As</label>
-
-        <select id="role" required>
-            <option value="">Select role</option>
-            <option value="admin">Administrator</option>
-            <option value="instructor">Instructor</option>
+        <!-- ROLE -->
+        <label for="role">
+            Login As
+        </label>
+        <select
+            id="role"
+            required
+        >
+            <option value="">
+                Select role
+            </option>
+            <option value="admin">
+                Administrator
+            </option>
+            <option value="instructor">
+                Instructor
+            </option>
+            <option value="student">
+                Student
+            </option>
         </select>
-
-
-        <label for="username">Username</label>
-
+        <!-- USERNAME -->
+        <label for="username">
+            Username
+        </label>
         <input
             id="username"
             type="text"
@@ -145,10 +161,18 @@
             autocomplete="username"
             required
         >
-
-
-        <label for="password">Password</label>
-
+        <!-- STUDENT HELP -->
+        <div
+            id="studentHelp"
+            class="student-help"
+        >
+            Students will use the username
+            assigned to their student account.
+        </div>
+        <!-- PASSWORD -->
+        <label for="password">
+            Password
+        </label>
         <input
             id="password"
             type="password"
@@ -156,96 +180,299 @@
             autocomplete="current-password"
             required
         >
-
-
+        <!-- LOGIN BUTTON -->
         <button type="submit">
             Login
         </button>
-
         <div id="message"></div>
-
     </form>
-
     <div class="footer">
         © 2026 NAI GARMAI SCHOOL SYSTEM
     </div>
-
 </div>
-
-
 <script>
-
-document.getElementById("loginForm").addEventListener("submit", function(event) {
-
-    event.preventDefault();
-
-    const role = document.getElementById("role").value;
-    const username = document.getElementById("username").value.trim();
-    const password = document.getElementById("password").value;
-
-    const message = document.getElementById("message");
-
-
-    /* =========================
-       DEMO LOGIN CREDENTIALS
-       ========================= */
-
-    const adminUsername = "admin";
-    const adminPassword = "admi2000";
-
-    const instructorUsername = "instructor";
-    const instructorPassword = "teacher1999";
-
-
-    /* =========================
-       ADMINISTRATOR LOGIN
-       ========================= */
-
-    if (
-        role === "admin" &&
-        username === adminUsername &&
-        password === adminPassword
-    ) {
-
-        localStorage.setItem("userRole", "admin");
-        localStorage.setItem("loggedIn", "true");
-
-        window.location.assign("https://nai-garmai-school-management-system-kappa.vercel.app/index.html");
-
-        return;
-    }
-
-
-    /* =========================
-       INSTRUCTOR LOGIN
-       ========================= */
-
-    if (
-        role === "instructor" &&
-        username === instructorUsername &&
-        password === instructorPassword
-    ) {
-
-        localStorage.setItem("userRole", "instructor");
-        localStorage.setItem("loggedIn", "true");
-
-        window.location.assign("https://nai-garmai-school-management-system-kappa.vercel.app/index.html");
-
-        return;
-    }
-
-
-    /* =========================
-       INVALID LOGIN
-       ========================= */
-
-    message.style.color = "red";
-
-    message.textContent = "Invalid login details.";
-
-});
-
+/*
+ * ROLE SELECT
+ *
+ * Show a small message when
+ * Student is selected.
+ */
+document
+    .getElementById("role")
+    .addEventListener(
+        "change",
+        function() {
+            const role =
+                this.value;
+            const help =
+                document.getElementById(
+                    "studentHelp"
+                );
+            if (
+                role === "student"
+            ) {
+                help.style.display =
+                    "block";
+            } else {
+                help.style.display =
+                    "none";
+            }
+        }
+    );
+/*
+ * LOGIN FORM
+ */
+document
+    .getElementById("loginForm")
+    .addEventListener(
+        "submit",
+        function(event) {
+            event.preventDefault();
+            const role =
+                document.getElementById(
+                    "role"
+                ).value;
+            const username =
+                document.getElementById(
+                    "username"
+                ).value.trim();
+            const password =
+                document.getElementById(
+                    "password"
+                ).value;
+            const message =
+                document.getElementById(
+                    "message"
+                );
+            /*
+             * CLEAR OLD MESSAGE
+             */
+            message.textContent =
+                "";
+            /*
+             * DEMO ADMIN CREDENTIALS
+             *
+             * These are kept from
+             * your existing system.
+             */
+            const adminUsername =
+                "admin";
+            const adminPassword =
+                "admi2000";
+            /*
+             * DEMO INSTRUCTOR CREDENTIALS
+             */
+            const instructorUsername =
+                "instructor";
+            const instructorPassword =
+                "teacher1999";
+            /*
+             * ADMINISTRATOR LOGIN
+             */
+            if (
+                role === "admin"
+                &&
+                username ===
+                adminUsername
+                &&
+                password ===
+                adminPassword
+            ) {
+                localStorage.setItem(
+                    "userRole",
+                    "admin"
+                );
+                localStorage.setItem(
+                    "loggedIn",
+                    "true"
+                );
+                /*
+                 * Make sure no old
+                 * student identity remains.
+                 */
+                localStorage.removeItem(
+                    "studentId"
+                );
+                window.location.assign(
+                    "index.html"
+                );
+                return;
+            }
+            /*
+             * INSTRUCTOR LOGIN
+             */
+            if (
+                role === "instructor"
+                &&
+                username ===
+                instructorUsername
+                &&
+                password ===
+                instructorPassword
+            ) {
+                localStorage.setItem(
+                    "userRole",
+                    "instructor"
+                );
+                localStorage.setItem(
+                    "loggedIn",
+                    "true"
+                );
+                /*
+                 * Make sure no old
+                 * student identity remains.
+                 */
+                localStorage.removeItem(
+                    "studentId"
+                );
+                window.location.assign(
+                    "index.html"
+                );
+                return;
+            }
+            /*
+             * STUDENT LOGIN
+             *
+             * Student accounts are read
+             * from the Students records.
+             */
+            if (
+                role === "student"
+            ) {
+                /*
+                 * Get students saved
+                 * by the Students module.
+                 */
+                const students =
+                    JSON.parse(
+                        localStorage.getItem(
+                            "students"
+                        )
+                    ) || [];
+                /*
+                 * Find matching account.
+                 *
+                 * We support several possible
+                 * field names so this can work
+                 * with the existing Students file.
+                 */
+                const student =
+                    students.find(
+                        function(item) {
+                            const savedUsername =
+                                item.username !==
+                                undefined
+                                ?
+                                item.username
+                                :
+                                item.userName;
+                            const savedPassword =
+                                item.password !==
+                                undefined
+                                ?
+                                item.password
+                                :
+                                item.studentPassword;
+                            return (
+                                String(
+                                    savedUsername || ""
+                                ).toLowerCase()
+                                ===
+                                String(
+                                    username
+                                ).toLowerCase()
+                                &&
+                                String(
+                                    savedPassword || ""
+                                )
+                                ===
+                                String(
+                                    password
+                                )
+                            );
+                        }
+                    );
+                /*
+                 * STUDENT FOUND
+                 */
+                if (
+                    student
+                ) {
+                    /*
+                     * Get the student's
+                     * actual ID.
+                     */
+                    const studentId =
+                        student.id !==
+                        undefined
+                        ?
+                        student.id
+                        :
+                        student.studentId;
+                    /*
+                     * Make sure the student
+                     * has an ID.
+                     */
+                    if (
+                        studentId ===
+                        undefined
+                        ||
+                        studentId ===
+                        null
+                        ||
+                        String(
+                            studentId
+                        ).trim() === ""
+                    ) {
+                        message.style.color =
+                            "red";
+                        message.textContent =
+                            "This student account is not connected to a Student ID.";
+                        return;
+                    }
+                    /*
+                     * SAVE STUDENT SESSION
+                     */
+                    localStorage.setItem(
+                        "userRole",
+                        "student"
+                    );
+                    localStorage.setItem(
+                        "loggedIn",
+                        "true"
+                    );
+                    localStorage.setItem(
+                        "studentId",
+                        String(
+                            studentId
+                        )
+                    );
+                    /*
+                     * OPEN STUDENT PORTAL
+                     */
+                    window.location.assign(
+                        "student.html"
+                    );
+                    return;
+                }
+                /*
+                 * STUDENT NOT FOUND
+                 */
+                message.style.color =
+                    "red";
+                message.textContent =
+                    "Invalid student username or password.";
+                return;
+            }
+            /*
+             * INVALID LOGIN
+             */
+            message.style.color =
+                "red";
+            message.textContent =
+                "Invalid login details.";
+        }
+    );
 </script>
-
 </body>
 </html>
