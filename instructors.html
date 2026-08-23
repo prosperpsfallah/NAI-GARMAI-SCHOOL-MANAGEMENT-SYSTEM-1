@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NAI GARMAI | Instructors</title>
+
+    <title>NAI GARMAI | Instructor Management</title>
 
     <style>
         body {
@@ -13,16 +14,24 @@
             padding: 20px;
         }
 
-        .box {
-            max-width: 700px;
+        .container {
+            max-width: 800px;
             margin: auto;
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
         }
 
-        h1, h2 {
-            color: #0b3d62;
+        .header {
+            background: #0b3d62;
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .panel {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
         }
 
         input {
@@ -35,54 +44,113 @@
         button {
             padding: 12px 18px;
             margin-top: 10px;
-            background: #0b3d62;
-            color: white;
             border: none;
             border-radius: 7px;
+            background: #0b3d62;
+            color: white;
+            cursor: pointer;
         }
 
         .instructor {
             background: #f1f1f1;
             padding: 15px;
-            margin-top: 10px;
+            margin-top: 12px;
             border-radius: 8px;
+        }
+
+        .delete {
+            background: #d9534f;
+        }
+
+        .back {
+            background: white;
+            color: #0b3d62;
         }
     </style>
 </head>
 
 <body>
 
-<div class="box">
+<div class="container">
 
-    <h1>NAI GARMAI</h1>
-    <h2>Instructor Management</h2>
+    <div class="header">
+        <h1>NAI GARMAI</h1>
+        <p>Instructor Management</p>
 
-    <input id="name" type="text" placeholder="Instructor Name">
+        <button class="back" onclick="goDashboard()">
+            ← Dashboard
+        </button>
+    </div>
 
-    <input id="id" type="text" placeholder="Instructor ID">
 
-    <input id="subject" type="text" placeholder="Subject">
+    <div class="panel">
 
-    <input id="className" type="text" placeholder="Class">
+        <h2>Add Instructor</h2>
 
-    <button onclick="addInstructor()">Add Instructor</button>
+        <input
+            id="name"
+            type="text"
+            placeholder="Instructor Full Name"
+        >
 
-    <button onclick="goDashboard()">← Dashboard</button>
+        <input
+            id="id"
+            type="text"
+            placeholder="Instructor ID"
+        >
 
-    <h2>Instructors</h2>
+        <input
+            id="subject"
+            type="text"
+            placeholder="Subject"
+        >
 
-    <div id="instructors"></div>
+        <input
+            id="className"
+            type="text"
+            placeholder="Assigned Class"
+        >
+
+        <button onclick="addInstructor()">
+            Add Instructor
+        </button>
+
+    </div>
+
+
+    <div class="panel">
+
+        <h2>Instructor Records</h2>
+
+        <div id="instructors"></div>
+
+    </div>
 
 </div>
 
+
 <script>
+
+let instructors =
+    JSON.parse(
+        localStorage.getItem("instructors")
+    ) || [];
+
 
 function addInstructor() {
 
-    var name = document.getElementById("name").value;
-    var id = document.getElementById("id").value;
-    var subject = document.getElementById("subject").value;
-    var className = document.getElementById("className").value;
+    const name =
+        document.getElementById("name").value.trim();
+
+    const id =
+        document.getElementById("id").value.trim();
+
+    const subject =
+        document.getElementById("subject").value.trim();
+
+    const className =
+        document.getElementById("className").value.trim();
+
 
     if (
         name === "" ||
@@ -90,33 +158,123 @@ function addInstructor() {
         subject === "" ||
         className === ""
     ) {
-        alert("Please fill in all fields.");
+
+        alert("Please complete all fields.");
+
         return;
     }
 
-    var instructor = document.createElement("div");
 
-    instructor.className = "instructor";
+    instructors.push({
 
-    instructor.innerHTML =
-        "<strong>Name:</strong> " + name +
-        "<br><strong>ID:</strong> " + id +
-        "<br><strong>Subject:</strong> " + subject +
-        "<br><strong>Class:</strong> " + className;
+        name: name,
+        id: id,
+        subject: subject,
+        className: className
 
-    document
-        .getElementById("instructors")
-        .appendChild(instructor);
+    });
+
+
+    localStorage.setItem(
+        "instructors",
+        JSON.stringify(instructors)
+    );
+
 
     document.getElementById("name").value = "";
     document.getElementById("id").value = "";
     document.getElementById("subject").value = "";
     document.getElementById("className").value = "";
+
+
+    displayInstructors();
+
 }
 
-function goDashboard() {
-    window.location.href = "index.html";
+
+function displayInstructors() {
+
+    const container =
+        document.getElementById("instructors");
+
+    container.innerHTML = "";
+
+
+    if (instructors.length === 0) {
+
+        container.innerHTML =
+            "<p>No instructors added yet.</p>";
+
+        return;
+    }
+
+
+    instructors.forEach(function(instructor, index) {
+
+        const div =
+            document.createElement("div");
+
+        div.className = "instructor";
+
+
+        div.innerHTML =
+
+            "<strong>Name:</strong> "
+            + instructor.name
+            + "<br><strong>ID:</strong> "
+            + instructor.id
+            + "<br><strong>Subject:</strong> "
+            + instructor.subject
+            + "<br><strong>Class:</strong> "
+            + instructor.className
+            + "<br><br>"
+            + "<button class='delete' onclick='deleteInstructor("
+            + index
+            + ")'>Delete</button>";
+
+
+        container.appendChild(div);
+
+    });
+
 }
+
+
+function deleteInstructor(index) {
+
+    if (
+        !confirm(
+            "Delete this instructor?"
+        )
+    ) {
+
+        return;
+    }
+
+
+    instructors.splice(index, 1);
+
+
+    localStorage.setItem(
+        "instructors",
+        JSON.stringify(instructors)
+    );
+
+
+    displayInstructors();
+
+}
+
+
+function goDashboard() {
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+displayInstructors();
 
 </script>
 
