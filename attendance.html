@@ -1,25 +1,570 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
     <title>NAI GARMAI | Attendance</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .header {
+            background: #0b3d62;
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            margin: 0 0 5px;
+        }
+
+        .panel {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 7px;
+            font-size: 15px;
+        }
+
+        button {
+            padding: 12px 18px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 7px;
+            background: #0b3d62;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .back {
+            background: white;
+            color: #0b3d62;
+        }
+
+        .record {
+            background: #f1f1f1;
+            padding: 15px;
+            margin-top: 12px;
+            border-radius: 8px;
+        }
+
+        .approve {
+            background: #198754;
+            margin-right: 8px;
+        }
+
+        .reject {
+            background: #d9534f;
+        }
+
+        .pending {
+            color: #d97706;
+            font-weight: bold;
+        }
+
+        .approved {
+            color: #198754;
+            font-weight: bold;
+        }
+
+        .rejected {
+            color: #d9534f;
+            font-weight: bold;
+        }
+
+        #message {
+            margin-top: 12px;
+            font-weight: bold;
+        }
+
+    </style>
+
 </head>
+
 
 <body>
 
-    <h1>NAI GARMAI</h1>
-    <h2>Attendance Management</h2>
 
-    <p>Attendance page is working.</p>
+<div class="container">
 
-    <button onclick="goDashboard()">← Dashboard</button>
 
-    <script>
-        function goDashboard() {
-            window.location.href = "index.html";
+    <div class="header">
+
+        <h1>NAI GARMAI</h1>
+
+        <p>Attendance Management</p>
+
+        <button
+            class="back"
+            onclick="goDashboard()"
+        >
+            ← Dashboard
+        </button>
+
+    </div>
+
+
+    <!-- ATTENDANCE SUBMISSION -->
+
+    <div
+        class="panel"
+        id="submissionPanel"
+    >
+
+        <h2>Submit Attendance</h2>
+
+        <input
+            id="student"
+            type="text"
+            placeholder="Student Name"
+        >
+
+        <input
+            id="studentId"
+            type="text"
+            placeholder="Student ID"
+        >
+
+        <input
+            id="date"
+            type="date"
+        >
+
+        <select id="attendance">
+
+            <option value="">
+                Select Attendance
+            </option>
+
+            <option value="Present">
+                Present
+            </option>
+
+            <option value="Absent">
+                Absent
+            </option>
+
+            <option value="Late">
+                Late
+            </option>
+
+        </select>
+
+        <button onclick="submitAttendance()">
+            Submit Attendance
+        </button>
+
+        <div id="message"></div>
+
+    </div>
+
+
+    <!-- ATTENDANCE RECORDS -->
+
+    <div class="panel">
+
+        <h2>Attendance Records</h2>
+
+        <div id="records"></div>
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+
+const role =
+    localStorage.getItem("userRole");
+
+
+let attendanceRecords =
+    JSON.parse(
+        localStorage.getItem(
+            "attendanceRecords"
+        )
+    ) || [];
+
+
+function setupRole() {
+
+    const panel =
+        document.getElementById(
+            "submissionPanel"
+        );
+
+    if (role === "instructor") {
+
+        panel.style.display =
+            "block";
+
+    } else {
+
+        panel.style.display =
+            "none";
+
+    }
+
+}
+
+
+function submitAttendance() {
+
+    if (role !== "instructor") {
+
+        alert(
+            "Only instructors can submit attendance."
+        );
+
+        return;
+    }
+
+
+    const student =
+        document.getElementById(
+            "student"
+        ).value.trim();
+
+
+    const studentId =
+        document.getElementById(
+            "studentId"
+        ).value.trim();
+
+
+    const date =
+        document.getElementById(
+            "date"
+        ).value;
+
+
+    const attendance =
+        document.getElementById(
+            "attendance"
+        ).value;
+
+
+    const message =
+        document.getElementById(
+            "message"
+        );
+
+
+    if (
+        student === "" ||
+        studentId === "" ||
+        date === "" ||
+        attendance === ""
+    ) {
+
+        message.style.color =
+            "red";
+
+        message.textContent =
+            "Please complete all fields.";
+
+        return;
+    }
+
+
+    attendanceRecords.push({
+
+        student: student,
+
+        studentId: studentId,
+
+        date: date,
+
+        attendance: attendance,
+
+        status: "Pending",
+
+        locked: false
+
+    });
+
+
+    localStorage.setItem(
+
+        "attendanceRecords",
+
+        JSON.stringify(
+            attendanceRecords
+        )
+
+    );
+
+
+    document.getElementById(
+        "student"
+    ).value = "";
+
+
+    document.getElementById(
+        "studentId"
+    ).value = "";
+
+
+    document.getElementById(
+        "date"
+    ).value = "";
+
+
+    document.getElementById(
+        "attendance"
+    ).value = "";
+
+
+    message.style.color =
+        "green";
+
+
+    message.textContent =
+        "Attendance submitted successfully — Status: Pending";
+
+
+    displayRecords();
+
+}
+
+
+function displayRecords() {
+
+    const container =
+        document.getElementById(
+            "records"
+        );
+
+
+    container.innerHTML = "";
+
+
+    if (
+        attendanceRecords.length === 0
+    ) {
+
+        container.innerHTML =
+            "<p>No attendance records yet.</p>";
+
+        return;
+    }
+
+
+    attendanceRecords.forEach(
+        function(record, index) {
+
+            let statusClass =
+                "pending";
+
+
+            if (
+                record.status === "Approved"
+            ) {
+
+                statusClass =
+                    "approved";
+
+            }
+
+
+            if (
+                record.status === "Rejected"
+            ) {
+
+                statusClass =
+                    "rejected";
+
+            }
+
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.className =
+                "record";
+
+
+            div.innerHTML =
+
+                "<strong>Student:</strong> "
+                + record.student
+
+                + "<br><strong>ID:</strong> "
+                + record.studentId
+
+                + "<br><strong>Date:</strong> "
+                + record.date
+
+                + "<br><strong>Attendance:</strong> "
+                + record.attendance
+
+                + "<br><strong>Status:</strong> "
+
+                + "<span class='"
+                + statusClass
+                + "'>"
+
+                + record.status
+
+                + "</span>";
+
+
+            if (
+                role === "admin" &&
+                record.status === "Pending" &&
+                record.locked !== true
+            ) {
+
+                div.innerHTML +=
+
+                    "<br>"
+
+                    + "<button "
+                    + "class='approve' "
+                    + "onclick='approveAttendance("
+                    + index
+                    + ")'>"
+                    + "Approve"
+                    + "</button>"
+
+                    + "<button "
+                    + "class='reject' "
+                    + "onclick='rejectAttendance("
+                    + index
+                    + ")'>"
+                    + "Reject"
+                    + "</button>";
+
+            }
+
+
+            container.appendChild(
+                div
+            );
+
         }
-    </script>
+    );
+
+}
+
+
+function approveAttendance(index) {
+
+    if (role !== "admin") {
+        return;
+    }
+
+
+    attendanceRecords[index].status =
+        "Approved";
+
+
+    attendanceRecords[index].locked =
+        true;
+
+
+    localStorage.setItem(
+
+        "attendanceRecords",
+
+        JSON.stringify(
+            attendanceRecords
+        )
+
+    );
+
+
+    displayRecords();
+
+}
+
+
+function rejectAttendance(index) {
+
+    if (role !== "admin") {
+        return;
+    }
+
+
+    attendanceRecords[index].status =
+        "Rejected";
+
+
+    attendanceRecords[index].locked =
+        true;
+
+
+    localStorage.setItem(
+
+        "attendanceRecords",
+
+        JSON.stringify(
+            attendanceRecords
+        )
+
+    );
+
+
+    displayRecords();
+
+}
+
+
+function goDashboard() {
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+setupRole();
+
+displayRecords();
+
+
+</script>
+
 
 </body>
+
 </html>
