@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAI GARMAI | Instructors</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .box {
+            max-width: 700px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+        }
+
+        h1, h2 {
+            color: #0b3d62;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 12px 18px;
+            margin-top: 10px;
+            background: #0b3d62;
+            color: white;
+            border: none;
+            border-radius: 7px;
+        }
+
+        .instructor {
+            background: #f1f1f1;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+
+    <h1>NAI GARMAI</h1>
+    <h2>Instructor Management</h2>
+
+    <input id="name" type="text" placeholder="Instructor Name">
+
+    <input id="id" type="text" placeholder="Instructor ID">
+
+    <input id="subject" type="text" placeholder="Subject">
+
+    <input id="className" type="text" placeholder="Class">
+
+    <button onclick="addInstructor()">Add Instructor</button>
+
+    <button onclick="goDashboard()">← Dashboard</button>
+
+    <h2>Instructors</h2>
+
+    <div id="instructors"></div>
+
+</div>
+
+<script>
+
+function addInstructor() {
+
+    var name = document.getElementById("name").value;
+    var id = document.getElementById("id").value;
+    var subject = document.getElementById("subject").value;
+    var className = document.getElementById("className").value;
+
+    if (
+        name === "" ||
+        id === "" ||
+        subject === "" ||
+        className === ""
+    ) {
+        alert("Please fill in all fields.");
+        return;
+    }
+
+    var instructor = document.createElement("div");
+
+    instructor.className = "instructor";
+
+    instructor.innerHTML =
+        "<strong>Name:</strong> " + name +
+        "<br><strong>ID:</strong> " + id +
+        "<br><strong>Subject:</strong> " + subject +
+        "<br><strong>Class:</strong> " + className;
+
+    document
+        .getElementById("instructors")
+        .appendChild(instructor);
+
+    document.getElementById("name").value = "";
+    document.getElementById("id").value = "";
+    document.getElementById("subject").value = "";
+    document.getElementById("className").value = "";
+}
+
+function goDashboard() {
+    window.location.href = "index.html";
+}
+
+</script>
+
+</body>
+</html>
