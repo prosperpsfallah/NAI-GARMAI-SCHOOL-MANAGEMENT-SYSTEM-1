@@ -12,89 +12,204 @@
 
     <title>NAI GARMAI | Students</title>
 
+
     <style>
 
         * {
             box-sizing: border-box;
         }
 
+
         body {
             font-family: Arial, sans-serif;
+
             background: #f4f7fb;
+
             margin: 0;
+
             padding: 20px;
         }
+
 
         .container {
             max-width: 1000px;
+
             margin: auto;
         }
 
+
         .header {
             background: #0b3d62;
+
             color: white;
+
             padding: 20px;
+
             border-radius: 12px;
+
             margin-bottom: 20px;
         }
+
 
         .header h1 {
             margin: 0 0 5px;
         }
 
+
         .panel {
             background: white;
+
             padding: 20px;
+
             border-radius: 12px;
+
             margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+
+            box-shadow:
+                0 4px 15px
+                rgba(0,0,0,0.08);
         }
 
-        input,
-        select {
+
+        input {
             width: 100%;
+
             padding: 12px;
+
             margin: 8px 0;
-            border: 1px solid #ddd;
+
+            border:
+                1px solid #ddd;
+
             border-radius: 7px;
+
             font-size: 15px;
         }
 
+
+        input:focus {
+            outline: none;
+
+            border-color: #0b3d62;
+        }
+
+
         button {
             padding: 12px 18px;
+
             margin-top: 10px;
+
             border: none;
+
             border-radius: 7px;
+
             background: #0b3d62;
+
             color: white;
+
             cursor: pointer;
+
             font-weight: bold;
         }
+
+
+        button:hover {
+            opacity: 0.9;
+        }
+
 
         .back {
             background: white;
+
             color: #0b3d62;
         }
 
+
         .student {
             background: #f1f1f1;
+
             padding: 15px;
+
             margin-top: 12px;
+
             border-radius: 8px;
         }
 
+
         .delete {
             background: #d9534f;
+
             margin-left: 8px;
         }
 
-        .edit {
-            background: #198754;
-        }
 
         #message {
             margin-top: 12px;
+
             font-weight: bold;
+        }
+
+
+        .credentials {
+            background: #eaf7ee;
+
+            border:
+                1px solid #198754;
+
+            padding: 15px;
+
+            margin-top: 15px;
+
+            border-radius: 8px;
+        }
+
+
+        .credentials h3 {
+            color: #198754;
+
+            margin-top: 0;
+        }
+
+
+        .credential-value {
+            background: white;
+
+            padding: 10px;
+
+            margin-top: 6px;
+
+            border-radius: 6px;
+
+            font-family: monospace;
+
+            font-weight: bold;
+        }
+
+
+        .warning {
+            color: #856404;
+
+            background: #fff3cd;
+
+            border:
+                1px solid #ffeeba;
+
+            padding: 10px;
+
+            border-radius: 7px;
+
+            margin-top: 12px;
+
+            font-size: 13px;
+        }
+
+
+        .role-message {
+            color: #777;
+
+            font-size: 14px;
+
+            margin-top: 8px;
         }
 
     </style>
@@ -108,11 +223,17 @@
 <div class="container">
 
 
+    <!-- HEADER -->
+
     <div class="header">
 
-        <h1>NAI GARMAI</h1>
+        <h1>
+            NAI GARMAI
+        </h1>
 
-        <p>Student Management</p>
+        <p>
+            Student Management
+        </p>
 
         <button
             class="back"
@@ -124,6 +245,7 @@
     </div>
 
 
+
     <!-- ADD STUDENT -->
 
     <div
@@ -131,19 +253,28 @@
         id="studentForm"
     >
 
-        <h2>Add Student</h2>
+        <h2>
+            Register New Student
+        </h2>
+
+
+        <p class="role-message">
+            The system will automatically
+            generate the student's ID and
+            login account.
+        </p>
+
+
+        <br>
+
 
         <input
             id="studentName"
             type="text"
             placeholder="Student Full Name"
+            autocomplete="name"
         >
 
-        <input
-            id="studentId"
-            type="text"
-            placeholder="Student ID"
-        >
 
         <input
             id="studentClass"
@@ -151,26 +282,108 @@
             placeholder="Class / Grade"
         >
 
+
         <input
             id="studentPhone"
             type="text"
             placeholder="Parent/Guardian Phone"
+            autocomplete="tel"
         >
 
-        <button onclick="addStudent()">
-            Add Student
+
+        <button
+            onclick="addStudent()"
+        >
+            Register Student
         </button>
+
 
         <div id="message"></div>
 
+
+        <!-- NEW ACCOUNT CREDENTIALS -->
+
+        <div
+            id="credentials"
+            class="credentials"
+            style="display:none;"
+        >
+
+            <h3>
+                Student Account Created
+            </h3>
+
+
+            <p>
+                Give these login details
+                to the student.
+            </p>
+
+
+            <br>
+
+
+            <strong>
+                Student ID
+            </strong>
+
+
+            <div
+                id="createdStudentId"
+                class="credential-value"
+            ></div>
+
+
+            <br>
+
+
+            <strong>
+                Username
+            </strong>
+
+
+            <div
+                id="createdUsername"
+                class="credential-value"
+            ></div>
+
+
+            <br>
+
+
+            <strong>
+                Temporary Password
+            </strong>
+
+
+            <div
+                id="createdPassword"
+                class="credential-value"
+            ></div>
+
+
+            <div class="warning">
+
+                ⚠️ The password is shown here
+                only so the administrator can
+                give it to the student.
+
+            </div>
+
+        </div>
+
     </div>
+
 
 
     <!-- STUDENT LIST -->
 
     <div class="panel">
 
-        <h2>Student Records</h2>
+        <h2>
+            Student Records
+        </h2>
+
 
         <div id="students"></div>
 
@@ -180,10 +393,13 @@
 </div>
 
 
+
 <script>
 
 
-/* USER ROLE */
+/*
+ * USER ROLE
+ */
 
 const role =
     localStorage.getItem(
@@ -191,7 +407,10 @@ const role =
     );
 
 
-/* STUDENT DATA */
+
+/*
+ * STUDENT DATA
+ */
 
 let students =
     JSON.parse(
@@ -201,9 +420,14 @@ let students =
     ) || [];
 
 
-/* SET PERMISSIONS */
+
+/*
+ * ONLY ADMIN CAN ACCESS
+ * STUDENT MANAGEMENT.
+ */
 
 function setupRole() {
+
 
     const form =
         document.getElementById(
@@ -211,12 +435,9 @@ function setupRole() {
         );
 
 
-    /*
-       ONLY ADMIN CAN ADD,
-       EDIT OR DELETE STUDENTS
-    */
-
-    if (role === "admin") {
+    if (
+        role === "admin"
+    ) {
 
         form.style.display =
             "block";
@@ -231,42 +452,174 @@ function setupRole() {
 }
 
 
-/* ADD STUDENT */
+
+/*
+ * GENERATE STUDENT ID
+ *
+ * Example:
+ *
+ * NG-2026-0001
+ * NG-2026-0002
+ * NG-2026-0003
+ */
+
+function generateStudentId() {
+
+
+    const year =
+        new Date()
+            .getFullYear();
+
+
+    let number =
+        students.length + 1;
+
+
+    let id;
+
+
+    do {
+
+        id =
+            "NG-"
+            + year
+            + "-"
+            + String(number)
+                .padStart(
+                    4,
+                    "0"
+                );
+
+
+        number++;
+
+    } while (
+
+        students.some(
+            function(student) {
+
+                return String(
+                    student.id
+                )
+                ===
+                String(id);
+
+            }
+        )
+
+    );
+
+
+    return id;
+
+}
+
+
+
+/*
+ * GENERATE USERNAME
+ */
+
+function generateUsername(
+    studentId
+) {
+
+    return studentId;
+
+}
+
+
+
+/*
+ * GENERATE TEMPORARY PASSWORD
+ */
+
+function generatePassword() {
+
+
+    const characters =
+        "ABCDEFGHJKLMNPQRSTUVWXYZ"
+        + "abcdefghijkmnopqrstuvwxyz"
+        + "23456789";
+
+
+    let password = "";
+
+
+    for (
+        let i = 0;
+        i < 8;
+        i++
+    ) {
+
+        const randomIndex =
+            Math.floor(
+                Math.random()
+                *
+                characters.length
+            );
+
+
+        password +=
+            characters[
+                randomIndex
+            ];
+
+    }
+
+
+    return password;
+
+}
+
+
+
+/*
+ * ADD STUDENT
+ */
 
 function addStudent() {
 
-    if (role !== "admin") {
+
+    if (
+        role !== "admin"
+    ) {
 
         alert(
-            "Only the Administrator can add students."
+            "Only the Administrator can register students."
         );
 
         return;
+
     }
+
 
 
     const name =
         document.getElementById(
             "studentName"
-        ).value.trim();
+        )
+        .value
+        .trim();
 
-
-    const id =
-        document.getElementById(
-            "studentId"
-        ).value.trim();
 
 
     const studentClass =
         document.getElementById(
             "studentClass"
-        ).value.trim();
+        )
+        .value
+        .trim();
+
 
 
     const phone =
         document.getElementById(
             "studentPhone"
-        ).value.trim();
+        )
+        .value
+        .trim();
+
 
 
     const message =
@@ -275,63 +628,113 @@ function addStudent() {
         );
 
 
+
+    /*
+     * VALIDATION
+     */
+
     if (
-        name === "" ||
-        id === "" ||
+        name === ""
+        ||
         studentClass === ""
     ) {
 
         message.style.color =
             "red";
 
+
         message.textContent =
-            "Please complete all required fields.";
+            "Please enter the student's name and class.";
+
 
         return;
+
     }
 
 
-    /* CHECK DUPLICATE ID */
 
-    const existing =
-        students.find(
-            function(student) {
+    /*
+     * CREATE UNIQUE ID
+     */
 
-                return student.id === id;
+    const studentId =
+        generateStudentId();
 
-            }
+
+
+    /*
+     * CREATE LOGIN USERNAME
+     */
+
+    const username =
+        generateUsername(
+            studentId
         );
 
 
-    if (existing) {
 
-        message.style.color =
-            "red";
+    /*
+     * CREATE TEMPORARY PASSWORD
+     */
 
-        message.textContent =
-            "Student ID already exists.";
-
-        return;
-    }
+    const password =
+        generatePassword();
 
 
-    /* CREATE STUDENT */
 
-    students.push({
+    /*
+     * CREATE STUDENT RECORD
+     */
 
-        name: name,
+    const newStudent = {
 
-        id: id,
+
+        name:
+            name,
+
+
+        id:
+            studentId,
+
 
         studentClass:
             studentClass,
 
-        phone: phone
 
-    });
+        phone:
+            phone,
 
 
-    /* SAVE STUDENTS */
+        username:
+            username,
+
+
+        password:
+            password,
+
+
+        role:
+            "student",
+
+
+        accountCreated:
+            new Date()
+                .toISOString()
+
+
+    };
+
+
+
+    /*
+     * SAVE STUDENT
+     */
+
+    students.push(
+        newStudent
+    );
+
+
 
     localStorage.setItem(
 
@@ -344,15 +747,13 @@ function addStudent() {
     );
 
 
-    /* CLEAR FORM */
+
+    /*
+     * CLEAR FORM
+     */
 
     document.getElementById(
         "studentName"
-    ).value = "";
-
-
-    document.getElementById(
-        "studentId"
     ).value = "";
 
 
@@ -366,22 +767,65 @@ function addStudent() {
     ).value = "";
 
 
+
+    /*
+     * SUCCESS MESSAGE
+     */
+
     message.style.color =
         "green";
 
 
     message.textContent =
-        "Student added successfully.";
+        "Student registered successfully.";
 
+
+
+    /*
+     * SHOW LOGIN CREDENTIALS
+     */
+
+    document.getElementById(
+        "createdStudentId"
+    ).textContent =
+        studentId;
+
+
+    document.getElementById(
+        "createdUsername"
+    ).textContent =
+        username;
+
+
+    document.getElementById(
+        "createdPassword"
+    ).textContent =
+        password;
+
+
+    document.getElementById(
+        "credentials"
+    ).style.display =
+        "block";
+
+
+
+    /*
+     * REFRESH LIST
+     */
 
     displayStudents();
 
 }
 
 
-/* DISPLAY STUDENTS */
+
+/*
+ * DISPLAY STUDENTS
+ */
 
 function displayStudents() {
+
 
     const container =
         document.getElementById(
@@ -389,7 +833,9 @@ function displayStudents() {
         );
 
 
-    container.innerHTML = "";
+    container.innerHTML =
+        "";
+
 
 
     if (
@@ -400,11 +846,16 @@ function displayStudents() {
             "<p>No students registered yet.</p>";
 
         return;
+
     }
 
 
+
     students.forEach(
-        function(student, index) {
+        function(
+            student,
+            index
+        ) {
 
 
             const div =
@@ -417,27 +868,55 @@ function displayStudents() {
                 "student";
 
 
+
             div.innerHTML =
 
                 "<strong>Name:</strong> "
-                + student.name
+                + escapeHTML(
+                    student.name
+                )
 
-                + "<br><strong>Student ID:</strong> "
-                + student.id
+                + "<br>"
 
-                + "<br><strong>Class:</strong> "
-                + student.studentClass
+                + "<strong>Student ID:</strong> "
+                + escapeHTML(
+                    student.id
+                )
 
-                + "<br><strong>Parent/Guardian Phone:</strong> "
-                + (
-                    student.phone ||
+                + "<br>"
+
+                + "<strong>Class:</strong> "
+                + escapeHTML(
+                    student.studentClass
+                )
+
+                + "<br>"
+
+                + "<strong>Parent/Guardian Phone:</strong> "
+                + escapeHTML(
+                    student.phone
+                    ||
                     "Not provided"
+                )
+
+                + "<br>"
+
+                + "<strong>Username:</strong> "
+                + escapeHTML(
+                    student.username
+                    ||
+                    "Not created"
                 );
 
 
-            /* ADMIN CONTROLS */
 
-            if (role === "admin") {
+            /*
+             * ADMIN DELETE
+             */
+
+            if (
+                role === "admin"
+            ) {
 
 
                 div.innerHTML +=
@@ -455,6 +934,7 @@ function displayStudents() {
             }
 
 
+
             container.appendChild(
                 div
             );
@@ -465,14 +945,63 @@ function displayStudents() {
 }
 
 
-/* DELETE STUDENT */
 
-function deleteStudent(index) {
+/*
+ * SAFE TEXT
+ */
 
-    if (role !== "admin") {
+function escapeHTML(
+    value
+) {
+
+
+    return String(
+        value
+        ||
+        ""
+    )
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+
+
+/*
+ * DELETE STUDENT
+ */
+
+function deleteStudent(
+    index
+) {
+
+
+    if (
+        role !== "admin"
+    ) {
 
         return;
+
     }
+
 
 
     const confirmDelete =
@@ -481,16 +1010,21 @@ function deleteStudent(index) {
         );
 
 
-    if (!confirmDelete) {
+    if (
+        !confirmDelete
+    ) {
 
         return;
+
     }
+
 
 
     students.splice(
         index,
         1
     );
+
 
 
     localStorage.setItem(
@@ -504,12 +1038,16 @@ function deleteStudent(index) {
     );
 
 
+
     displayStudents();
 
 }
 
 
-/* DASHBOARD */
+
+/*
+ * DASHBOARD
+ */
 
 function goDashboard() {
 
@@ -519,7 +1057,10 @@ function goDashboard() {
 }
 
 
-/* START */
+
+/*
+ * START
+ */
 
 setupRole();
 
