@@ -216,92 +216,62 @@ function submitGrade() {
     displayGrades();
 
 }
+function submitGrade() {
+
+    if (role !== "instructor") {
+        alert("Only instructors can submit grades.");
+        return;
+    }
+
+    const student =
+        document.getElementById("student").value.trim();
+
+    const studentId =
+        document.getElementById("studentId").value.trim();
+
+    const subject =
+        document.getElementById("subject").value.trim();
+
+    const score =
+        document.getElementById("score").value;
+
+    const message =
+        document.getElementById("message");
 
 
-function displayGrades() {
-
-    const container =
-        document.getElementById("grades");
-
-    container.innerHTML = "";
-
-
-    if (grades.length === 0) {
-
-        container.innerHTML =
-            "<p>No grades submitted yet.</p>";
-
+    if (
+        student === "" ||
+        studentId === "" ||
+        subject === "" ||
+        score === ""
+    ) {
+        message.style.color = "red";
+        message.textContent =
+            "Please complete all fields.";
         return;
     }
 
 
-    grades.forEach(
-        function(grade, index) {
-
-            const div =
-                document.createElement("div");
-
-            div.className = "grade";
-
-
-            div.innerHTML =
-
-                "<strong>Student:</strong> "
-                + grade.student
-
-                + "<br><strong>ID:</strong> "
-                + grade.studentId
-
-                + "<br><strong>Subject:</strong> "
-                + grade.subject
-
-                + "<br><strong>Score:</strong> "
-                + grade.score
-
-                + "<br><strong>Status:</strong> "
-                + "<span class='status'>"
-                + grade.status
-                + "</span>";
-
-
-            if (
-    role === "admin" &&
-    grade.status === "Pending" &&
-    grade.locked !== true
-) {
-
-                div.innerHTML +=
-
-                    "<br><button class='approve' "
-                    + "onclick='approveGrade("
-                    + index
-                    + ")'>Approve</button>"
-
-                    + "<button class='reject' "
-                    + "onclick='rejectGrade("
-                    + index
-                    + ")'>Reject</button>";
-
-            }
-
-
-            container.appendChild(div);
-
-        }
-    );
-
-}
-
-
-function approveGrade(index) {
-
-    if (role !== "admin") {
+    if (Number(score) < 0 || Number(score) > 100) {
+        message.style.color = "red";
+        message.textContent =
+            "Score must be between 0 and 100.";
         return;
     }
 
 
-    grades[index].status =
-        "Approved";
+    grades.push({
+
+        student: student,
+        studentId: studentId,
+        subject: subject,
+        score: score,
+
+        status: "Pending",
+
+        locked: false
+
+    });
 
 
     localStorage.setItem(
@@ -310,10 +280,21 @@ function approveGrade(index) {
     );
 
 
+    document.getElementById("student").value = "";
+    document.getElementById("studentId").value = "";
+    document.getElementById("subject").value = "";
+    document.getElementById("score").value = "";
+
+
+    message.style.color = "green";
+
+    message.textContent =
+        "Grade submitted successfully — Status: Pending";
+
+
     displayGrades();
 
 }
-
 
 function rejectGrade(index) {
 
