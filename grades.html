@@ -265,9 +265,10 @@ function displayGrades() {
 
 
             if (
-                role === "admin" &&
-                grade.status === "Pending"
-            ) {
+    role === "admin" &&
+    grade.status === "Pending" &&
+    grade.locked !== true
+) {
 
                 div.innerHTML +=
 
