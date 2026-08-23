@@ -1351,3 +1351,25 @@ window.deleteStudent = deleteStudent;
 window.deleteTeacher = deleteTeacher;
 window.deleteClass = deleteClass;
 window.deleteSubject = deleteSubject;
+// NAI GARMAI ROLE ACCESS CONTROL
+
+document.addEventListener("DOMContentLoaded", function () {
+    const role = localStorage.getItem("userRole");
+
+    if (!role) return;
+
+    const instructorAllowed = ["dashboard", "grades", "attendance"];
+
+    if (role === "instructor") {
+        document.querySelectorAll(".nav-btn").forEach(function (button) {
+            const onclick = button.getAttribute("onclick") || "";
+            const match = onclick.match(/showPage\(['"]([^'"]+)['"]/);
+
+            if (match && !instructorAllowed.includes(match[1])) {
+                button.style.display = "none";
+            }
+        });
+    }
+});
+
+
