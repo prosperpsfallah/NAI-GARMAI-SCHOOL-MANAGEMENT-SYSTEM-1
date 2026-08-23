@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>NAI GARMAI | Student Portal</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .header {
+            background: #0b3d62;
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            margin: 0 0 5px;
+        }
+
+        .panel {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .card {
+            background: #f1f1f1;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .card h2 {
+            color: #0b3d62;
+            margin: 10px 0;
+        }
+
+        .record {
+            background: #f1f1f1;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        button {
+            padding: 12px 18px;
+            border: none;
+            border-radius: 7px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .back {
+            background: white;
+            color: #0b3d62;
+        }
+
+        .logout {
+            background: #d9534f;
+            color: white;
+            margin-left: 10px;
+        }
+
+        .approved {
+            color: #198754;
+            font-weight: bold;
+        }
+
+        .empty {
+            color: #777;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <div class="header">
+
+        <h1>NAI GARMAI</h1>
+
+        <p>Student Portal</p>
+
+        <button
+            class="back"
+            onclick="goDashboard()"
+        >
+            ← Dashboard
+        </button>
+
+        <button
+            class="logout"
+            onclick="logout()"
+        >
+            Logout
+        </button>
+
+    </div>
+
+
+    <!-- STUDENT PROFILE -->
+
+    <div class="panel">
+
+        <h2>My Profile</h2>
+
+        <p id="studentName">
+            Loading...
+        </p>
+
+        <p id="studentId">
+            Loading...
+        </p>
+
+    </div>
+
+
+    <!-- SUMMARY -->
+
+    <div class="panel">
+
+        <h2>Academic Summary</h2>
+
+        <br>
+
+        <div class="grid">
+
+            <div class="card">
+
+                <p>Approved Grades</p>
+
+                <h2 id="gradeCount">
+                    0
+                </h2>
+
+            </div>
+
+
+            <div class="card">
+
+                <p>Approved Attendance</p>
+
+                <h2 id="attendanceCount">
+                    0
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- GRADES -->
+
+    <div class="panel">
+
+        <h2>My Approved Grades</h2>
+
+        <div id="grades">
+
+            <p class="empty">
+                Loading grades...
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ATTENDANCE -->
+
+    <div class="panel">
+
+        <h2>My Approved Attendance</h2>
+
+        <div id="attendance">
+
+            <p class="empty">
+                Loading attendance...
+            </p>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+
+/*
+ * Student information is temporarily
+ * identified using localStorage.
+ *
+ * Later we will replace this with
+ * secure server-side authentication.
+ */
+
+
+const studentId =
+    localStorage.getItem(
+        "studentId"
+    );
+
+
+const students =
+    JSON.parse(
+        localStorage.getItem(
+            "students"
+        )
+    ) || [];
+
+
+const grades =
+    JSON.parse(
+        localStorage.getItem(
+            "grades"
+        )
+    ) || [];
+
+
+const attendanceRecords =
+    JSON.parse(
+        localStorage.getItem(
+            "attendanceRecords"
+        )
+    ) || [];
+
+
+/* FIND STUDENT */
+
+const student =
+    students.find(
+        function(item) {
+
+            return item.id === studentId;
+
+        }
+    );
+
+
+/* PROFILE */
+
+if (student) {
+
+    document.getElementById(
+        "studentName"
+    ).textContent =
+        "Name: " + student.name;
+
+
+    document.getElementById(
+        "studentId"
+    ).textContent =
+        "Student ID: " + student.id;
+
+} else {
+
+    document.getElementById(
+        "studentName"
+    ).textContent =
+        "Student profile not found.";
+
+}
+
+
+/* APPROVED GRADES */
+
+const myGrades =
+    grades.filter(
+        function(grade) {
+
+            return (
+                grade.studentId === studentId &&
+                grade.status === "Approved"
+            );
+
+        }
+    );
+
+
+document.getElementById(
+    "gradeCount"
+).textContent =
+    myGrades.length;
+
+
+const gradesContainer =
+    document.getElementById(
+        "grades"
+    );
+
+
+gradesContainer.innerHTML = "";
+
+
+if (myGrades.length === 0) {
+
+    gradesContainer.innerHTML =
+        "<p class='empty'>No approved grades yet.</p>";
+
+} else {
+
+    myGrades.forEach(
+        function(grade) {
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.className =
+                "record";
+
+
+            div.innerHTML =
+
+                "<strong>Subject:</strong> "
+                + grade.subject
+
+                + "<br><strong>Score:</strong> "
+                + grade.score
+
+                + "<br><strong>Status:</strong> "
+
+                + "<span class='approved'>"
+                + grade.status
+                + "</span>";
+
+
+            gradesContainer.appendChild(
+                div
+            );
+
+        }
+    );
+
+}
+
+
+/* APPROVED ATTENDANCE */
+
+const myAttendance =
+    attendanceRecords.filter(
+        function(record) {
+
+            return (
+                record.studentId === studentId &&
+                record.status === "Approved"
+            );
+
+        }
+    );
+
+
+document.getElementById(
+    "attendanceCount"
+).textContent =
+    myAttendance.length;
+
+
+const attendanceContainer =
+    document.getElementById(
+        "attendance"
+    );
+
+
+attendanceContainer.innerHTML = "";
+
+
+if (myAttendance.length === 0) {
+
+    attendanceContainer.innerHTML =
+        "<p class='empty'>No approved attendance yet.</p>";
+
+} else {
+
+    myAttendance.forEach(
+        function(record) {
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.className =
+                "record";
+
+
+            div.innerHTML =
+
+                "<strong>Date:</strong> "
+                + record.date
+
+                + "<br><strong>Attendance:</strong> "
+                + record.attendance
+
+                + "<br><strong>Status:</strong> "
+
+                + "<span class='approved'>"
+                + record.status
+                + "</span>";
+
+
+            attendanceContainer.appendChild(
+                div
+            );
+
+        }
+    );
+
+}
+
+
+/* DASHBOARD */
+
+function goDashboard() {
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+/* LOGOUT */
+
+function logout() {
+
+    localStorage.removeItem(
+        "studentId"
+    );
+
+    localStorage.removeItem(
+        "loggedIn"
+    );
+
+    localStorage.removeItem(
+        "userRole"
+    );
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
