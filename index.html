@@ -2,22 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
     <title>NAI GARMAI | Dashboard</title>
-
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
-
         body {
             font-family: Arial, sans-serif;
             background: #f4f7fb;
             color: #222;
         }
-
         header {
             background: #0b3d62;
             color: white;
@@ -26,11 +26,9 @@
             align-items: center;
             justify-content: space-between;
         }
-
         header h1 {
             font-size: 20px;
         }
-
         .logout {
             background: #d9534f;
             color: white;
@@ -39,49 +37,59 @@
             border-radius: 8px;
             cursor: pointer;
         }
-
         .container {
             padding: 25px 20px;
             max-width: 1100px;
             margin: auto;
         }
-
         .welcome {
             background: white;
             padding: 25px;
             border-radius: 15px;
             margin-bottom: 25px;
-            box-shadow: 0 5px 20px rgba(0,0,0,.08);
+            box-shadow:
+                0 5px 20px
+                rgba(0,0,0,.08);
         }
-
         .welcome h2 {
             color: #0b3d62;
             margin-bottom: 8px;
         }
-
         .cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(180px, 1fr)
+                );
             gap: 18px;
         }
-
         .card {
             background: white;
             padding: 25px;
             border-radius: 15px;
             text-align: center;
-            box-shadow: 0 5px 20px rgba(0,0,0,.08);
+            box-shadow:
+                0 5px 20px
+                rgba(0,0,0,.08);
+            cursor: pointer;
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
         }
-
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow:
+                0 8px 25px
+                rgba(0,0,0,.12);
+        }
         .card h3 {
             color: #0b3d62;
             margin-bottom: 10px;
         }
-
         .card p {
             color: #777;
         }
-
         .footer {
             text-align: center;
             padding: 30px;
@@ -90,87 +98,153 @@
         }
     </style>
 </head>
-
 <body>
-
 <header>
-    <h1>NAI GARMAI SCHOOL SYSTEM</h1>
-    <button class="logout" onclick="logout()">Logout</button>
+    <h1>
+        NAI GARMAI SCHOOL SYSTEM
+    </h1>
+    <button
+        class="logout"
+        onclick="logout()"
+    >
+        Logout
+    </button>
 </header>
-
 <div class="container">
-
     <div class="welcome">
-        <h2>Welcome to the Dashboard</h2>
-        <p id="userInfo">Loading...</p>
+        <h2>
+            Welcome to the Dashboard
+        </h2>
+        <p id="userInfo">
+            Loading...
+        </p>
     </div>
-
     <div class="cards">
-<div class="card" onclick="window.location.href='students.html'">
-    <h3>Students</h3>
-    <p>Manage students</p>
-</div>
-
-    <div class="card" onclick="window.location.href='instructors.html'">
-    <h3>Instructors</h3>
-    <p>Manage instructors</p>
-</div>
-
-      <div class="card" onclick="window.location.href='attendance.html'">
-    <h3>Attendance</h3>
-    <p>View attendance</p>
-</div>
-     <div class="card" onclick="window.location.href='grades.html'">
-    <h3>Grades</h3>
-    <p>Manage grades</p>
-</div>
-      <div class="card" onclick="window.location.href='reports.html'">
-    <h3>Reports</h3>
-    <p>School reports</p>
-</div>
-
+        <!-- STUDENTS -->
+        <div
+            class="card"
+            onclick="window.location.href='students.html'"
+        >
+            <h3>
+                Students
+            </h3>
+            <p>
+                Manage students
+            </p>
+        </div>
+        <!-- INSTRUCTORS -->
+        <div
+            class="card"
+            onclick="window.location.href='instructors.html'"
+        >
+            <h3>
+                Instructors
+            </h3>
+            <p>
+                Manage instructors
+            </p>
+        </div>
+        <!-- ATTENDANCE -->
+        <div
+            class="card"
+            onclick="window.location.href='attendance.html'"
+        >
+            <h3>
+                Attendance
+            </h3>
+            <p>
+                View attendance
+            </p>
+        </div>
+        <!-- GRADES -->
+        <div
+            class="card"
+            onclick="window.location.href='grades.html'"
+        >
+            <h3>
+                Grades
+            </h3>
+            <p>
+                Manage grades
+            </p>
+        </div>
+        <!-- STUDENT PORTAL -->
+        <div
+            class="card"
+            onclick="window.location.href='student.html'"
+        >
+            <h3>
+                Student Portal
+            </h3>
+            <p>
+                View student grades
+                and attendance
+            </p>
+        </div>
+        <!-- REPORTS -->
+        <div
+            class="card"
+            onclick="window.location.href='reports.html'"
+        >
+            <h3>
+                Reports
+            </h3>
+            <p>
+                School reports
+            </p>
+        </div>
     </div>
-
 </div>
-
 <div class="footer">
     © 2026 NAI GARMAI SCHOOL SYSTEM
 </div>
-
 <script>
-
-    const loggedIn = localStorage.getItem("loggedIn");
-    const userRole = localStorage.getItem("userRole");
-
+    const loggedIn =
+        localStorage.getItem(
+            "loggedIn"
+        );
+    const userRole =
+        localStorage.getItem(
+            "userRole"
+        );
     /*
-     * Only redirect to login when there is no login session.
+     * Only redirect to login when
+     * there is no login session.
      */
-
-    if (loggedIn !== "true" || !userRole) {
-
-        window.location.href = "/login.html";
-
-    } else {
-
+    if (
+        loggedIn !== "true"
+        ||
+        !userRole
+    ) {
+        window.location.href =
+            "/login.html";
+    }
+    else {
         const roleName =
             userRole === "admin"
             ? "Administrator"
-            : "Instructor";
-
-        document.getElementById("userInfo").textContent =
-            "Logged in as: " + roleName;
+            : userRole === "instructor"
+            ? "Instructor"
+            : "Student";
+        document.getElementById(
+            "userInfo"
+        ).textContent =
+            "Logged in as: "
+            + roleName;
     }
-
-
     function logout() {
-
-        localStorage.removeItem("loggedIn");
-        localStorage.removeItem("userRole");
-
-        window.location.href = "/login.html";
+        localStorage.removeItem(
+            "loggedIn"
+        );
+        localStorage.removeItem(
+            "userRole"
+        );
+        localStorage.removeItem(
+            "studentId"
+        );
+        window.location.href =
+            "/login.html";
     }
-
 </script>
-
 </body>
 </html>
