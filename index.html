@@ -190,7 +190,7 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
         localStorage.setItem("userRole", "admin");
         localStorage.setItem("loggedIn", "true");
 
-        window.location.href = "index.html";
+        window.location.assign("/index.html");
 
         return;
     }
@@ -207,7 +207,7 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
         localStorage.setItem("userRole", "instructor");
         localStorage.setItem("loggedIn", "true");
 
-        window.location.href = "index.html";
+        window.location.assign("/index.html");
 
         return;
     }
