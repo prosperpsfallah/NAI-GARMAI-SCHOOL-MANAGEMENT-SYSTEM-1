@@ -25,6 +25,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 15px;
         }
         header h1 {
             font-size: 20px;
@@ -36,6 +37,7 @@
             padding: 10px 15px;
             border-radius: 8px;
             cursor: pointer;
+            font-weight: bold;
         }
         .container {
             padding: 25px 20px;
@@ -54,6 +56,9 @@
         .welcome h2 {
             color: #0b3d62;
             margin-bottom: 8px;
+        }
+        .welcome p {
+            color: #666;
         }
         .cards {
             display: grid;
@@ -90,11 +95,30 @@
         .card p {
             color: #777;
         }
+        /*
+         * STUDENT PORTAL IS HIDDEN
+         * FROM ADMINISTRATOR AND INSTRUCTOR.
+         *
+         * It will be shown only when
+         * a real student account logs in.
+         */
+        #studentPortalCard {
+            display: none;
+        }
         .footer {
             text-align: center;
             padding: 30px;
             color: #888;
             font-size: 13px;
+        }
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            header .logout {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -111,19 +135,21 @@
     </button>
 </header>
 <div class="container">
+    <!-- WELCOME -->
     <div class="welcome">
         <h2>
             Welcome to the Dashboard
         </h2>
         <p id="userInfo">
-            Loading...
+            Loading user information...
         </p>
     </div>
+    <!-- DASHBOARD CARDS -->
     <div class="cards">
         <!-- STUDENTS -->
         <div
             class="card"
-            onclick="window.location.href='students.html'"
+            onclick="openPage('students.html')"
         >
             <h3>
                 Students
@@ -135,7 +161,7 @@
         <!-- INSTRUCTORS -->
         <div
             class="card"
-            onclick="window.location.href='instructors.html'"
+            onclick="openPage('instructors.html')"
         >
             <h3>
                 Instructors
@@ -147,50 +173,51 @@
         <!-- ATTENDANCE -->
         <div
             class="card"
-            onclick="window.location.href='attendance.html'"
+            onclick="openPage('attendance.html')"
         >
             <h3>
                 Attendance
             </h3>
             <p>
-                View attendance
+                Manage student attendance
             </p>
         </div>
         <!-- GRADES -->
         <div
             class="card"
-            onclick="window.location.href='grades.html'"
+            onclick="openPage('grades.html')"
         >
             <h3>
                 Grades
             </h3>
             <p>
-                Manage grades
-            </p>
-        </div>
-        <!-- STUDENT PORTAL -->
-        <div
-            class="card"
-            onclick="window.location.href='student.html'"
-        >
-            <h3>
-                Student Portal
-            </h3>
-            <p>
-                View student grades
-                and attendance
+                Manage student grades
             </p>
         </div>
         <!-- REPORTS -->
         <div
             class="card"
-            onclick="window.location.href='reports.html'"
+            onclick="openPage('reports.html')"
         >
             <h3>
                 Reports
             </h3>
             <p>
-                School reports
+                View school reports
+            </p>
+        </div>
+        <!-- STUDENT PORTAL -->
+        <div
+            class="card"
+            id="studentPortalCard"
+            onclick="openPage('student.html')"
+        >
+            <h3>
+                Student Portal
+            </h3>
+            <p>
+                View your grades
+                and attendance
             </p>
         </div>
     </div>
@@ -199,52 +226,112 @@
     © 2026 NAI GARMAI SCHOOL SYSTEM
 </div>
 <script>
-    const loggedIn =
-        localStorage.getItem(
-            "loggedIn"
-        );
-    const userRole =
-        localStorage.getItem(
-            "userRole"
-        );
-    /*
-     * Only redirect to login when
-     * there is no login session.
-     */
+/*
+ * CURRENT LOGIN SESSION
+ *
+ * These values are only being used
+ * by the current version of the app.
+ *
+ * We will replace this with proper
+ * server-side authentication later.
+ */
+const loggedIn =
+    localStorage.getItem(
+        "loggedIn"
+    );
+const userRole =
+    localStorage.getItem(
+        "userRole"
+    );
+/*
+ * CHECK LOGIN
+ */
+if (
+    loggedIn !== "true"
+    ||
+    !userRole
+) {
+    window.location.href =
+        "login.html";
+}
+/*
+ * DISPLAY USER ROLE
+ */
+else {
+    let roleName;
     if (
-        loggedIn !== "true"
-        ||
-        !userRole
+        userRole === "admin"
     ) {
-        window.location.href =
-            "/login.html";
+        roleName =
+            "Administrator";
+    }
+    else if (
+        userRole === "instructor"
+    ) {
+        roleName =
+            "Instructor";
+    }
+    else if (
+        userRole === "student"
+    ) {
+        roleName =
+            "Student";
     }
     else {
-        const roleName =
-            userRole === "admin"
-            ? "Administrator"
-            : userRole === "instructor"
-            ? "Instructor"
-            : "Student";
+        roleName =
+            "User";
+    }
+    document.getElementById(
+        "userInfo"
+    ).textContent =
+        "Logged in as: "
+        + roleName;
+    /*
+     * STUDENT PORTAL
+     *
+     * Only students should see it.
+     */
+    if (
+        userRole === "student"
+    ) {
         document.getElementById(
-            "userInfo"
-        ).textContent =
-            "Logged in as: "
-            + roleName;
+            "studentPortalCard"
+        ).style.display =
+            "block";
     }
-    function logout() {
-        localStorage.removeItem(
-            "loggedIn"
-        );
-        localStorage.removeItem(
-            "userRole"
-        );
-        localStorage.removeItem(
-            "studentId"
-        );
-        window.location.href =
-            "/login.html";
-    }
+}
+/*
+ * OPEN PAGE
+ */
+function openPage(page) {
+    window.location.href =
+        page;
+}
+/*
+ * LOGOUT
+ */
+function logout() {
+    /*
+     * Clear login session.
+     */
+    localStorage.removeItem(
+        "loggedIn"
+    );
+    localStorage.removeItem(
+        "userRole"
+    );
+    /*
+     * Student identity will eventually
+     * come from secure authentication.
+     *
+     * Remove any old testing ID.
+     */
+    localStorage.removeItem(
+        "studentId"
+    );
+    window.location.href =
+        "login.html";
+}
 </script>
 </body>
 </html>
