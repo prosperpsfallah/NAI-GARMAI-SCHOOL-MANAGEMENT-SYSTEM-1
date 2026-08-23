@@ -1,255 +1,241 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NAI GARMAI | Instructors</title>
 
-    <meta charset="UTF-8">
+<style>
+* {
+    box-sizing: border-box;
+}
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    margin: 0;
+    padding: 20px;
+}
 
-    <title>NAI GARMAI | Instructors</title>
+.container {
+    max-width: 1000px;
+    margin: auto;
+}
 
-    <style>
+.header {
+    background: #0b3d62;
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
 
-        * {
-            box-sizing: border-box;
-        }
+.header h1 {
+    margin: 0 0 5px;
+}
 
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f7fb;
-            margin: 0;
-            padding: 20px;
-        }
+.panel {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
 
-        .container {
-            max-width: 1000px;
-            margin: auto;
-        }
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: 1px solid #ddd;
+    border-radius: 7px;
+    font-size: 15px;
+}
 
-        .header {
-            background: #0b3d62;
-            color: white;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-        }
+button {
+    padding: 12px 18px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 7px;
+    background: #0b3d62;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+}
 
-        .header h1 {
-            margin: 0 0 5px;
-        }
+.back {
+    background: white;
+    color: #0b3d62;
+}
 
-        .panel {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-        }
+.delete {
+    background: #d9534f;
+}
 
-        input {
-            width: 100%;
-            padding: 12px;
-            margin: 8px 0;
-            border: 1px solid #ddd;
-            border-radius: 7px;
-            font-size: 15px;
-        }
+.instructor {
+    background: #f1f1f1;
+    padding: 15px;
+    margin-top: 12px;
+    border-radius: 8px;
+}
 
-        button {
-            padding: 12px 18px;
-            margin-top: 10px;
-            border: none;
-            border-radius: 7px;
-            background: #0b3d62;
-            color: white;
-            cursor: pointer;
-            font-weight: bold;
-        }
+.credentials {
+    background: #eaf5ea;
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: 8px;
+    color: #155724;
+}
 
-        .back {
-            background: white;
-            color: #0b3d62;
-        }
+.success {
+    color: #198754;
+    font-weight: bold;
+    margin-top: 12px;
+}
 
-        .instructor {
-            background: #f1f1f1;
-            padding: 15px;
-            margin-top: 12px;
-            border-radius: 8px;
-        }
-
-        .delete {
-            background: #d9534f;
-        }
-
-        #message {
-            margin-top: 12px;
-            font-weight: bold;
-        }
-
-    </style>
-
+.error {
+    color: #d9534f;
+    font-weight: bold;
+    margin-top: 12px;
+}
+</style>
 </head>
-
 
 <body>
 
-
 <div class="container">
 
+<div class="header">
+    <h1>NAI GARMAI SCHOOL SYSTEM</h1>
+    <p>Instructor Management</p>
 
-    <div class="header">
+    <button class="back" onclick="goDashboard()">
+        ← Dashboard
+    </button>
+</div>
 
-        <h1>NAI GARMAI</h1>
+<div class="panel" id="instructorForm">
 
-        <p>Instructor Management</p>
+    <h2>Add Instructor</h2>
 
-        <button
-            class="back"
-            onclick="goDashboard()"
-        >
-            ← Dashboard
-        </button>
-
-    </div>
-
-
-    <!-- ADD INSTRUCTOR -->
-
-    <div
-        class="panel"
-        id="instructorForm"
+    <input
+        id="instructorName"
+        type="text"
+        placeholder="Instructor Full Name"
     >
 
-        <h2>Add Instructor</h2>
+    <input
+        id="instructorId"
+        type="text"
+        placeholder="Instructor ID"
+    >
 
-        <input
-            id="instructorName"
-            type="text"
-            placeholder="Instructor Full Name"
-        >
+    <input
+        id="instructorSubject"
+        type="text"
+        placeholder="Subject / Department"
+    >
 
-        <input
-            id="instructorId"
-            type="text"
-            placeholder="Instructor ID"
-        >
+    <input
+        id="instructorPhone"
+        type="text"
+        placeholder="Phone Number"
+    >
 
-        <input
-            id="instructorSubject"
-            type="text"
-            placeholder="Subject / Department"
-        >
+    <input
+        id="instructorUsername"
+        type="text"
+        placeholder="Login Username"
+    >
 
-        <input
-            id="instructorPhone"
-            type="text"
-            placeholder="Phone Number"
-        >
+    <input
+        id="instructorPassword"
+        type="password"
+        placeholder="Login Password"
+    >
 
-        <button onclick="addInstructor()">
-            Add Instructor
-        </button>
+    <button onclick="addInstructor()">
+        Add Instructor
+    </button>
 
-        <div id="message"></div>
-
-    </div>
-
-
-    <!-- INSTRUCTOR RECORDS -->
-
-    <div class="panel">
-
-        <h2>Instructor Records</h2>
-
-        <div id="instructors"></div>
-
-    </div>
-
+    <div id="message"></div>
 
 </div>
 
+<div class="panel">
+
+    <h2>Instructor Records</h2>
+
+    <div id="instructors"></div>
+
+</div>
+
+</div>
 
 <script>
 
+/* ================================
+   SECURITY
+================================ */
+
+const loggedIn =
+    localStorage.getItem("loggedIn");
 
 const role =
-    localStorage.getItem(
-        "userRole"
-    );
+    localStorage.getItem("userRole");
 
-
-let instructors =
-    JSON.parse(
-        localStorage.getItem(
-            "instructors"
-        )
-    ) || [];
-
-
-function setupRole() {
-
-    const form =
-        document.getElementById(
-            "instructorForm"
-        );
-
-
-    if (role === "admin") {
-
-        form.style.display =
-            "block";
-
-    } else {
-
-        form.style.display =
-            "none";
-
-    }
-
+if (
+    loggedIn !== "true" ||
+    role !== "admin"
+) {
+    window.location.href = "login.html";
 }
 
 
+/* ================================
+   LOAD INSTRUCTORS
+================================ */
+
+let instructors =
+    JSON.parse(
+        localStorage.getItem("instructors")
+    ) || [];
+
+
+/* ================================
+   ADD INSTRUCTOR
+================================ */
+
 function addInstructor() {
-
-    if (role !== "admin") {
-
-        alert(
-            "Only the Administrator can add instructors."
-        );
-
-        return;
-
-    }
-
 
     const name =
         document.getElementById(
             "instructorName"
         ).value.trim();
 
-
     const id =
         document.getElementById(
             "instructorId"
         ).value.trim();
-
 
     const subject =
         document.getElementById(
             "instructorSubject"
         ).value.trim();
 
-
     const phone =
         document.getElementById(
             "instructorPhone"
         ).value.trim();
 
+    const username =
+        document.getElementById(
+            "instructorUsername"
+        ).value.trim();
+
+    const password =
+        document.getElementById(
+            "instructorPassword"
+        ).value;
 
     const message =
         document.getElementById(
@@ -260,93 +246,129 @@ function addInstructor() {
     if (
         name === "" ||
         id === "" ||
-        subject === ""
+        subject === "" ||
+        username === "" ||
+        password === ""
     ) {
 
-        message.style.color =
-            "red";
+        message.className = "error";
 
         message.textContent =
             "Please complete all required fields.";
 
         return;
-
     }
 
 
-    const existing =
+    /* CHECK DUPLICATE ID */
+
+    const duplicateId =
         instructors.find(
             function(instructor) {
-
-                return instructor.id === id;
-
+                return String(instructor.id)
+                    .toLowerCase()
+                    ===
+                    String(id)
+                    .toLowerCase();
             }
         );
 
 
-    if (existing) {
+    if (duplicateId) {
 
-        message.style.color =
-            "red";
+        message.className = "error";
 
         message.textContent =
             "Instructor ID already exists.";
 
         return;
-
     }
 
 
-    instructors.push({
+    /* CHECK DUPLICATE USERNAME */
 
-        name: name,
+    const duplicateUsername =
+        instructors.find(
+            function(instructor) {
+                return String(
+                    instructor.username || ""
+                )
+                .toLowerCase()
+                ===
+                username.toLowerCase();
+            }
+        );
+
+
+    if (duplicateUsername) {
+
+        message.className = "error";
+
+        message.textContent =
+            "Username already exists.";
+
+        return;
+    }
+
+
+    /* CREATE ACCOUNT */
+
+    instructors.push({
 
         id: id,
 
+        name: name,
+
         subject: subject,
 
-        phone: phone
+        phone: phone,
+
+        username: username,
+
+        password: password
 
     });
 
 
+    /* SAVE */
+
     localStorage.setItem(
-
         "instructors",
-
-        JSON.stringify(
-            instructors
-        )
-
+        JSON.stringify(instructors)
     );
 
+
+    /* CLEAR */
 
     document.getElementById(
         "instructorName"
     ).value = "";
 
-
     document.getElementById(
         "instructorId"
     ).value = "";
-
 
     document.getElementById(
         "instructorSubject"
     ).value = "";
 
-
     document.getElementById(
         "instructorPhone"
     ).value = "";
 
+    document.getElementById(
+        "instructorUsername"
+    ).value = "";
 
-    message.style.color =
-        "green";
+    document.getElementById(
+        "instructorPassword"
+    ).value = "";
 
+
+    message.className = "success";
 
     message.textContent =
-        "Instructor added successfully.";
+        "Instructor account created successfully.";
 
 
     displayInstructors();
@@ -354,13 +376,16 @@ function addInstructor() {
 }
 
 
+/* ================================
+   DISPLAY
+================================ */
+
 function displayInstructors() {
 
     const container =
         document.getElementById(
             "instructors"
         );
-
 
     container.innerHTML = "";
 
@@ -373,19 +398,16 @@ function displayInstructors() {
             "<p>No instructors registered yet.</p>";
 
         return;
-
     }
 
 
     instructors.forEach(
         function(instructor, index) {
 
-
             const div =
                 document.createElement(
                     "div"
                 );
-
 
             div.className =
                 "instructor";
@@ -394,41 +416,79 @@ function displayInstructors() {
             div.innerHTML =
 
                 "<strong>Name:</strong> "
-                + instructor.name
+                +
+                escapeHTML(
+                    instructor.name
+                )
 
-                + "<br><strong>Instructor ID:</strong> "
-                + instructor.id
+                +
+                "<br><strong>Instructor ID:</strong> "
+                +
+                escapeHTML(
+                    instructor.id
+                )
 
-                + "<br><strong>Subject / Department:</strong> "
-                + instructor.subject
+                +
+                "<br><strong>Subject / Department:</strong> "
+                +
+                escapeHTML(
+                    instructor.subject
+                )
 
-                + "<br><strong>Phone:</strong> "
-                + (
+                +
+                "<br><strong>Phone:</strong> "
+                +
+                escapeHTML(
                     instructor.phone ||
                     "Not provided"
+                )
+
+                +
+                "<div class='credentials'>"
+                +
+                "<strong>Username:</strong> "
+                +
+                escapeHTML(
+                    instructor.username
+                )
+                +
+                "<br>"
+                +
+                "<strong>Password:</strong> "
+                +
+                escapeHTML(
+                    instructor.password
+                )
+                +
+                "</div>";
+
+
+            const deleteButton =
+                document.createElement(
+                    "button"
                 );
 
+            deleteButton.className =
+                "delete";
 
-            if (role === "admin") {
+            deleteButton.textContent =
+                "Delete";
 
-                div.innerHTML +=
-
-                    "<br>"
-
-                    + "<button "
-                    + "class='delete' "
-                    + "onclick='deleteInstructor("
-                    + index
-                    + ")'>"
-                    + "Delete"
-                    + "</button>";
-
-            }
+            deleteButton.onclick =
+                function() {
+                    deleteInstructor(index);
+                };
 
 
-            container.appendChild(
-                div
+            div.appendChild(
+                document.createElement("br")
             );
+
+            div.appendChild(
+                deleteButton
+            );
+
+            container.appendChild(div);
 
         }
     );
@@ -436,66 +496,61 @@ function displayInstructors() {
 }
 
 
+/* ================================
+   DELETE
+================================ */
+
 function deleteInstructor(index) {
 
-    if (role !== "admin") {
-
+    if (!confirm(
+        "Are you sure you want to delete this instructor?"
+    )) {
         return;
-
     }
 
-
-    const confirmed =
-        confirm(
-            "Are you sure you want to delete this instructor?"
-        );
-
-
-    if (!confirmed) {
-
-        return;
-
-    }
-
-
-    instructors.splice(
-        index,
-        1
-    );
-
+    instructors.splice(index, 1);
 
     localStorage.setItem(
-
         "instructors",
-
-        JSON.stringify(
-            instructors
-        )
-
+        JSON.stringify(instructors)
     );
 
-
     displayInstructors();
-
 }
 
+
+/* ================================
+   DASHBOARD
+================================ */
 
 function goDashboard() {
-
     window.location.href =
         "index.html";
-
 }
 
 
-setupRole();
+/* ================================
+   SECURITY ESCAPE
+================================ */
+
+function escapeHTML(value) {
+
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+/* ================================
+   START
+================================ */
 
 displayInstructors();
 
-
 </script>
 
-
 </body>
-
 </html>
