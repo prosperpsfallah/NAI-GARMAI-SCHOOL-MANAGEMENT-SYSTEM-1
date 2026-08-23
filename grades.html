@@ -1,18 +1,350 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NAI GARMAI | Grades</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .header,
+        .panel {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .header {
+            background: #0b3d62;
+            color: white;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 12px 18px;
+            margin: 8px 5px 0 0;
+            border: none;
+            border-radius: 7px;
+            background: #0b3d62;
+            color: white;
+            cursor: pointer;
+        }
+
+        .grade {
+            background: #f1f1f1;
+            padding: 15px;
+            margin-top: 12px;
+            border-radius: 8px;
+        }
+
+        .approve {
+            background: #198754;
+        }
+
+        .reject {
+            background: #d9534f;
+        }
+
+        .status {
+            font-weight: bold;
+        }
+    </style>
 </head>
+
 <body>
 
-<h1>NAI GARMAI</h1>
-<h2>Grades Management</h2>
+<div class="container">
 
-<p>Grades page is working.</p>
+    <div class="header">
+        <h1>NAI GARMAI</h1>
+        <p>Grades Management</p>
 
-<button onclick="window.location.href='index.html'">
-    ← Dashboard
-</button>
+        <button onclick="goDashboard()">
+            ← Dashboard
+        </button>
+    </div>
+
+
+    <div class="panel">
+
+        <h2>Submit Grade</h2>
+
+        <input
+            id="student"
+            type="text"
+            placeholder="Student Name"
+        >
+
+        <input
+            id="studentId"
+            type="text"
+            placeholder="Student ID"
+        >
+
+        <input
+            id="subject"
+            type="text"
+            placeholder="Subject"
+        >
+
+        <input
+            id="score"
+            type="number"
+            min="0"
+            max="100"
+            placeholder="Score (0-100)"
+        >
+
+        <button onclick="submitGrade()">
+            Submit Grade
+        </button>
+
+    </div>
+
+
+    <div class="panel">
+
+        <h2>Grade Records</h2>
+
+        <div id="grades"></div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+let grades =
+    JSON.parse(
+        localStorage.getItem("grades")
+    ) || [];
+
+
+const role =
+    localStorage.getItem("userRole");
+
+
+function submitGrade() {
+
+    if (role !== "instructor") {
+
+        alert(
+            "Only instructors can submit grades."
+        );
+
+        return;
+    }
+
+
+    const student =
+        document.getElementById("student")
+        .value.trim();
+
+    const studentId =
+        document.getElementById("studentId")
+        .value.trim();
+
+    const subject =
+        document.getElementById("subject")
+        .value.trim();
+
+    const score =
+        document.getElementById("score")
+        .value;
+
+
+    if (
+        student === "" ||
+        studentId === "" ||
+        subject === "" ||
+        score === ""
+    ) {
+
+        alert(
+            "Please complete all fields."
+        );
+
+        return;
+    }
+
+
+    grades.push({
+
+        student: student,
+        studentId: studentId,
+        subject: subject,
+        score: score,
+        status: "Pending"
+
+    });
+
+
+    localStorage.setItem(
+        "grades",
+        JSON.stringify(grades)
+    );
+
+
+    document.getElementById("student").value = "";
+    document.getElementById("studentId").value = "";
+    document.getElementById("subject").value = "";
+    document.getElementById("score").value = "";
+
+
+    displayGrades();
+
+}
+
+
+function displayGrades() {
+
+    const container =
+        document.getElementById("grades");
+
+    container.innerHTML = "";
+
+
+    if (grades.length === 0) {
+
+        container.innerHTML =
+            "<p>No grades submitted yet.</p>";
+
+        return;
+    }
+
+
+    grades.forEach(
+        function(grade, index) {
+
+            const div =
+                document.createElement("div");
+
+            div.className = "grade";
+
+
+            div.innerHTML =
+
+                "<strong>Student:</strong> "
+                + grade.student
+
+                + "<br><strong>ID:</strong> "
+                + grade.studentId
+
+                + "<br><strong>Subject:</strong> "
+                + grade.subject
+
+                + "<br><strong>Score:</strong> "
+                + grade.score
+
+                + "<br><strong>Status:</strong> "
+                + "<span class='status'>"
+                + grade.status
+                + "</span>";
+
+
+            if (
+                role === "admin" &&
+                grade.status === "Pending"
+            ) {
+
+                div.innerHTML +=
+
+                    "<br><button class='approve' "
+                    + "onclick='approveGrade("
+                    + index
+                    + ")'>Approve</button>"
+
+                    + "<button class='reject' "
+                    + "onclick='rejectGrade("
+                    + index
+                    + ")'>Reject</button>";
+
+            }
+
+
+            container.appendChild(div);
+
+        }
+    );
+
+}
+
+
+function approveGrade(index) {
+
+    if (role !== "admin") {
+        return;
+    }
+
+
+    grades[index].status =
+        "Approved";
+
+
+    localStorage.setItem(
+        "grades",
+        JSON.stringify(grades)
+    );
+
+
+    displayGrades();
+
+}
+
+
+function rejectGrade(index) {
+
+    if (role !== "admin") {
+        return;
+    }
+
+
+    grades[index].status =
+        "Rejected";
+
+
+    localStorage.setItem(
+        "grades",
+        JSON.stringify(grades)
+    );
+
+
+    displayGrades();
+
+}
+
+
+function goDashboard() {
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+displayGrades();
+
+</script>
 
 </body>
 </html>
