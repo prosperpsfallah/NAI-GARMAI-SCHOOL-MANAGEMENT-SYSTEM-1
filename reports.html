@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>NAI GARMAI | Reports</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .header {
+            background: #0b3d62;
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            margin: 0 0 5px;
+        }
+
+        .panel {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .card {
+            background: #f1f1f1;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .card h2 {
+            font-size: 32px;
+            color: #0b3d62;
+            margin: 10px 0;
+        }
+
+        .card p {
+            margin: 0;
+            color: #555;
+            font-weight: bold;
+        }
+
+        .back {
+            background: white;
+            color: #0b3d62;
+            padding: 12px 18px;
+            border: none;
+            border-radius: 7px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .refresh {
+            background: #0b3d62;
+            color: white;
+            padding: 12px 18px;
+            border: none;
+            border-radius: 7px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .notice {
+            padding: 15px;
+            background: #fff3cd;
+            color: #664d03;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <div class="header">
+
+        <h1>NAI GARMAI</h1>
+
+        <p>School Reports & Statistics</p>
+
+        <button
+            class="back"
+            onclick="goDashboard()"
+        >
+            ← Dashboard
+        </button>
+
+    </div>
+
+
+    <div
+        class="notice"
+        id="accessMessage"
+    >
+        Loading reports...
+    </div>
+
+
+    <div
+        class="panel"
+        id="reportPanel"
+    >
+
+        <h2>School Overview</h2>
+
+        <br>
+
+
+        <div class="grid">
+
+
+            <div class="card">
+
+                <p>Total Students</p>
+
+                <h2 id="totalStudents">
+                    0
+                </h2>
+
+            </div>
+
+
+            <div class="card">
+
+                <p>Total Instructors</p>
+
+                <h2 id="totalInstructors">
+                    0
+                </h2>
+
+            </div>
+
+
+            <div class="card">
+
+                <p>Total Grades</p>
+
+                <h2 id="totalGrades">
+                    0
+                </h2>
+
+            </div>
+
+
+            <div class="card">
+
+                <p>Pending Grades</p>
+
+                <h2 id="pendingGrades">
+                    0
+                </h2>
+
+            </div>
+
+
+            <div class="card">
+
+                <p>Approved Grades</p>
+
+                <h2 id="approvedGrades">
+                    0
+                </h2>
+
+            </div>
+
+
+            <div class="card">
+
+                <p>Rejected Grades</p>
+
+                <h2 id="rejectedGrades">
+                    0
+                </h2>
+
+            </div>
+
+
+            <div class="card">
+
+                <p>Total Attendance</p>
+
+                <h2 id="totalAttendance">
+                    0
+                </h2>
+
+            </div>
+
+
+            <div class="card">
+
+                <p>Pending Attendance</p>
+
+                <h2 id="pendingAttendance">
+                    0
+                </h2>
+
+            </div>
+
+
+            <div class="card">
+
+                <p>Approved Attendance</p>
+
+                <h2 id="approvedAttendance">
+                    0
+                </h2>
+
+            </div>
+
+
+            <div class="card">
+
+                <p>Rejected Attendance</p>
+
+                <h2 id="rejectedAttendance">
+                    0
+                </h2>
+
+            </div>
+
+
+        </div>
+
+
+        <br>
+
+
+        <button
+            class="refresh"
+            onclick="loadReports()"
+        >
+            Refresh Reports
+        </button>
+
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+
+/* CURRENT ROLE */
+
+const role =
+    localStorage.getItem(
+        "userRole"
+    );
+
+
+/* DASHBOARD */
+
+function goDashboard() {
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+/* LOAD REPORTS */
+
+function loadReports() {
+
+
+    if (role !== "admin") {
+
+        document.getElementById(
+            "accessMessage"
+        ).textContent =
+            "Reports are available to the Administrator only.";
+
+        document.getElementById(
+            "reportPanel"
+        ).style.display =
+            "none";
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "accessMessage"
+    ).textContent =
+        "Administrator Report Dashboard";
+
+
+    /* STUDENTS */
+
+    const students =
+        JSON.parse(
+            localStorage.getItem(
+                "students"
+            )
+        ) || [];
+
+
+    /* INSTRUCTORS */
+
+    const instructors =
+        JSON.parse(
+            localStorage.getItem(
+                "instructors"
+            )
+        ) || [];
+
+
+    /* GRADES */
+
+    const grades =
+        JSON.parse(
+            localStorage.getItem(
+                "grades"
+            )
+        ) || [];
+
+
+    /* ATTENDANCE */
+
+    const attendance =
+        JSON.parse(
+            localStorage.getItem(
+                "attendanceRecords"
+            )
+        ) || [];
+
+
+    /* STUDENT COUNT */
+
+    document.getElementById(
+        "totalStudents"
+    ).textContent =
+        students.length;
+
+
+    /* INSTRUCTOR COUNT */
+
+    document.getElementById(
+        "totalInstructors"
+    ).textContent =
+        instructors.length;
+
+
+    /* GRADE COUNT */
+
+    document.getElementById(
+        "totalGrades"
+    ).textContent =
+        grades.length;
+
+
+    /* GRADE STATUSES */
+
+    document.getElementById(
+        "pendingGrades"
+    ).textContent =
+
+        grades.filter(
+            function(grade) {
+
+                return grade.status === "Pending";
+
+            }
+        ).length;
+
+
+    document.getElementById(
+        "approvedGrades"
+    ).textContent =
+
+        grades.filter(
+            function(grade) {
+
+                return grade.status === "Approved";
+
+            }
+        ).length;
+
+
+    document.getElementById(
+        "rejectedGrades"
+    ).textContent =
+
+        grades.filter(
+            function(grade) {
+
+                return grade.status === "Rejected";
+
+            }
+        ).length;
+
+
+    /* ATTENDANCE COUNT */
+
+    document.getElementById(
+        "totalAttendance"
+    ).textContent =
+        attendance.length;
+
+
+    /* ATTENDANCE STATUSES */
+
+    document.getElementById(
+        "pendingAttendance"
+    ).textContent =
+
+        attendance.filter(
+            function(record) {
+
+                return record.status === "Pending";
+
+            }
+        ).length;
+
+
+    document.getElementById(
+        "approvedAttendance"
+    ).textContent =
+
+        attendance.filter(
+            function(record) {
+
+                return record.status === "Approved";
+
+            }
+        ).length;
+
+
+    document.getElementById(
+        "rejectedAttendance"
+    ).textContent =
+
+        attendance.filter(
+            function(record) {
+
+                return record.status === "Rejected";
+
+            }
+        ).length;
+
+}
+
+
+/* START */
+
+loadReports();
+
+
+</script>
+
+
+</body>
+
+</html>
