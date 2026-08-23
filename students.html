@@ -1,10 +1,534 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<title>Students</title>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>NAI GARMAI | Students</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .header {
+            background: #0b3d62;
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            margin: 0 0 5px;
+        }
+
+        .panel {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 7px;
+            font-size: 15px;
+        }
+
+        button {
+            padding: 12px 18px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 7px;
+            background: #0b3d62;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .back {
+            background: white;
+            color: #0b3d62;
+        }
+
+        .student {
+            background: #f1f1f1;
+            padding: 15px;
+            margin-top: 12px;
+            border-radius: 8px;
+        }
+
+        .delete {
+            background: #d9534f;
+            margin-left: 8px;
+        }
+
+        .edit {
+            background: #198754;
+        }
+
+        #message {
+            margin-top: 12px;
+            font-weight: bold;
+        }
+
+    </style>
+
 </head>
+
+
 <body>
-<h1>NAI GARMAI Students</h1>
-<p>Student page is working.</p>
+
+
+<div class="container">
+
+
+    <div class="header">
+
+        <h1>NAI GARMAI</h1>
+
+        <p>Student Management</p>
+
+        <button
+            class="back"
+            onclick="goDashboard()"
+        >
+            ← Dashboard
+        </button>
+
+    </div>
+
+
+    <!-- ADD STUDENT -->
+
+    <div
+        class="panel"
+        id="studentForm"
+    >
+
+        <h2>Add Student</h2>
+
+        <input
+            id="studentName"
+            type="text"
+            placeholder="Student Full Name"
+        >
+
+        <input
+            id="studentId"
+            type="text"
+            placeholder="Student ID"
+        >
+
+        <input
+            id="studentClass"
+            type="text"
+            placeholder="Class / Grade"
+        >
+
+        <input
+            id="studentPhone"
+            type="text"
+            placeholder="Parent/Guardian Phone"
+        >
+
+        <button onclick="addStudent()">
+            Add Student
+        </button>
+
+        <div id="message"></div>
+
+    </div>
+
+
+    <!-- STUDENT LIST -->
+
+    <div class="panel">
+
+        <h2>Student Records</h2>
+
+        <div id="students"></div>
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+
+/* USER ROLE */
+
+const role =
+    localStorage.getItem(
+        "userRole"
+    );
+
+
+/* STUDENT DATA */
+
+let students =
+    JSON.parse(
+        localStorage.getItem(
+            "students"
+        )
+    ) || [];
+
+
+/* SET PERMISSIONS */
+
+function setupRole() {
+
+    const form =
+        document.getElementById(
+            "studentForm"
+        );
+
+
+    /*
+       ONLY ADMIN CAN ADD,
+       EDIT OR DELETE STUDENTS
+    */
+
+    if (role === "admin") {
+
+        form.style.display =
+            "block";
+
+    } else {
+
+        form.style.display =
+            "none";
+
+    }
+
+}
+
+
+/* ADD STUDENT */
+
+function addStudent() {
+
+    if (role !== "admin") {
+
+        alert(
+            "Only the Administrator can add students."
+        );
+
+        return;
+    }
+
+
+    const name =
+        document.getElementById(
+            "studentName"
+        ).value.trim();
+
+
+    const id =
+        document.getElementById(
+            "studentId"
+        ).value.trim();
+
+
+    const studentClass =
+        document.getElementById(
+            "studentClass"
+        ).value.trim();
+
+
+    const phone =
+        document.getElementById(
+            "studentPhone"
+        ).value.trim();
+
+
+    const message =
+        document.getElementById(
+            "message"
+        );
+
+
+    if (
+        name === "" ||
+        id === "" ||
+        studentClass === ""
+    ) {
+
+        message.style.color =
+            "red";
+
+        message.textContent =
+            "Please complete all required fields.";
+
+        return;
+    }
+
+
+    /* CHECK DUPLICATE ID */
+
+    const existing =
+        students.find(
+            function(student) {
+
+                return student.id === id;
+
+            }
+        );
+
+
+    if (existing) {
+
+        message.style.color =
+            "red";
+
+        message.textContent =
+            "Student ID already exists.";
+
+        return;
+    }
+
+
+    /* CREATE STUDENT */
+
+    students.push({
+
+        name: name,
+
+        id: id,
+
+        studentClass:
+            studentClass,
+
+        phone: phone
+
+    });
+
+
+    /* SAVE STUDENTS */
+
+    localStorage.setItem(
+
+        "students",
+
+        JSON.stringify(
+            students
+        )
+
+    );
+
+
+    /* CLEAR FORM */
+
+    document.getElementById(
+        "studentName"
+    ).value = "";
+
+
+    document.getElementById(
+        "studentId"
+    ).value = "";
+
+
+    document.getElementById(
+        "studentClass"
+    ).value = "";
+
+
+    document.getElementById(
+        "studentPhone"
+    ).value = "";
+
+
+    message.style.color =
+        "green";
+
+
+    message.textContent =
+        "Student added successfully.";
+
+
+    displayStudents();
+
+}
+
+
+/* DISPLAY STUDENTS */
+
+function displayStudents() {
+
+    const container =
+        document.getElementById(
+            "students"
+        );
+
+
+    container.innerHTML = "";
+
+
+    if (
+        students.length === 0
+    ) {
+
+        container.innerHTML =
+            "<p>No students registered yet.</p>";
+
+        return;
+    }
+
+
+    students.forEach(
+        function(student, index) {
+
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.className =
+                "student";
+
+
+            div.innerHTML =
+
+                "<strong>Name:</strong> "
+                + student.name
+
+                + "<br><strong>Student ID:</strong> "
+                + student.id
+
+                + "<br><strong>Class:</strong> "
+                + student.studentClass
+
+                + "<br><strong>Parent/Guardian Phone:</strong> "
+                + (
+                    student.phone ||
+                    "Not provided"
+                );
+
+
+            /* ADMIN CONTROLS */
+
+            if (role === "admin") {
+
+
+                div.innerHTML +=
+
+                    "<br>"
+
+                    + "<button "
+                    + "class='delete' "
+                    + "onclick='deleteStudent("
+                    + index
+                    + ")'>"
+                    + "Delete"
+                    + "</button>";
+
+            }
+
+
+            container.appendChild(
+                div
+            );
+
+        }
+    );
+
+}
+
+
+/* DELETE STUDENT */
+
+function deleteStudent(index) {
+
+    if (role !== "admin") {
+
+        return;
+    }
+
+
+    const confirmDelete =
+        confirm(
+            "Are you sure you want to delete this student?"
+        );
+
+
+    if (!confirmDelete) {
+
+        return;
+    }
+
+
+    students.splice(
+        index,
+        1
+    );
+
+
+    localStorage.setItem(
+
+        "students",
+
+        JSON.stringify(
+            students
+        )
+
+    );
+
+
+    displayStudents();
+
+}
+
+
+/* DASHBOARD */
+
+function goDashboard() {
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+/* START */
+
+setupRole();
+
+displayStudents();
+
+
+</script>
+
+
 </body>
+
 </html>
