@@ -1,26 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0"
     >
+
     <title>NAI GARMAI | Student Portal</title>
+
+
     <style>
+
         * {
             box-sizing: border-box;
         }
+
+
         body {
             font-family: Arial, sans-serif;
             background: #f4f7fb;
             margin: 0;
             padding: 20px;
         }
+
+
         .container {
             max-width: 1000px;
             margin: auto;
         }
+
+
         .header {
             background: #0b3d62;
             color: white;
@@ -28,21 +41,30 @@
             border-radius: 12px;
             margin-bottom: 20px;
         }
+
+
         .header h1 {
             margin: 0 0 5px;
         }
+
+
         .panel {
             background: white;
             padding: 20px;
             border-radius: 12px;
             margin-bottom: 20px;
-            box-shadow:
-                0 4px 15px
-                rgba(0,0,0,0.08);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
         }
+
+
         .profile-row {
-            margin: 8px 0;
+            margin: 10px 0;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 7px;
         }
+
+
         .grid {
             display: grid;
             grid-template-columns:
@@ -52,33 +74,47 @@
                 );
             gap: 15px;
         }
+
+
         .card {
             background: #f1f1f1;
             padding: 20px;
             border-radius: 10px;
             text-align: center;
         }
+
+
         .card h2 {
             color: #0b3d62;
             margin: 10px 0;
         }
+
+
         .record {
             background: #f1f1f1;
             padding: 15px;
             border-radius: 8px;
             margin-top: 10px;
         }
+
+
         .approved {
             color: #198754;
             font-weight: bold;
         }
+
+
         .empty {
             color: #777;
         }
+
+
         .error {
             color: #d9534f;
             font-weight: bold;
         }
+
+
         button {
             padding: 12px 18px;
             border: none;
@@ -86,345 +122,968 @@
             font-weight: bold;
             cursor: pointer;
         }
+
+
         .back {
             background: white;
             color: #0b3d62;
         }
+
+
         .logout {
             background: #d9534f;
             color: white;
             margin-left: 10px;
         }
+
     </style>
+
 </head>
+
+
 <body>
+
+
 <div class="container">
+
+
     <!-- HEADER -->
+
     <div class="header">
+
         <h1>
             NAI GARMAI
         </h1>
+
         <p>
             Student Portal
         </p>
+
         <br>
+
         <button
             class="back"
             onclick="goDashboard()"
         >
             ← Dashboard
         </button>
+
         <button
             class="logout"
             onclick="logout()"
         >
             Logout
         </button>
+
     </div>
+
+
+
     <!-- PROFILE -->
+
     <div class="panel">
+
         <h2>
             My Profile
         </h2>
+
         <div id="profile">
+
             Loading student profile...
+
         </div>
+
     </div>
-    <!-- SUMMARY -->
+
+
+
+    <!-- ACADEMIC SUMMARY -->
+
     <div class="panel">
+
         <h2>
             Academic Summary
         </h2>
+
         <br>
+
         <div class="grid">
+
+
             <div class="card">
+
                 <p>
                     Approved Grades
                 </p>
+
                 <h2 id="gradeCount">
                     0
                 </h2>
+
             </div>
+
+
             <div class="card">
+
                 <p>
                     Approved Attendance
                 </p>
+
                 <h2 id="attendanceCount">
                     0
                 </h2>
+
             </div>
+
+
         </div>
+
     </div>
-    <!-- GRADES -->
+
+
+
+    <!-- APPROVED GRADES -->
+
     <div class="panel">
+
         <h2>
             My Approved Grades
         </h2>
+
         <div id="grades">
+
             <p class="empty">
                 Loading grades...
             </p>
+
         </div>
+
     </div>
-    <!-- ATTENDANCE -->
+
+
+
+    <!-- APPROVED ATTENDANCE -->
+
     <div class="panel">
+
         <h2>
             My Approved Attendance
         </h2>
+
         <div id="attendance">
+
             <p class="empty">
                 Loading attendance...
             </p>
+
         </div>
+
     </div>
+
+
 </div>
+
+
+
 <script>
+
+
 /*
- * SECURITY CHECK
- *
- * Student Portal is only for
- * users logged in as students.
- */
+==================================================
+SECURITY CHECK
+==================================================
+*/
+
 const loggedIn =
     localStorage.getItem(
         "loggedIn"
     );
+
+
 const userRole =
     localStorage.getItem(
         "userRole"
     );
+
+
 if (
     loggedIn !== "true"
     ||
     userRole !== "student"
 ) {
+
     window.location.href =
         "login.html";
+
 }
+
+
 /*
- * IMPORTANT:
- *
- * We are NOT hard-coding a student ID.
- *
- * The login system must eventually
- * provide the student's identity.
- */
+==================================================
+GET LOGGED-IN STUDENT ID
+==================================================
+*/
+
 const studentId =
     localStorage.getItem(
         "studentId"
     );
+
+
 /*
- * Load stored records.
- */
+==================================================
+LOAD DATA
+==================================================
+*/
+
 const students =
     JSON.parse(
         localStorage.getItem(
             "students"
         )
     ) || [];
+
+
 const grades =
     JSON.parse(
         localStorage.getItem(
             "grades"
         )
     ) || [];
+
+
 const attendanceRecords =
     JSON.parse(
         localStorage.getItem(
             "attendanceRecords"
         )
     ) || [];
+
+
 /*
- * Profile
- */
+==================================================
+PROFILE
+==================================================
+*/
+
 const profile =
     document.getElementById(
         "profile"
     );
-if (!studentId) {
+
+
+/*
+ * Make sure a student ID exists.
+ */
+
+if (
+    !studentId
+) {
+
     profile.innerHTML =
+
         "<p class='error'>"
-        + "Your student account is not connected "
-        + "to a student profile yet."
-        + "</p>";
+        +
+        "Your student account is not connected "
+        +
+        "to a Student ID."
+        +
+        "</p>";
+
 } else {
+
+
+    /*
+     * Find the student whose ID
+     * belongs to the logged-in account.
+     */
+
     const student =
         students.find(
             function(item) {
-                const id =
+
+
+                const savedId =
+
                     item.id !== undefined
-                        ? item.id
-                        : item.studentId;
-                return String(id)
-                    === String(studentId);
+
+                    ?
+
+                    item.id
+
+                    :
+
+                    item.studentId;
+
+
+                return (
+
+                    String(
+                        savedId
+                    )
+                    ===
+                    String(
+                        studentId
+                    )
+
+                );
+
             }
         );
-    if (!student) {
+
+
+    /*
+     * STUDENT NOT FOUND
+     */
+
+    if (
+        !student
+    ) {
+
+
         profile.innerHTML =
+
             "<p class='error'>"
-            + "Student profile could not be found."
-            + "</p>";
+            +
+            "Student profile could not be found."
+            +
+            "</p>";
+
+
     } else {
-        const id =
+
+
+        /*
+         * Get the student's actual ID.
+         */
+
+        const savedId =
+
             student.id !== undefined
-                ? student.id
-                : student.studentId;
+
+            ?
+
+            student.id
+
+            :
+
+            student.studentId;
+
+
+        /*
+         * Get the student's actual name.
+         *
+         * IMPORTANT:
+         * This is NOT the Student ID.
+         */
+
+        const studentName =
+
+            student.name !== undefined
+
+            &&
+
+            String(
+                student.name
+            ).trim() !== ""
+
+            ?
+
+            student.name
+
+            :
+
+            student.fullName !== undefined
+
+            &&
+
+            String(
+                student.fullName
+            ).trim() !== ""
+
+            ?
+
+            student.fullName
+
+            :
+
+            "Name not available";
+
+
+        /*
+         * Get class.
+         */
+
+        const studentClass =
+
+            student.studentClass
+            ||
+            student.class
+            ||
+            student.grade
+            ||
+            "Not provided";
+
+
+        /*
+         * Get phone.
+         */
+
+        const studentPhone =
+
+            student.phone
+            ||
+            "Not provided";
+
+
+        /*
+         * DISPLAY PROFILE
+         */
+
         profile.innerHTML =
+
             "<div class='profile-row'>"
-            + "<strong>Name:</strong> "
-            + (
-                student.name ||
-                student.fullName ||
-                "Not provided"
+
+            +
+
+            "<strong>Name:</strong> "
+
+            +
+
+            escapeHTML(
+                studentName
             )
-            + "</div>"
-            + "<div class='profile-row'>"
-            + "<strong>Student ID:</strong> "
-            + id
-            + "</div>";
+
+            +
+
+            "</div>"
+
+
+            +
+
+            "<div class='profile-row'>"
+
+            +
+
+            "<strong>Student ID:</strong> "
+
+            +
+
+            escapeHTML(
+                savedId
+            )
+
+            +
+
+            "</div>"
+
+
+            +
+
+            "<div class='profile-row'>"
+
+            +
+
+            "<strong>Class / Grade:</strong> "
+
+            +
+
+            escapeHTML(
+                studentClass
+            )
+
+            +
+
+            "</div>"
+
+
+            +
+
+            "<div class='profile-row'>"
+
+            +
+
+            "<strong>Parent/Guardian Phone:</strong> "
+
+            +
+
+            escapeHTML(
+                studentPhone
+            )
+
+            +
+
+            "</div>";
+
     }
+
 }
+
+
+
 /*
- * Approved grades
- */
+==================================================
+APPROVED GRADES
+==================================================
+*/
+
 const myGrades =
     grades.filter(
         function(grade) {
+
+
+            /*
+             * Only grades belonging
+             * to this student.
+             */
+
+            const gradeStudentId =
+
+                grade.studentId !== undefined
+
+                ?
+
+                grade.studentId
+
+                :
+
+                grade.id;
+
+
             return (
+
                 String(
-                    grade.studentId
+                    gradeStudentId
                 )
-                === String(studentId)
+                ===
+                String(
+                    studentId
+                )
+
                 &&
-                grade.status ===
-                "Approved"
+
+                String(
+                    grade.status || ""
+                ).toLowerCase()
+
+                ===
+
+                "approved"
+
             );
+
         }
     );
+
+
+/*
+ * Grade count.
+ */
+
 document.getElementById(
     "gradeCount"
 ).textContent =
     myGrades.length;
+
+
+/*
+ * Grade container.
+ */
+
 const gradesContainer =
     document.getElementById(
         "grades"
     );
-gradesContainer.innerHTML = "";
+
+
+gradesContainer.innerHTML =
+    "";
+
+
+/*
+ * No grades.
+ */
+
 if (
     myGrades.length === 0
 ) {
+
     gradesContainer.innerHTML =
+
         "<p class='empty'>"
-        + "No approved grades yet."
-        + "</p>";
+
+        +
+
+        "No approved grades yet."
+
+        +
+
+        "</p>";
+
+
 } else {
+
+
+    /*
+     * Display grades.
+     */
+
     myGrades.forEach(
         function(grade) {
+
+
             const div =
                 document.createElement(
                     "div"
                 );
+
+
             div.className =
                 "record";
+
+
             div.innerHTML =
+
                 "<strong>Subject:</strong> "
-                + grade.subject
-                + "<br>"
-                + "<strong>Score:</strong> "
-                + grade.score
-                + "<br>"
-                + "<strong>Status:</strong> "
-                + "<span class='approved'>"
-                + grade.status
-                + "</span>";
+
+                +
+
+                escapeHTML(
+                    grade.subject
+                    ||
+                    "Not provided"
+                )
+
+                +
+
+                "<br>"
+
+                +
+
+                "<strong>Score:</strong> "
+
+                +
+
+                escapeHTML(
+                    grade.score
+                    ||
+                    "0"
+                )
+
+                +
+
+                "<br>"
+
+                +
+
+                "<strong>Status:</strong> "
+
+                +
+
+                "<span class='approved'>"
+
+                +
+
+                escapeHTML(
+                    grade.status
+                )
+
+                +
+
+                "</span>";
+
+
             gradesContainer.appendChild(
                 div
             );
+
         }
     );
+
 }
+
+
+
 /*
- * Approved attendance
- */
+==================================================
+APPROVED ATTENDANCE
+==================================================
+*/
+
 const myAttendance =
     attendanceRecords.filter(
         function(record) {
+
+
+            const attendanceStudentId =
+
+                record.studentId !== undefined
+
+                ?
+
+                record.studentId
+
+                :
+
+                record.id;
+
+
             return (
+
                 String(
-                    record.studentId
+                    attendanceStudentId
                 )
-                === String(studentId)
+                ===
+                String(
+                    studentId
+                )
+
                 &&
-                record.status ===
-                "Approved"
+
+                String(
+                    record.status || ""
+                ).toLowerCase()
+
+                ===
+
+                "approved"
+
             );
+
         }
     );
+
+
+/*
+ * Attendance count.
+ */
+
 document.getElementById(
     "attendanceCount"
 ).textContent =
     myAttendance.length;
+
+
+/*
+ * Attendance container.
+ */
+
 const attendanceContainer =
     document.getElementById(
         "attendance"
     );
-attendanceContainer.innerHTML = "";
+
+
+attendanceContainer.innerHTML =
+    "";
+
+
+/*
+ * No attendance.
+ */
+
 if (
     myAttendance.length === 0
 ) {
+
     attendanceContainer.innerHTML =
+
         "<p class='empty'>"
-        + "No approved attendance yet."
-        + "</p>";
+
+        +
+
+        "No approved attendance yet."
+
+        +
+
+        "</p>";
+
+
 } else {
+
+
+    /*
+     * Display attendance.
+     */
+
     myAttendance.forEach(
         function(record) {
+
+
             const div =
                 document.createElement(
                     "div"
                 );
+
+
             div.className =
                 "record";
+
+
             div.innerHTML =
+
                 "<strong>Date:</strong> "
-                + record.date
-                + "<br>"
-                + "<strong>Attendance:</strong> "
-                + record.attendance
-                + "<br>"
-                + "<strong>Status:</strong> "
-                + "<span class='approved'>"
-                + record.status
-                + "</span>";
+
+                +
+
+                escapeHTML(
+                    record.date
+                    ||
+                    "Not provided"
+                )
+
+                +
+
+                "<br>"
+
+                +
+
+                "<strong>Attendance:</strong> "
+
+                +
+
+                escapeHTML(
+                    record.attendance
+                    ||
+                    record.status
+                    ||
+                    "Not provided"
+                )
+
+                +
+
+                "<br>"
+
+                +
+
+                "<strong>Status:</strong> "
+
+                +
+
+                "<span class='approved'>"
+
+                +
+
+                escapeHTML(
+                    record.status
+                )
+
+                +
+
+                "</span>";
+
+
             attendanceContainer.appendChild(
                 div
             );
+
         }
     );
+
 }
+
+
+
 /*
- * Dashboard
- */
+==================================================
+SAFE HTML FUNCTION
+==================================================
+*/
+
+function escapeHTML(
+    value
+) {
+
+    return String(
+        value
+        ??
+        ""
+    )
+
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+
+    .replace(
+        /</g,
+        "&lt;"
+    )
+
+    .replace(
+        />/g,
+        "&gt;"
+    )
+
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+
+
+/*
+==================================================
+DASHBOARD
+==================================================
+*/
+
 function goDashboard() {
+
+    /*
+     * Students should not be able
+     * to use the main admin dashboard.
+     *
+     * Send them back to their portal.
+     */
+
     window.location.href =
-        "index.html";
+        "student.html";
+
 }
+
+
+
 /*
- * Logout
- */
+==================================================
+LOGOUT
+==================================================
+*/
+
 function logout() {
+
+
     localStorage.removeItem(
         "loggedIn"
     );
+
+
     localStorage.removeItem(
         "userRole"
     );
+
+
     localStorage.removeItem(
         "studentId"
     );
+
+
     window.location.href =
         "login.html";
+
 }
+
+
 </script>
+
+
 </body>
+
 </html>
