@@ -1,688 +1,956 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>NAI GARMAI | Attendance</title>
-
-    <style>
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f7fb;
-            margin: 0;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: auto;
-        }
-
-        .header {
-            background: #0b3d62;
-            color: white;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-        }
-
-        .header h1 {
-            margin: 0 0 5px;
-        }
-
-        .panel {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-        }
-
-        select,
-        input {
-            width: 100%;
-            padding: 12px;
-            margin: 8px 0;
-            border: 1px solid #ddd;
-            border-radius: 7px;
-            font-size: 15px;
-        }
-
-        button {
-            padding: 12px 18px;
-            margin-top: 10px;
-            border: none;
-            border-radius: 7px;
-            background: #0b3d62;
-            color: white;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .back {
-            background: white;
-            color: #0b3d62;
-        }
-
-        .record {
-            background: #f1f1f1;
-            padding: 15px;
-            margin-top: 12px;
-            border-radius: 8px;
-        }
-
-        .approve {
-            background: #198754;
-            margin-right: 8px;
-        }
-
-        .reject {
-            background: #d9534f;
-        }
-
-        .pending {
-            color: #d97706;
-            font-weight: bold;
-        }
-
-        .approved {
-            color: #198754;
-            font-weight: bold;
-        }
-
-        .rejected {
-            color: #d9534f;
-            font-weight: bold;
-        }
-
-        .success {
-            color: #198754;
-            font-weight: bold;
-            margin-top: 12px;
-        }
-
-        .error {
-            color: #d9534f;
-            font-weight: bold;
-            margin-top: 12px;
-        }
-
-    </style>
-
+<meta charset="UTF-8">
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+<title>NAI GARMAI | Attendance</title>
+<style>
+* {
+    box-sizing: border-box;
+}
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    margin: 0;
+    padding: 20px;
+    color: #222;
+}
+.container {
+    max-width: 1000px;
+    margin: auto;
+}
+.header {
+    background: #0b3d62;
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+.header h1 {
+    margin: 0 0 5px;
+}
+.header p {
+    margin: 0 0 15px;
+}
+.panel {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow:
+        0 4px 15px
+        rgba(0,0,0,0.08);
+}
+label {
+    display: block;
+    font-weight: bold;
+    margin-top: 12px;
+}
+select,
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: 1px solid #ddd;
+    border-radius: 7px;
+    font-size: 15px;
+}
+select:focus,
+input:focus {
+    outline: none;
+    border-color: #0b3d62;
+}
+button {
+    padding: 12px 18px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 7px;
+    background: #0b3d62;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+}
+.back {
+    background: white;
+    color: #0b3d62;
+}
+.approve {
+    background: #198754;
+    margin-right: 8px;
+}
+.reject {
+    background: #d9534f;
+}
+.attendance {
+    background: #f5f7fa;
+    padding: 18px;
+    margin-top: 12px;
+    border-radius: 9px;
+    border-left: 4px solid #0b3d62;
+}
+.status {
+    font-weight: bold;
+}
+.pending {
+    color: #d97706;
+}
+.approved {
+    color: #198754;
+}
+.rejected {
+    color: #d9534f;
+}
+.present {
+    color: #198754;
+    font-weight: bold;
+}
+.absent {
+    color: #d9534f;
+    font-weight: bold;
+}
+.late {
+    color: #d97706;
+    font-weight: bold;
+}
+.locked {
+    color: #555;
+    font-size: 13px;
+    margin-top: 8px;
+}
+.success {
+    color: #198754;
+    font-weight: bold;
+    margin-top: 12px;
+}
+.error {
+    color: #d9534f;
+    font-weight: bold;
+    margin-top: 12px;
+}
+.empty {
+    color: #777;
+}
+.notice {
+    background: #eef5fa;
+    padding: 12px;
+    border-radius: 8px;
+    color: #555;
+    margin-bottom: 15px;
+}
+</style>
 </head>
-
-
 <body>
-
-
 <div class="container">
-
-
-    <div class="header">
-
-        <h1>NAI GARMAI</h1>
-
-        <p>Attendance Management</p>
-
-        <button
-            class="back"
-            onclick="goDashboard()"
-        >
-            ← Dashboard
-        </button>
-
-    </div>
-
-
-    <!-- INSTRUCTOR SUBMISSION -->
-
-    <div
-        class="panel"
-        id="submissionPanel"
-    >
-
-        <h2>Submit Attendance</h2>
-
-
-        <label>
-            Select Student
-        </label>
-
-
-        <select id="studentSelect">
-
-            <option value="">
-                Select a registered student
-            </option>
-
-        </select>
-
-
-        <input
-            id="date"
-            type="date"
-        >
-
-
-        <select id="attendance">
-
-            <option value="">
-                Select Attendance
-            </option>
-
-            <option value="Present">
-                Present
-            </option>
-
-            <option value="Absent">
-                Absent
-            </option>
-
-            <option value="Late">
-                Late
-            </option>
-
-        </select>
-
-
-        <button onclick="submitAttendance()">
-            Submit Attendance
-        </button>
-
-
-        <div id="message"></div>
-
-    </div>
-
-
-    <!-- ATTENDANCE RECORDS -->
-
-    <div class="panel">
-
-        <h2>Attendance Records</h2>
-
-        <div id="records"></div>
-
-    </div>
-
-
+<!-- HEADER -->
+<div class="header">
+<h1>
+NAI GARMAI SCHOOL SYSTEM
+</h1>
+<p>
+Attendance Management
+</p>
+<button
+class="back"
+onclick="goDashboard()"
+>
+← Dashboard
+</button>
 </div>
-
-
+<!-- INSTRUCTOR SUBMISSION -->
+<div
+class="panel"
+id="submissionPanel"
+>
+<h2>
+Record Attendance
+</h2>
+<div class="notice">
+Instructors can record attendance.
+Attendance remains <strong>Pending</strong>
+until the Administrator reviews it.
+</div>
+<label>
+Student
+</label>
+<select id="studentSelect">
+<option value="">
+Select a registered student
+</option>
+</select>
+<label>
+Date
+</label>
+<input
+id="attendanceDate"
+type="date"
+>
+<label>
+Attendance
+</label>
+<select id="attendanceStatus">
+<option value="">
+Select attendance
+</option>
+<option value="Present">
+Present
+</option>
+<option value="Absent">
+Absent
+</option>
+<option value="Late">
+Late
+</option>
+</select>
+<button
+onclick="submitAttendance()"
+>
+Submit Attendance
+</button>
+<div id="message"></div>
+</div>
+<!-- ATTENDANCE RECORDS -->
+<div class="panel">
+<h2>
+Attendance Records
+</h2>
+<div id="attendanceRecords">
+<p class="empty">
+Loading attendance...
+</p>
+</div>
+</div>
+</div>
 <script>
-
-
-/* USER ROLE */
-
+/*
+==================================================
+SECURITY
+==================================================
+*/
+const loggedIn =
+localStorage.getItem(
+"loggedIn"
+);
 const role =
-    localStorage.getItem(
-        "userRole"
-    );
-
-
-/* REGISTERED STUDENTS */
-
+localStorage.getItem(
+"userRole"
+);
+if (
+loggedIn !== "true"
+) {
+window.location.href =
+"login.html";
+}
+/*
+==================================================
+LOAD DATA
+==================================================
+*/
 let students =
-    JSON.parse(
-        localStorage.getItem(
-            "students"
-        )
-    ) || [];
-
-
-/* ATTENDANCE RECORDS */
-
+JSON.parse(
+localStorage.getItem(
+"students"
+)
+) || [];
 let attendanceRecords =
-    JSON.parse(
-        localStorage.getItem(
-            "attendanceRecords"
-        )
-    ) || [];
-
-
-/* SET ROLE */
-
+JSON.parse(
+localStorage.getItem(
+"attendanceRecords"
+)
+) || [];
+/*
+==================================================
+SET PERMISSIONS
+==================================================
+*/
 function setupRole() {
-
-    const panel =
-        document.getElementById(
-            "submissionPanel"
-        );
-
-
-    if (role === "instructor") {
-
-        panel.style.display =
-            "block";
-
-    } else {
-
-        panel.style.display =
-            "none";
-
-    }
-
+const panel =
+document.getElementById(
+"submissionPanel"
+);
+if (
+role === "instructor"
+) {
+panel.style.display =
+"block";
 }
-
-
-/* LOAD STUDENTS */
-
+else {
+panel.style.display =
+"none";
+}
+}
+/*
+==================================================
+LOAD STUDENTS
+==================================================
+*/
 function loadStudents() {
-
-    const select =
-        document.getElementById(
-            "studentSelect"
-        );
-
-
-    select.innerHTML =
-        '<option value="">Select a registered student</option>';
-
-
-    if (students.length === 0) {
-
-        select.innerHTML +=
-            '<option value="">No students registered</option>';
-
-        return;
-
-    }
-
-
-    students.forEach(
-        function(student) {
-
-            const option =
-                document.createElement(
-                    "option"
-                );
-
-
-            option.value =
-                student.id;
-
-
-            option.textContent =
-                student.name
-                + " — "
-                + student.id;
-
-
-            select.appendChild(
-                option
-            );
-
-        }
-    );
-
+const select =
+document.getElementById(
+"studentSelect"
+);
+select.innerHTML =
+'<option value="">'
++
+'Select a registered student'
++
+'</option>';
+if (
+students.length === 0
+) {
+select.innerHTML +=
+'<option value="">'
++
+'No students registered'
++
+'</option>';
+return;
 }
-
-
-/* SUBMIT ATTENDANCE */
-
+students.forEach(
+function(student) {
+const studentId =
+student.studentId
+||
+student.id;
+const studentName =
+student.name
+||
+student.fullName
+||
+"Unknown Student";
+const option =
+document.createElement(
+"option"
+);
+option.value =
+studentId;
+option.textContent =
+studentName
++
+" — "
++
+studentId;
+select.appendChild(
+option
+);
+});
+}
+/*
+==================================================
+SET TODAY'S DATE
+==================================================
+*/
+function setToday() {
+const dateInput =
+document.getElementById(
+"attendanceDate"
+);
+const today =
+new Date()
+.toISOString()
+.split("T")[0];
+dateInput.value =
+today;
+}
+/*
+==================================================
+SUBMIT ATTENDANCE
+==================================================
+*/
 function submitAttendance() {
-
-    if (role !== "instructor") {
-
-        alert(
-            "Only instructors can submit attendance."
-        );
-
-        return;
-
-    }
-
-
-    const studentId =
-        document.getElementById(
-            "studentSelect"
-        ).value;
-
-
-    const date =
-        document.getElementById(
-            "date"
-        ).value;
-
-
-    const attendance =
-        document.getElementById(
-            "attendance"
-        ).value;
-
-
-    const message =
-        document.getElementById(
-            "message"
-        );
-
-
-    if (
-        studentId === "" ||
-        date === "" ||
-        attendance === ""
-    ) {
-
-        message.className =
-            "error";
-
-        message.textContent =
-            "Please select a student and complete all fields.";
-
-        return;
-
-    }
-
-
-    const student =
-        students.find(
-            function(item) {
-
-                return item.id === studentId;
-
-            }
-        );
-
-
-    if (!student) {
-
-        message.className =
-            "error";
-
-        message.textContent =
-            "Student could not be found.";
-
-        return;
-
-    }
-
-
-    attendanceRecords.push({
-
-        student: student.name,
-
-        studentId: student.id,
-
-        date: date,
-
-        attendance: attendance,
-
-        status: "Pending",
-
-        locked: false
-
-    });
-
-
-    localStorage.setItem(
-
-        "attendanceRecords",
-
-        JSON.stringify(
-            attendanceRecords
-        )
-
-    );
-
-
-    document.getElementById(
-        "studentSelect"
-    ).value = "";
-
-
-    document.getElementById(
-        "date"
-    ).value = "";
-
-
-    document.getElementById(
-        "attendance"
-    ).value = "";
-
-
-    message.className =
-        "success";
-
-
-    message.textContent =
-        "Attendance submitted successfully — Status: Pending";
-
-
-    displayRecords();
-
+if (
+role !== "instructor"
+) {
+alert(
+"Only instructors can submit attendance."
+);
+return;
 }
-
-
-/* DISPLAY RECORDS */
-
-function displayRecords() {
-
-    const container =
-        document.getElementById(
-            "records"
-        );
-
-
-    container.innerHTML = "";
-
-
-    if (
-        attendanceRecords.length === 0
-    ) {
-
-        container.innerHTML =
-            "<p>No attendance records yet.</p>";
-
-        return;
-
-    }
-
-
-    attendanceRecords.forEach(
-        function(record, index) {
-
-            let statusClass =
-                "pending";
-
-
-            if (
-                record.status === "Approved"
-            ) {
-
-                statusClass =
-                    "approved";
-
-            }
-
-
-            if (
-                record.status === "Rejected"
-            ) {
-
-                statusClass =
-                    "rejected";
-
-            }
-
-
-            const div =
-                document.createElement(
-                    "div"
-                );
-
-
-            div.className =
-                "record";
-
-
-            div.innerHTML =
-
-                "<strong>Student:</strong> "
-                + record.student
-
-                + "<br><strong>ID:</strong> "
-                + record.studentId
-
-                + "<br><strong>Date:</strong> "
-                + record.date
-
-                + "<br><strong>Attendance:</strong> "
-                + record.attendance
-
-                + "<br><strong>Status:</strong> "
-
-                + "<span class='"
-                + statusClass
-                + "'>"
-
-                + record.status
-
-                + "</span>";
-
-
-            if (
-                role === "admin" &&
-                record.status === "Pending" &&
-                record.locked !== true
-            ) {
-
-                div.innerHTML +=
-
-                    "<br>"
-
-                    + "<button "
-                    + "class='approve' "
-                    + "onclick='approveAttendance("
-                    + index
-                    + ")'>"
-                    + "Approve"
-                    + "</button>"
-
-                    + "<button "
-                    + "class='reject' "
-                    + "onclick='rejectAttendance("
-                    + index
-                    + ")'>"
-                    + "Reject"
-                    + "</button>";
-
-            }
-
-
-            container.appendChild(
-                div
-            );
-
-        }
-    );
-
+const studentId =
+document.getElementById(
+"studentSelect"
+).value;
+const date =
+document.getElementById(
+"attendanceDate"
+).value;
+const attendance =
+document.getElementById(
+"attendanceStatus"
+).value;
+const message =
+document.getElementById(
+"message"
+);
+message.textContent =
+"";
+/*
+VALIDATION
+*/
+if (
+studentId === ""
+||
+date === ""
+||
+attendance === ""
+) {
+message.className =
+"error";
+message.textContent =
+"Please complete all attendance fields.";
+return;
 }
-
-
-/* APPROVE */
-
-function approveAttendance(index) {
-
-    if (role !== "admin") {
-
-        return;
-
-    }
-
-
-    attendanceRecords[index].status =
-        "Approved";
-
-
-    attendanceRecords[index].locked =
-        true;
-
-
-    localStorage.setItem(
-
-        "attendanceRecords",
-
-        JSON.stringify(
-            attendanceRecords
-        )
-
-    );
-
-
-    displayRecords();
-
+/*
+FIND STUDENT
+*/
+const student =
+students.find(
+function(item) {
+const id =
+item.studentId
+||
+item.id;
+return String(id)
+===
+String(studentId);
+});
+if (!student) {
+message.className =
+"error";
+message.textContent =
+"Student could not be found.";
+return;
 }
-
-
-/* REJECT */
-
-function rejectAttendance(index) {
-
-    if (role !== "admin") {
-
-        return;
-
-    }
-
-
-    attendanceRecords[index].status =
-        "Rejected";
-
-
-    attendanceRecords[index].locked =
-        true;
-
-
-    localStorage.setItem(
-
-        "attendanceRecords",
-
-        JSON.stringify(
-            attendanceRecords
-        )
-
-    );
-
-
-    displayRecords();
-
+const studentName =
+student.name
+||
+student.fullName
+||
+"Unknown Student";
+/*
+PREVENT DUPLICATE
+*/
+const duplicate =
+attendanceRecords.find(
+function(record) {
+return (
+String(
+record.studentId
+)
+===
+String(studentId)
+&&
+String(
+record.date
+)
+===
+String(date)
+);
+});
+if (
+duplicate
+) {
+message.className =
+"error";
+message.textContent =
+"Attendance for this student and date has already been submitted.";
+return;
 }
-
-
-/* DASHBOARD */
-
+/*
+CREATE RECORD
+*/
+const newRecord = {
+student:
+studentName,
+studentId:
+String(studentId),
+date:
+date,
+attendance:
+attendance,
+status:
+"Pending",
+locked:
+false,
+submittedAt:
+new Date()
+.toISOString()
+};
+/*
+SAVE
+*/
+attendanceRecords.push(
+newRecord
+);
+localStorage.setItem(
+"attendanceRecords",
+JSON.stringify(
+attendanceRecords
+)
+);
+/*
+CLEAR FORM
+*/
+document.getElementById(
+"studentSelect"
+).value =
+"";
+document.getElementById(
+"attendanceDate"
+).value =
+"";
+document.getElementById(
+"attendanceStatus"
+).value =
+"";
+message.className =
+"success";
+message.textContent =
+"Attendance submitted successfully. Status: Pending";
+displayAttendance();
+}
+/*
+==================================================
+DISPLAY ATTENDANCE
+==================================================
+*/
+function displayAttendance() {
+const container =
+document.getElementById(
+"attendanceRecords"
+);
+container.innerHTML =
+"";
+/*
+STUDENT VIEW
+*/
+if (
+role === "student"
+) {
+const studentId =
+localStorage.getItem(
+"studentId"
+);
+const approvedRecords =
+attendanceRecords.filter(
+function(record) {
+return (
+String(
+record.studentId
+)
+===
+String(
+studentId
+)
+&&
+String(
+record.status
+||
+""
+)
+.toLowerCase()
+===
+"approved"
+);
+});
+if (
+approvedRecords.length === 0
+) {
+container.innerHTML =
+"<p class='empty'>"
++
+"No approved attendance available yet."
++
+"</p>";
+return;
+}
+approvedRecords.forEach(
+function(record) {
+createAttendanceCard(
+record,
+container,
+false
+);
+});
+return;
+}
+/*
+ADMIN / INSTRUCTOR VIEW
+*/
+if (
+attendanceRecords.length === 0
+) {
+container.innerHTML =
+"<p class='empty'>"
++
+"No attendance records submitted yet."
++
+"</p>";
+return;
+}
+attendanceRecords.forEach(
+function(record, index) {
+createAttendanceCard(
+record,
+container,
+true,
+index
+);
+});
+}
+/*
+==================================================
+CREATE ATTENDANCE CARD
+==================================================
+*/
+function createAttendanceCard(
+record,
+container,
+showManagement,
+index
+) {
+const div =
+document.createElement(
+"div"
+);
+div.className =
+"attendance";
+let statusClass =
+"pending";
+if (
+String(
+record.status
+)
+.toLowerCase()
+===
+"approved"
+) {
+statusClass =
+"approved";
+}
+if (
+String(
+record.status
+)
+.toLowerCase()
+===
+"rejected"
+) {
+statusClass =
+"rejected";
+}
+let attendanceClass =
+"";
+if (
+String(
+record.attendance
+)
+.toLowerCase()
+===
+"present"
+) {
+attendanceClass =
+"present";
+}
+if (
+String(
+record.attendance
+)
+.toLowerCase()
+===
+"absent"
+) {
+attendanceClass =
+"absent";
+}
+if (
+String(
+record.attendance
+)
+.toLowerCase()
+===
+"late"
+) {
+attendanceClass =
+"late";
+}
+div.innerHTML =
+"<strong>Student:</strong> "
++
+escapeHTML(
+record.student
+||
+"Unknown"
+)
++
+"<br>"
++
+"<strong>Student ID:</strong> "
++
+escapeHTML(
+record.studentId
+||
+"Unknown"
+)
++
+"<br>"
++
+"<strong>Date:</strong> "
++
+escapeHTML(
+record.date
+||
+"Unknown"
+)
++
+"<br>"
++
+"<strong>Attendance:</strong> "
++
+"<span class='"
++
+attendanceClass
++
+"'>"
++
+escapeHTML(
+record.attendance
+||
+"Unknown"
+)
++
+"</span>"
++
+"<br>"
++
+"<strong>Status:</strong> "
++
+"<span class='status "
++
+statusClass
++
+"'>"
++
+escapeHTML(
+record.status
+||
+"Pending"
+)
++
+"</span>";
+/*
+ADMIN CONTROLS
+*/
+if (
+role === "admin"
+&&
+record.status === "Pending"
+&&
+record.locked !== true
+) {
+const approveButton =
+document.createElement(
+"button"
+);
+approveButton.className =
+"approve";
+approveButton.textContent =
+"Approve";
+approveButton.onclick =
+function() {
+approveAttendance(
+index
+);
+};
+const rejectButton =
+document.createElement(
+"button"
+);
+rejectButton.className =
+"reject";
+rejectButton.textContent =
+"Reject";
+rejectButton.onclick =
+function() {
+rejectAttendance(
+index
+);
+};
+div.appendChild(
+document.createElement(
+"br"
+)
+);
+div.appendChild(
+approveButton
+);
+div.appendChild(
+rejectButton
+);
+}
+/*
+LOCKED
+*/
+if (
+record.locked === true
+) {
+const lockedText =
+document.createElement(
+"div"
+);
+lockedText.className =
+"locked";
+lockedText.textContent =
+"🔒 This attendance record is locked and cannot be changed.";
+div.appendChild(
+lockedText
+);
+}
+container.appendChild(
+div
+);
+}
+/*
+==================================================
+APPROVE ATTENDANCE
+==================================================
+*/
+function approveAttendance(
+index
+) {
+if (
+role !== "admin"
+) {
+alert(
+"Only the Administrator can approve attendance."
+);
+return;
+}
+if (
+!attendanceRecords[index]
+) {
+return;
+}
+if (
+attendanceRecords[index].locked === true
+) {
+alert(
+"This attendance record is already locked."
+);
+return;
+}
+attendanceRecords[index].status =
+"Approved";
+attendanceRecords[index].locked =
+true;
+attendanceRecords[index].approvedAt =
+new Date()
+.toISOString();
+localStorage.setItem(
+"attendanceRecords",
+JSON.stringify(
+attendanceRecords
+)
+);
+displayAttendance();
+}
+/*
+==================================================
+REJECT ATTENDANCE
+==================================================
+*/
+function rejectAttendance(
+index
+) {
+if (
+role !== "admin"
+) {
+alert(
+"Only the Administrator can reject attendance."
+);
+return;
+}
+if (
+!attendanceRecords[index]
+) {
+return;
+}
+if (
+attendanceRecords[index].locked === true
+) {
+alert(
+"This attendance record is already locked."
+);
+return;
+}
+attendanceRecords[index].status =
+"Rejected";
+attendanceRecords[index].locked =
+true;
+attendanceRecords[index].rejectedAt =
+new Date()
+.toISOString();
+localStorage.setItem(
+"attendanceRecords",
+JSON.stringify(
+attendanceRecords
+)
+);
+displayAttendance();
+}
+/*
+==================================================
+DASHBOARD
+==================================================
+*/
 function goDashboard() {
-
-    window.location.href =
-        "index.html";
-
+window.location.href =
+"index.html";
 }
-
-
-/* START */
-
+/*
+==================================================
+HTML SECURITY
+==================================================
+*/
+function escapeHTML(
+value
+) {
+return String(
+value ??
+""
+)
+.replace(
+/&/g,
+"&amp;"
+)
+.replace(
+/</g,
+"&lt;"
+)
+.replace(
+/>/g,
+"&gt;"
+)
+.replace(
+/"/g,
+"&quot;"
+)
+.replace(
+/'/g,
+"&#039;"
+);
+}
+/*
+==================================================
+START
+==================================================
+*/
 setupRole();
-
 loadStudents();
-
-displayRecords();
-
-
+setToday();
+displayAttendance();
 </script>
-
-
 </body>
-
 </html>
