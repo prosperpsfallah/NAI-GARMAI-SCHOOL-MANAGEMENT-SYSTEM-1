@@ -3,124 +3,163 @@
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
-    <title>NAI GARMAI | Grades</title>
+<title>NAI GARMAI | Grades</title>
 
-    <style>
+<style>
 
-        * {
-            box-sizing: border-box;
-        }
+* {
+    box-sizing: border-box;
+}
 
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f7fb;
-            margin: 0;
-            padding: 20px;
-        }
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    margin: 0;
+    padding: 20px;
+    color: #222;
+}
 
-        .container {
-            max-width: 900px;
-            margin: auto;
-        }
+.container {
+    max-width: 1000px;
+    margin: auto;
+}
 
-        .header {
-            background: #0b3d62;
-            color: white;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-        }
+.header {
+    background: #0b3d62;
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
 
-        .header h1 {
-            margin: 0 0 5px;
-        }
+.header h1 {
+    margin: 0 0 5px;
+}
 
-        .panel {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-        }
+.header p {
+    margin: 0 0 15px;
+}
 
-        select,
-        input {
-            width: 100%;
-            padding: 12px;
-            margin: 8px 0;
-            border: 1px solid #ddd;
-            border-radius: 7px;
-            font-size: 15px;
-        }
+.panel {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow:
+        0 4px 15px
+        rgba(0,0,0,0.08);
+}
 
-        button {
-            padding: 12px 18px;
-            margin-top: 10px;
-            border: none;
-            border-radius: 7px;
-            background: #0b3d62;
-            color: white;
-            cursor: pointer;
-            font-weight: bold;
-        }
+label {
+    display: block;
+    font-weight: bold;
+    margin-top: 12px;
+}
 
-        .back {
-            background: white;
-            color: #0b3d62;
-        }
+select,
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border:
+        1px solid #ddd;
+    border-radius: 7px;
+    font-size: 15px;
+}
 
-        .grade {
-            background: #f1f1f1;
-            padding: 15px;
-            margin-top: 12px;
-            border-radius: 8px;
-        }
+select:focus,
+input:focus {
+    outline: none;
+    border-color: #0b3d62;
+}
 
-        .approve {
-            background: #198754;
-            margin-right: 8px;
-        }
+button {
+    padding: 12px 18px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 7px;
+    background: #0b3d62;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+}
 
-        .reject {
-            background: #d9534f;
-        }
+.back {
+    background: white;
+    color: #0b3d62;
+}
 
-        .status {
-            font-weight: bold;
-        }
+.approve {
+    background: #198754;
+    margin-right: 8px;
+}
 
-        .pending {
-            color: #d97706;
-        }
+.reject {
+    background: #d9534f;
+}
 
-        .approved {
-            color: #198754;
-        }
+.grade {
+    background: #f5f7fa;
+    padding: 18px;
+    margin-top: 12px;
+    border-radius: 9px;
+    border-left: 4px solid #0b3d62;
+}
 
-        .rejected {
-            color: #d9534f;
-        }
+.status {
+    font-weight: bold;
+}
 
-        .success {
-            color: #198754;
-            font-weight: bold;
-            margin-top: 12px;
-        }
+.pending {
+    color: #d97706;
+}
 
-        .error {
-            color: #d9534f;
-            font-weight: bold;
-            margin-top: 12px;
-        }
+.approved {
+    color: #198754;
+}
 
-    </style>
+.rejected {
+    color: #d9534f;
+}
+
+.locked {
+    color: #555;
+    font-size: 13px;
+    margin-top: 8px;
+}
+
+.success {
+    color: #198754;
+    font-weight: bold;
+    margin-top: 12px;
+}
+
+.error {
+    color: #d9534f;
+    font-weight: bold;
+    margin-top: 12px;
+}
+
+.empty {
+    color: #777;
+}
+
+.notice {
+    background: #eef5fa;
+    padding: 12px;
+    border-radius: 8px;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+</style>
 
 </head>
 
@@ -131,81 +170,114 @@
 <div class="container">
 
 
-    <div class="header">
+<!-- HEADER -->
 
-        <h1>NAI GARMAI</h1>
+<div class="header">
 
-        <p>Grades Management</p>
+<h1>
+NAI GARMAI SCHOOL SYSTEM
+</h1>
 
-        <button
-            class="back"
-            onclick="goDashboard()"
-        >
-            ← Dashboard
-        </button>
+<p>
+Grades Management
+</p>
 
-    </div>
+<button
+class="back"
+onclick="goDashboard()"
+>
+← Dashboard
+</button>
 
-
-    <!-- INSTRUCTOR FORM -->
-
-    <div
-        class="panel"
-        id="submissionPanel"
-    >
-
-        <h2>Submit Grade</h2>
+</div>
 
 
-        <label>
-            Select Student
-        </label>
+<!-- INSTRUCTOR SUBMISSION -->
+
+<div
+class="panel"
+id="submissionPanel"
+>
+
+<h2>
+Submit Grade
+</h2>
+
+<div class="notice">
+
+Instructors can submit grades.
+Submitted grades remain <strong>Pending</strong>
+until the Administrator reviews them.
+
+</div>
 
 
-        <select id="studentSelect">
+<label>
+Student
+</label>
 
-            <option value="">
-                Select a registered student
-            </option>
+<select id="studentSelect">
 
-        </select>
+<option value="">
+Select a registered student
+</option>
 
-
-        <input
-            id="subject"
-            type="text"
-            placeholder="Subject"
-        >
+</select>
 
 
-        <input
-            id="score"
-            type="number"
-            min="0"
-            max="100"
-            placeholder="Score (0-100)"
-        >
+<label>
+Subject
+</label>
+
+<input
+id="subject"
+type="text"
+placeholder="Example: Mathematics"
+>
 
 
-        <button onclick="submitGrade()">
-            Submit Grade
-        </button>
+<label>
+Score
+</label>
+
+<input
+id="score"
+type="number"
+min="0"
+max="100"
+placeholder="Enter score from 0 to 100"
+>
 
 
-        <div id="message"></div>
+<button
+onclick="submitGrade()"
+>
+Submit Grade
+</button>
 
-    </div>
+
+<div id="message"></div>
+
+</div>
 
 
-    <!-- RECORDS -->
+<!-- GRADE RECORDS -->
 
-    <div class="panel">
+<div class="panel">
 
-        <h2>Grade Records</h2>
+<h2>
+Grade Records
+</h2>
 
-        <div id="grades"></div>
+<div id="grades">
 
-    </div>
+<p class="empty">
+Loading grades...
+</p>
+
+</div>
+
+</div>
 
 
 </div>
@@ -214,464 +286,1023 @@
 <script>
 
 
-/* USER ROLE */
+/*
+==================================================
+SECURITY
+==================================================
+*/
+
+
+const loggedIn =
+localStorage.getItem(
+"loggedIn"
+);
+
 
 const role =
-    localStorage.getItem(
-        "userRole"
-    );
+localStorage.getItem(
+"userRole"
+);
 
 
-/* LOAD REGISTERED STUDENTS */
+if (
+loggedIn !== "true"
+) {
+
+window.location.href =
+"login.html";
+
+}
+
+
+/*
+==================================================
+LOAD DATA
+==================================================
+*/
+
 
 let students =
-    JSON.parse(
-        localStorage.getItem(
-            "students"
-        )
-    ) || [];
+JSON.parse(
+localStorage.getItem(
+"students"
+)
+) || [];
 
-
-/* LOAD GRADES */
 
 let grades =
-    JSON.parse(
-        localStorage.getItem(
-            "grades"
-        )
-    ) || [];
+JSON.parse(
+localStorage.getItem(
+"grades"
+)
+) || [];
 
 
-/* SET ROLE */
+/*
+==================================================
+SET PERMISSIONS
+==================================================
+*/
+
 
 function setupRole() {
 
-    const panel =
-        document.getElementById(
-            "submissionPanel"
-        );
+
+const panel =
+document.getElementById(
+"submissionPanel"
+);
 
 
-    if (role === "instructor") {
+if (
+role === "instructor"
+) {
 
-        panel.style.display =
-            "block";
+panel.style.display =
+"block";
 
-    } else {
+}
 
-        panel.style.display =
-            "none";
+else {
 
-    }
+panel.style.display =
+"none";
 
 }
 
 
-/* LOAD STUDENTS INTO DROPDOWN */
+/*
+ADMIN CAN REVIEW.
+STUDENT CANNOT MANAGE GRADES.
+*/
+
+}
+
+
+/*
+==================================================
+LOAD STUDENTS
+==================================================
+*/
+
 
 function loadStudents() {
 
-    const select =
-        document.getElementById(
-            "studentSelect"
-        );
+
+const select =
+document.getElementById(
+"studentSelect"
+);
 
 
-    select.innerHTML =
-        '<option value="">Select a registered student</option>';
+select.innerHTML =
+
+'<option value="">'
++
+'Select a registered student'
++
+'</option>';
 
 
-    if (students.length === 0) {
+if (
+students.length === 0
+) {
 
-        select.innerHTML +=
-            '<option value="">No students registered</option>';
+select.innerHTML +=
 
-        return;
+'<option value="">'
++
+'No students registered'
++
+'</option>';
 
-    }
-
-
-    students.forEach(
-        function(student) {
-
-            const option =
-                document.createElement(
-                    "option"
-                );
-
-
-            option.value =
-                student.id;
-
-
-            option.textContent =
-                student.name
-                + " — "
-                + student.id;
-
-
-            select.appendChild(
-                option
-            );
-
-        }
-    );
+return;
 
 }
 
 
-/* SUBMIT GRADE */
+students.forEach(
+function(student) {
+
+
+const studentId =
+student.studentId
+||
+student.id;
+
+
+const studentName =
+student.name
+||
+student.fullName
+||
+"Unknown Student";
+
+
+const option =
+document.createElement(
+"option"
+);
+
+
+option.value =
+studentId;
+
+
+option.textContent =
+studentName
++
+" — "
++
+studentId;
+
+
+select.appendChild(
+option
+);
+
+});
+
+}
+
+
+/*
+==================================================
+SUBMIT GRADE
+==================================================
+*/
+
 
 function submitGrade() {
 
-    if (role !== "instructor") {
 
-        alert(
-            "Only instructors can submit grades."
-        );
+if (
+role !== "instructor"
+) {
 
-        return;
+alert(
+"Only instructors can submit grades."
+);
 
-    }
-
-
-    const studentId =
-        document.getElementById(
-            "studentSelect"
-        ).value;
-
-
-    const subject =
-        document.getElementById(
-            "subject"
-        ).value.trim();
-
-
-    const score =
-        document.getElementById(
-            "score"
-        ).value;
-
-
-    const message =
-        document.getElementById(
-            "message"
-        );
-
-
-    if (
-        studentId === "" ||
-        subject === "" ||
-        score === ""
-    ) {
-
-        message.className =
-            "error";
-
-        message.textContent =
-            "Please select a student and complete all fields.";
-
-        return;
-
-    }
-
-
-    if (
-        Number(score) < 0 ||
-        Number(score) > 100
-    ) {
-
-        message.className =
-            "error";
-
-        message.textContent =
-            "Score must be between 0 and 100.";
-
-        return;
-
-    }
-
-
-    const student =
-        students.find(
-            function(item) {
-
-                return item.id === studentId;
-
-            }
-        );
-
-
-    if (!student) {
-
-        message.className =
-            "error";
-
-        message.textContent =
-            "Student could not be found.";
-
-        return;
-
-    }
-
-
-    grades.push({
-
-        student: student.name,
-
-        studentId: student.id,
-
-        subject: subject,
-
-        score: Number(score),
-
-        status: "Pending",
-
-        locked: false
-
-    });
-
-
-    localStorage.setItem(
-
-        "grades",
-
-        JSON.stringify(
-            grades
-        )
-
-    );
-
-
-    document.getElementById(
-        "studentSelect"
-    ).value = "";
-
-
-    document.getElementById(
-        "subject"
-    ).value = "";
-
-
-    document.getElementById(
-        "score"
-    ).value = "";
-
-
-    message.className =
-        "success";
-
-
-    message.textContent =
-        "Grade submitted successfully — Status: Pending";
-
-
-    displayGrades();
+return;
 
 }
 
 
-/* DISPLAY GRADES */
+const studentId =
+document.getElementById(
+"studentSelect"
+).value;
+
+
+const subject =
+document.getElementById(
+"subject"
+)
+.value
+.trim();
+
+
+const score =
+document.getElementById(
+"score"
+).value;
+
+
+const message =
+document.getElementById(
+"message"
+);
+
+
+message.textContent =
+"";
+
+
+/*
+VALIDATION
+*/
+
+
+if (
+studentId === ""
+||
+subject === ""
+||
+score === ""
+) {
+
+message.className =
+"error";
+
+message.textContent =
+"Please complete all fields.";
+
+return;
+
+}
+
+
+const numericScore =
+Number(score);
+
+
+if (
+isNaN(numericScore)
+||
+numericScore < 0
+||
+numericScore > 100
+) {
+
+message.className =
+"error";
+
+message.textContent =
+"Score must be between 0 and 100.";
+
+return;
+
+}
+
+
+/*
+FIND STUDENT
+*/
+
+
+const student =
+students.find(
+function(item) {
+
+const id =
+item.studentId
+||
+item.id;
+
+return String(id)
+===
+String(studentId);
+
+});
+
+if (!student) {
+
+message.className =
+"error";
+
+message.textContent =
+"Student could not be found.";
+
+return;
+
+}
+
+
+const studentName =
+student.name
+||
+student.fullName
+||
+"Unknown Student";
+
+
+/*
+CREATE GRADE
+*/
+
+
+const newGrade = {
+
+student:
+studentName,
+
+studentId:
+String(studentId),
+
+subject:
+subject,
+
+score:
+numericScore,
+
+status:
+"Pending",
+
+locked:
+false,
+
+submittedAt:
+new Date()
+.toISOString()
+
+};
+
+
+/*
+SAVE GRADE
+*/
+
+
+grades.push(
+newGrade
+);
+
+
+localStorage.setItem(
+
+"grades",
+
+JSON.stringify(
+grades
+)
+
+);
+
+
+/*
+CLEAR FORM
+*/
+
+
+document.getElementById(
+"studentSelect"
+).value =
+"";
+
+
+document.getElementById(
+"subject"
+).value =
+"";
+
+
+document.getElementById(
+"score"
+).value =
+"";
+
+
+message.className =
+"success";
+
+
+message.textContent =
+"Grade submitted successfully. Status: Pending";
+
+
+displayGrades();
+
+}
+
+
+/*
+==================================================
+DISPLAY GRADES
+==================================================
+*/
+
 
 function displayGrades() {
 
-    const container =
-        document.getElementById(
-            "grades"
-        );
+
+const container =
+document.getElementById(
+"grades"
+);
 
 
-    container.innerHTML = "";
+container.innerHTML =
+"";
 
 
-    if (grades.length === 0) {
+/*
+STUDENT VIEW
+*/
 
-        container.innerHTML =
-            "<p>No grades submitted yet.</p>";
+if (
+role === "student"
+) {
 
-        return;
-
-    }
-
-
-    grades.forEach(
-        function(grade, index) {
-
-            const div =
-                document.createElement(
-                    "div"
-                );
+const studentId =
+localStorage.getItem(
+"studentId"
+);
 
 
-            div.className =
-                "grade";
+const approvedGrades =
+grades.filter(
+function(grade) {
+
+return (
+
+String(
+grade.studentId
+)
+===
+String(
+studentId
+)
+
+&&
+
+String(
+grade.status
+||
+""
+)
+.toLowerCase()
+===
+"approved"
+
+);
+
+});
 
 
-            let statusClass =
-                "pending";
+if (
+approvedGrades.length === 0
+) {
 
+container.innerHTML =
 
-            if (
-                grade.status === "Approved"
-            ) {
+"<p class='empty'>"
++
+"No approved grades available yet."
++
+"</p>";
 
-                statusClass =
-                    "approved";
-
-            }
-
-
-            if (
-                grade.status === "Rejected"
-            ) {
-
-                statusClass =
-                    "rejected";
-
-            }
-
-
-            div.innerHTML =
-
-                "<strong>Student:</strong> "
-                + grade.student
-
-                + "<br><strong>ID:</strong> "
-                + grade.studentId
-
-                + "<br><strong>Subject:</strong> "
-                + grade.subject
-
-                + "<br><strong>Score:</strong> "
-                + grade.score
-
-                + "<br><strong>Status:</strong> "
-
-                + "<span class='status "
-                + statusClass
-                + "'>"
-
-                + grade.status
-
-                + "</span>";
-
-
-            if (
-                role === "admin" &&
-                grade.status === "Pending" &&
-                grade.locked !== true
-            ) {
-
-                div.innerHTML +=
-
-                    "<br>"
-
-                    + "<button "
-                    + "class='approve' "
-                    + "onclick='approveGrade("
-                    + index
-                    + ")'>"
-                    + "Approve"
-                    + "</button>"
-
-                    + "<button "
-                    + "class='reject' "
-                    + "onclick='rejectGrade("
-                    + index
-                    + ")'>"
-                    + "Reject"
-                    + "</button>";
-
-            }
-
-
-            container.appendChild(
-                div
-            );
-
-        }
-    );
+return;
 
 }
 
 
-/* APPROVE */
+approvedGrades.forEach(
+function(grade) {
 
-function approveGrade(index) {
+createGradeCard(
+grade,
+container,
+false
+);
 
-    if (role !== "admin") {
-        return;
-    }
+});
 
-
-    grades[index].status =
-        "Approved";
-
-
-    grades[index].locked =
-        true;
-
-
-    localStorage.setItem(
-
-        "grades",
-
-        JSON.stringify(
-            grades
-        )
-
-    );
-
-
-    displayGrades();
+return;
 
 }
 
 
-/* REJECT */
-
-function rejectGrade(index) {
-
-    if (role !== "admin") {
-        return;
-    }
+/*
+ADMIN / INSTRUCTOR VIEW
+*/
 
 
-    grades[index].status =
-        "Rejected";
+if (
+grades.length === 0
+) {
 
+container.innerHTML =
 
-    grades[index].locked =
-        true;
+"<p class='empty'>"
++
+"No grades submitted yet."
++
+"</p>";
 
-
-    localStorage.setItem(
-
-        "grades",
-
-        JSON.stringify(
-            grades
-        )
-
-    );
-
-
-    displayGrades();
+return;
 
 }
 
 
-/* DASHBOARD */
+grades.forEach(
+function(grade, index) {
+
+createGradeCard(
+grade,
+container,
+true,
+index
+);
+
+});
+
+}
+
+
+/*
+==================================================
+CREATE GRADE CARD
+==================================================
+*/
+
+
+function createGradeCard(
+grade,
+container,
+showManagement,
+index
+) {
+
+
+const div =
+document.createElement(
+"div"
+);
+
+
+div.className =
+"grade";
+
+
+let statusClass =
+"pending";
+
+
+if (
+String(
+grade.status
+)
+.toLowerCase()
+===
+"approved"
+) {
+
+statusClass =
+"approved";
+
+}
+
+
+if (
+String(
+grade.status
+)
+.toLowerCase()
+===
+"rejected"
+) {
+
+statusClass =
+"rejected";
+
+}
+
+
+div.innerHTML =
+
+"<strong>Student:</strong> "
++
+escapeHTML(
+grade.student
+||
+"Unknown"
+)
+
++
+
+"<br>"
+
++
+
+"<strong>Student ID:</strong> "
++
+escapeHTML(
+grade.studentId
+||
+"Unknown"
+)
+
++
+
+"<br>"
+
++
+
+"<strong>Subject:</strong> "
++
+escapeHTML(
+grade.subject
+||
+"Unknown"
+)
+
++
+
+"<br>"
+
++
+
+"<strong>Score:</strong> "
++
+escapeHTML(
+grade.score
+||
+"0"
+)
+
++
+
+"<br>"
+
++
+
+"<strong>Status:</strong> "
+
++
+
+"<span class='status "
++
+statusClass
++
+"'>"
+
++
+escapeHTML(
+grade.status
+||
+"Pending"
+)
+
++
+"</span>";
+
+
+/*
+ADMIN CONTROLS
+*/
+
+
+if (
+role === "admin"
+&&
+grade.status === "Pending"
+&&
+grade.locked !== true
+) {
+
+
+const approveButton =
+document.createElement(
+"button"
+);
+
+
+approveButton.className =
+"approve";
+
+
+approveButton.textContent =
+"Approve";
+
+
+approveButton.onclick =
+function() {
+
+approveGrade(
+index
+);
+
+};
+
+
+const rejectButton =
+document.createElement(
+"button"
+);
+
+
+rejectButton.className =
+"reject";
+
+
+rejectButton.textContent =
+"Reject";
+
+
+rejectButton.onclick =
+function() {
+
+rejectGrade(
+index
+);
+
+};
+
+
+div.appendChild(
+document.createElement(
+"br"
+)
+);
+
+
+div.appendChild(
+approveButton
+);
+
+
+div.appendChild(
+rejectButton
+);
+
+}
+
+
+/*
+LOCKED MESSAGE
+*/
+
+
+if (
+grade.locked === true
+) {
+
+const lockedText =
+document.createElement(
+"div"
+);
+
+
+lockedText.className =
+"locked";
+
+
+lockedText.textContent =
+"🔒 This grade is locked and cannot be changed.";
+
+
+div.appendChild(
+lockedText
+);
+
+}
+
+
+container.appendChild(
+div
+);
+
+}
+
+
+/*
+==================================================
+APPROVE GRADE
+==================================================
+*/
+
+
+function approveGrade(
+index
+) {
+
+
+if (
+role !== "admin"
+) {
+
+alert(
+"Only the Administrator can approve grades."
+);
+
+return;
+
+}
+
+
+if (
+!grades[index]
+) {
+
+return;
+
+}
+
+
+if (
+grades[index].locked === true
+) {
+
+alert(
+"This grade is already locked."
+);
+
+return;
+
+}
+
+
+grades[index].status =
+"Approved";
+
+
+grades[index].locked =
+true;
+
+
+grades[index].approvedAt =
+new Date()
+.toISOString();
+
+
+localStorage.setItem(
+
+"grades",
+
+JSON.stringify(
+grades
+)
+
+);
+
+
+displayGrades();
+
+}
+
+
+/*
+==================================================
+REJECT GRADE
+==================================================
+*/
+
+
+function rejectGrade(
+index
+) {
+
+
+if (
+role !== "admin"
+) {
+
+alert(
+"Only the Administrator can reject grades."
+);
+
+return;
+
+}
+
+
+if (
+!grades[index]
+) {
+
+return;
+
+}
+
+
+if (
+grades[index].locked === true
+) {
+
+alert(
+"This grade is already locked."
+);
+
+return;
+
+}
+
+
+grades[index].status =
+"Rejected";
+
+
+grades[index].locked =
+true;
+
+
+grades[index].rejectedAt =
+new Date()
+.toISOString();
+
+
+localStorage.setItem(
+
+"grades",
+
+JSON.stringify(
+grades
+)
+
+);
+
+
+displayGrades();
+
+}
+
+
+/*
+==================================================
+DASHBOARD
+==================================================
+*/
+
 
 function goDashboard() {
 
-    window.location.href =
-        "index.html";
+window.location.href =
+"index.html";
 
 }
 
 
-/* START */
+/*
+==================================================
+HTML SECURITY
+==================================================
+*/
+
+
+function escapeHTML(
+value
+) {
+
+return String(
+value ??
+""
+)
+
+.replace(
+/&/g,
+"&amp;"
+)
+
+.replace(
+/</g,
+"&lt;"
+)
+
+.replace(
+/>/g,
+"&gt;"
+)
+
+.replace(
+/"/g,
+"&quot;"
+)
+
+.replace(
+/'/g,
+"&#039;"
+);
+
+}
+
+
+/*
+==================================================
+START
+==================================================
+*/
+
 
 setupRole();
 
