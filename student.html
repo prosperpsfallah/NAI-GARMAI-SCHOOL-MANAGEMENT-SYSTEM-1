@@ -2,13 +2,8 @@
 <html lang="en">
 
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>NAI GARMAI | Students</title>
 
@@ -19,217 +14,150 @@
 }
 
 body {
-
     margin: 0;
-
     font-family: Arial, sans-serif;
-
     background: #f4f7fb;
-
     color: #222;
-
     padding: 20px;
 }
 
 .container {
-
     max-width: 1100px;
-
     margin: auto;
 }
 
 .header {
-
     background: #0b3d62;
-
     color: white;
-
     padding: 20px;
-
     border-radius: 12px;
-
     margin-bottom: 20px;
 }
 
 .header h1 {
-
     margin: 0 0 5px;
 }
 
 .panel {
-
     background: white;
-
     padding: 20px;
-
     border-radius: 12px;
-
     margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
 
-    box-shadow:
-        0 4px 15px
-        rgba(0,0,0,0.08);
+label {
+    display: block;
+    font-weight: bold;
+    margin-top: 12px;
 }
 
 input {
-
     width: 100%;
-
     padding: 13px;
-
     margin: 8px 0 15px;
-
-    border:
-        1px solid #ddd;
-
+    border: 1px solid #ddd;
     border-radius: 8px;
-
     font-size: 15px;
 }
 
 input:focus {
-
     outline: none;
-
     border-color: #0b3d62;
 }
 
 button {
-
     padding: 12px 18px;
-
     border: none;
-
     border-radius: 8px;
-
     background: #0b3d62;
-
     color: white;
-
     cursor: pointer;
-
     font-weight: bold;
-
     margin-top: 5px;
 }
 
 .back {
-
     background: white;
-
     color: #0b3d62;
 }
 
+.edit {
+    background: #0b3d62;
+    margin-right: 8px;
+}
+
 .delete {
-
     background: #d9534f;
+}
 
+.cancel {
+    background: #777;
     margin-left: 8px;
 }
 
 .student {
-
     background: #f5f7fa;
-
     padding: 18px;
-
     margin-top: 12px;
-
     border-radius: 10px;
-
-    border-left:
-        4px solid #0b3d62;
+    border-left: 4px solid #0b3d62;
 }
 
 .credential {
-
-    background: #fff;
-
+    background: white;
     padding: 12px;
-
     border-radius: 8px;
-
     margin-top: 12px;
-
-    border:
-        1px solid #ddd;
+    border: 1px solid #ddd;
 }
 
 .credential strong {
-
     color: #0b3d62;
 }
 
 .success {
-
     color: #198754;
-
     font-weight: bold;
-
     margin-top: 12px;
 }
 
 .error {
-
     color: #d9534f;
-
     font-weight: bold;
-
     margin-top: 12px;
 }
 
 .note {
-
     background: #eef5fa;
-
     padding: 12px;
-
     border-radius: 8px;
-
     margin-bottom: 15px;
-
     color: #555;
-
     font-size: 14px;
 }
 
 .empty {
-
     color: #777;
 }
 
-hr {
-
-    border: none;
-
-    border-top:
-        1px solid #ddd;
-
-    margin: 18px 0;
+.admin-only {
+    display: none;
 }
 
 </style>
 
 </head>
 
-
 <body>
-
 
 <div class="container">
 
-
-<!-- HEADER -->
-
 <div class="header">
 
-<h1>
-NAI GARMAI SCHOOL SYSTEM
-</h1>
+<h1>NAI GARMAI SCHOOL SYSTEM</h1>
 
-<p>
-Student Management
-</p>
+<p>Student Management</p>
 
 <button
 class="back"
@@ -241,22 +169,21 @@ onclick="goDashboard()"
 </div>
 
 
-<!-- ADD STUDENT -->
+<!-- ADMIN STUDENT FORM -->
 
 <div
-class="panel"
+class="panel admin-only"
 id="studentForm"
 >
 
-<h2>
+<h2 id="formTitle">
 Register New Student
 </h2>
 
 <div class="note">
 
-The system will automatically create a
-unique Student ID, username and temporary
-password for the student.
+Administrator has full control over student records.
+You can register, edit, and delete students.
 
 </div>
 
@@ -295,9 +222,19 @@ placeholder="Enter parent or guardian phone"
 
 
 <button
-onclick="addStudent()"
+id="saveButton"
+onclick="saveStudent()"
 >
 Register Student
+</button>
+
+<button
+id="cancelButton"
+class="cancel"
+onclick="cancelEdit()"
+style="display:none;"
+>
+Cancel Edit
 </button>
 
 
@@ -324,57 +261,42 @@ Loading students...
 
 </div>
 
-
 </div>
 
 
 <script>
 
-
 /*
 ==================================================
-SECURITY
+LOGIN SECURITY
 ==================================================
 */
 
+const loggedIn =
+localStorage.getItem("loggedIn");
 
 const role =
-localStorage.getItem(
-"userRole"
-);
+localStorage.getItem("userRole");
 
 
-const loggedIn =
-localStorage.getItem(
-"loggedIn"
-);
+if (loggedIn !== "true") {
 
-
-if (
-loggedIn !== "true"
-) {
-
-window.location.href =
-"login.html";
+    window.location.href = "login.html";
 
 }
 
 
 /*
 ==================================================
-ONLY ADMIN CAN MANAGE STUDENTS
+ADMIN ONLY
 ==================================================
 */
 
+if (role === "admin") {
 
-if (
-role !== "admin"
-) {
-
-document.getElementById(
-"studentForm"
-).style.display =
-"none";
+    document.getElementById(
+        "studentForm"
+    ).style.display = "block";
 
 }
 
@@ -385,13 +307,13 @@ LOAD STUDENTS
 ==================================================
 */
 
-
 let students =
 JSON.parse(
-localStorage.getItem(
-"students"
-)
+    localStorage.getItem("students")
 ) || [];
+
+
+let editingIndex = -1;
 
 
 /*
@@ -400,138 +322,94 @@ GENERATE STUDENT ID
 ==================================================
 */
 
-
 function generateStudentId() {
 
+    let highestNumber = 0;
 
-let highestNumber = 0;
+    students.forEach(function(student) {
 
+        const existingId =
+            String(
+                student.studentId ||
+                student.id ||
+                ""
+            );
 
-students.forEach(
-function(student) {
+        const match =
+            existingId.match(/NG-(\d+)/);
 
+        if (match) {
 
-const existingId =
-String(
-student.studentId
-||
-student.id
-||
-""
-);
+            const number =
+                parseInt(match[1], 10);
 
+            if (number > highestNumber) {
 
-const match =
-existingId.match(
-/NG-(\d+)/
-);
+                highestNumber = number;
 
+            }
 
-if (match) {
+        }
 
-const number =
-parseInt(
-match[1],
-10
-);
+    });
 
-if (
-number >
-highestNumber
-) {
-
-highestNumber =
-number;
-
-}
-
-}
-
-});
-
-
-const nextNumber =
-highestNumber + 1;
-
-
-return (
-"NG-"
-+
-String(
-nextNumber
-).padStart(
-4,
-"0"
-)
-);
+    return (
+        "NG-" +
+        String(
+            highestNumber + 1
+        ).padStart(4, "0")
+    );
 
 }
 
 
 /*
 ==================================================
-CREATE USERNAME
+GENERATE USERNAME
 ==================================================
 */
 
+function generateUsername(name) {
 
-function generateUsername(
-name
-) {
+    const cleanName =
+        name
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9\s]/g, "")
+        .replace(/\s+/g, ".");
 
+    let username = cleanName;
 
-const cleanName =
-name
-.toLowerCase()
-.trim()
-.replace(
-/[^a-z0-9\s]/g,
-""
-)
-.replace(
-(/\s+/g),
-"."
-);
+    let number = 1;
 
+    while (
+        students.some(function(student, index) {
 
-let username =
-cleanName;
+            if (index === editingIndex) {
 
+                return false;
 
-let number = 1;
+            }
 
+            return (
+                String(
+                    student.username || ""
+                ).toLowerCase()
+                ===
+                username.toLowerCase()
+            );
 
-while (
-students.some(
-function(student) {
+        })
+    ) {
 
-return (
-String(
-student.username
-||
-""
-)
-.toLowerCase()
-===
-username
-.toLowerCase()
-);
+        number++;
 
-}
-)
-) {
+        username =
+            cleanName + number;
 
-number++;
+    }
 
-username =
-cleanName
-+
-number;
-
-}
-
-
-return username;
+    return username;
 
 }
 
@@ -542,266 +420,347 @@ GENERATE PASSWORD
 ==================================================
 */
 
-
 function generatePassword() {
 
+    const characters =
+        "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789";
 
-const characters =
-"ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789";
+    let password = "";
 
+    for (
+        let i = 0;
+        i < 8;
+        i++
+    ) {
 
-let password =
-"";
+        const randomIndex =
+            Math.floor(
+                Math.random() *
+                characters.length
+            );
 
+        password +=
+            characters[randomIndex];
 
-for (
-let i = 0;
-i < 8;
-i++
-) {
+    }
 
-const randomIndex =
-Math.floor(
-Math.random()
-*
-characters.length
-);
-
-password +=
-characters[
-randomIndex
-];
-
-}
-
-
-return password;
+    return password;
 
 }
 
 
 /*
 ==================================================
-ADD STUDENT
-==================================================
-*/
-
-
-function addStudent() {
-
-
-if (
-role !== "admin"
-) {
-
-alert(
-"Only the Administrator can register students."
-);
-
-return;
-
-}
-
-
-const name =
-document.getElementById(
-"studentName"
-)
-.value
-.trim();
-
-
-const studentClass =
-document.getElementById(
-"studentClass"
-)
-.value
-.trim();
-
-
-const phone =
-document.getElementById(
-"studentPhone"
-)
-.value
-.trim();
-
-
-const message =
-document.getElementById(
-"message"
-);
-
-
-message.textContent =
-"";
-
-
-/*
-VALIDATION
-*/
-
-
-if (
-name === ""
-||
-studentClass === ""
-) {
-
-message.className =
-"error";
-
-message.textContent =
-"Please enter the student's name and class.";
-
-return;
-
-}
-
-
-/*
-CREATE ACCOUNT INFORMATION
-*/
-
-
-const studentId =
-generateStudentId();
-
-
-const username =
-generateUsername(
-name
-);
-
-
-const password =
-generatePassword();
-
-
-/*
-CREATE STUDENT OBJECT
-*/
-
-
-const newStudent = {
-
-id:
-studentId,
-
-studentId:
-studentId,
-
-name:
-name,
-
-fullName:
-name,
-
-studentClass:
-studentClass,
-
-class:
-studentClass,
-
-phone:
-phone,
-
-username:
-username,
-
-password:
-password,
-
-accountStatus:
-"Active",
-
-createdAt:
-new Date()
-.toISOString()
-
-};
-
-
-/*
 SAVE STUDENT
+==================================================
 */
 
+function saveStudent() {
 
-students.push(
-newStudent
-);
+    if (role !== "admin") {
+
+        alert(
+            "Only the Administrator can manage students."
+        );
+
+        return;
+
+    }
 
 
-localStorage.setItem(
+    const name =
+        document.getElementById(
+            "studentName"
+        ).value.trim();
 
-"students",
 
-JSON.stringify(
-students
-)
+    const studentClass =
+        document.getElementById(
+            "studentClass"
+        ).value.trim();
 
-);
+
+    const phone =
+        document.getElementById(
+            "studentPhone"
+        ).value.trim();
+
+
+    const message =
+        document.getElementById(
+            "message"
+        );
+
+
+    message.textContent = "";
+
+
+    if (
+        name === "" ||
+        studentClass === ""
+    ) {
+
+        message.className = "error";
+
+        message.textContent =
+            "Please enter the student's name and class.";
+
+        return;
+
+    }
+
+
+    /*
+    ==============================================
+    EDIT EXISTING STUDENT
+    ==============================================
+    */
+
+    if (editingIndex !== -1) {
+
+        const student =
+            students[editingIndex];
+
+        student.name = name;
+
+        student.fullName = name;
+
+        student.studentClass =
+            studentClass;
+
+        student.class =
+            studentClass;
+
+        student.phone =
+            phone;
+
+        student.updatedAt =
+            new Date().toISOString();
+
+
+        localStorage.setItem(
+            "students",
+            JSON.stringify(students)
+        );
+
+
+        message.className =
+            "success";
+
+        message.textContent =
+            "Student information updated successfully.";
+
+        cancelEdit();
+
+        displayStudents();
+
+        return;
+
+    }
+
+
+    /*
+    ==============================================
+    REGISTER NEW STUDENT
+    ==============================================
+    */
+
+    const studentId =
+        generateStudentId();
+
+
+    const username =
+        generateUsername(name);
+
+
+    const password =
+        generatePassword();
+
+
+    const newStudent = {
+
+        id: studentId,
+
+        studentId: studentId,
+
+        name: name,
+
+        fullName: name,
+
+        studentClass: studentClass,
+
+        class: studentClass,
+
+        phone: phone,
+
+        username: username,
+
+        password: password,
+
+        accountStatus: "Active",
+
+        createdAt:
+            new Date().toISOString()
+
+    };
+
+
+    students.push(newStudent);
+
+
+    localStorage.setItem(
+        "students",
+        JSON.stringify(students)
+    );
+
+
+    document.getElementById(
+        "studentName"
+    ).value = "";
+
+    document.getElementById(
+        "studentClass"
+    ).value = "";
+
+    document.getElementById(
+        "studentPhone"
+    ).value = "";
+
+
+    message.className =
+        "success";
+
+    message.textContent =
+        "Student registered successfully.";
+
+
+    displayStudents();
+
+}
 
 
 /*
-CLEAR FORM
+==================================================
+EDIT STUDENT
+==================================================
 */
 
+function editStudent(index) {
 
-document.getElementById(
-"studentName"
-).value =
-"";
+    if (role !== "admin") {
+
+        alert(
+            "Only the Administrator can edit students."
+        );
+
+        return;
+
+    }
 
 
-document.getElementById(
-"studentClass"
-).value =
-"";
+    const student =
+        students[index];
+
+    if (!student) {
+
+        return;
+
+    }
 
 
-document.getElementById(
-"studentPhone"
-).value =
-"";
+    editingIndex = index;
+
+
+    document.getElementById(
+        "formTitle"
+    ).textContent =
+        "Edit Student";
+
+
+    document.getElementById(
+        "studentName"
+    ).value =
+        student.name ||
+        student.fullName ||
+        "";
+
+
+    document.getElementById(
+        "studentClass"
+    ).value =
+        student.studentClass ||
+        student.class ||
+        "";
+
+
+    document.getElementById(
+        "studentPhone"
+    ).value =
+        student.phone ||
+        "";
+
+
+    document.getElementById(
+        "saveButton"
+    ).textContent =
+        "Save Changes";
+
+
+    document.getElementById(
+        "cancelButton"
+    ).style.display =
+        "inline-block";
+
+
+    document.getElementById(
+        "studentForm"
+    ).scrollIntoView({
+        behavior: "smooth"
+    });
+
+}
 
 
 /*
-SUCCESS MESSAGE
+==================================================
+CANCEL EDIT
+==================================================
 */
 
+function cancelEdit() {
 
-message.className =
-"success";
-
-
-message.innerHTML =
-
-"Student registered successfully.";
+    editingIndex = -1;
 
 
-/*
-REFRESH RECORDS
-*/
+    document.getElementById(
+        "formTitle"
+    ).textContent =
+        "Register New Student";
 
 
-displayStudents();
+    document.getElementById(
+        "saveButton"
+    ).textContent =
+        "Register Student";
 
 
-/*
-SHOW LOGIN CREDENTIALS
-*/
+    document.getElementById(
+        "cancelButton"
+    ).style.display =
+        "none";
 
 
-const records =
-document.getElementById(
-"students"
-);
+    document.getElementById(
+        "studentName"
+    ).value = "";
 
+    document.getElementById(
+        "studentClass"
+    ).value = "";
 
-const latest =
-records.firstElementChild;
-
+    document.getElementById(
+        "studentPhone"
+    ).value = "";
 
 }
 
@@ -812,246 +771,185 @@ DISPLAY STUDENTS
 ==================================================
 */
 
-
 function displayStudents() {
 
+    const container =
+        document.getElementById(
+            "students"
+        );
 
-const container =
-document.getElementById(
-"students"
-);
 
+    container.innerHTML = "";
 
-container.innerHTML =
-"";
 
+    if (students.length === 0) {
 
-if (
-students.length === 0
-) {
+        container.innerHTML =
+            "<p class='empty'>" +
+            "No students registered yet." +
+            "</p>";
 
-container.innerHTML =
+        return;
 
-"<p class='empty'>"
-+
-"No students registered yet."
-+
-"</p>";
+    }
 
-return;
 
-}
+    students.forEach(
+        function(student, index) {
 
+            const div =
+                document.createElement(
+                    "div"
+                );
 
-students.forEach(
-function(
-student,
-index
-) {
 
+            div.className =
+                "student";
 
-const div =
-document.createElement(
-"div"
-);
 
+            const name =
+                student.name ||
+                student.fullName ||
+                "Not provided";
 
-div.className =
-"student";
 
+            const id =
+                student.studentId ||
+                student.id ||
+                "Not provided";
 
-const name =
-student.name
-||
-student.fullName
-||
-"Not provided";
 
+            const studentClass =
+                student.studentClass ||
+                student.class ||
+                "Not provided";
 
-const id =
-student.studentId
-||
-student.id
-||
-"Not provided";
 
+            const phone =
+                student.phone ||
+                "Not provided";
 
-const studentClass =
-student.studentClass
-||
-student.class
-||
-"Not provided";
 
+            const username =
+                student.username ||
+                "Not created";
 
-const phone =
-student.phone
-||
-"Not provided";
 
+            const password =
+                student.password ||
+                "Not created";
 
-const username =
-student.username
-||
-"Not created";
 
+            div.innerHTML =
 
-const password =
-student.password
-||
-"Not created";
+                "<strong>Name:</strong> " +
+                escapeHTML(name) +
 
+                "<br><br>" +
 
-div.innerHTML =
+                "<strong>Student ID:</strong> " +
+                escapeHTML(id) +
 
-"<strong>Name:</strong> "
-+
-escapeHTML(
-name
-)
+                "<br><br>" +
 
-+
+                "<strong>Class / Grade:</strong> " +
+                escapeHTML(studentClass) +
 
-"<br><br>"
+                "<br><br>" +
 
-+
+                "<strong>Parent / Guardian Phone:</strong> " +
+                escapeHTML(phone) +
 
-"<strong>Student ID:</strong> "
-+
-escapeHTML(
-id
-)
+                "<div class='credential'>" +
 
-+
+                "<strong>Student Login</strong>" +
 
-"<br><br>"
+                "<br><br>" +
 
-+
+                "<strong>Username:</strong> " +
+                escapeHTML(username) +
 
-"<strong>Class / Grade:</strong> "
-+
-escapeHTML(
-studentClass
-)
+                "<br>" +
 
-+
+                "<strong>Temporary Password:</strong> " +
+                escapeHTML(password) +
 
-"<br><br>"
+                "<br>" +
 
-+
+                "<strong>Account Status:</strong> " +
+                escapeHTML(
+                    student.accountStatus ||
+                    "Active"
+                ) +
 
-"<strong>Parent / Guardian Phone:</strong> "
-+
-escapeHTML(
-phone
-)
+                "</div>";
 
-+
 
-"<div class='credential'>"
+            /*
+            ==========================================
+            ADMIN CONTROLS
+            ==========================================
+            */
 
-+
+            if (role === "admin") {
 
-"<strong>Student Login</strong>"
+                const editButton =
+                    document.createElement(
+                        "button"
+                    );
 
-+
+                editButton.className =
+                    "edit";
 
-"<br><br>"
+                editButton.textContent =
+                    "Edit Student";
 
-+
+                editButton.onclick =
+                    function() {
 
-"<strong>Username:</strong> "
-+
-escapeHTML(
-username
-)
+                        editStudent(index);
 
-+
+                    };
 
-"<br>"
 
-+
+                const deleteButton =
+                    document.createElement(
+                        "button"
+                    );
 
-"<strong>Temporary Password:</strong> "
-+
-escapeHTML(
-password
-)
+                deleteButton.className =
+                    "delete";
 
-+
+                deleteButton.textContent =
+                    "Delete Student";
 
-"<br>"
+                deleteButton.onclick =
+                    function() {
 
-+
+                        deleteStudent(index);
 
-"<strong>Account Status:</strong> "
-+
-escapeHTML(
-student.accountStatus
-||
-"Active"
-)
+                    };
 
-+
 
-"</div>";
+                div.appendChild(
+                    document.createElement("br")
+                );
 
+                div.appendChild(
+                    editButton
+                );
 
-/*
-ADMIN DELETE
-*/
+                div.appendChild(
+                    deleteButton
+                );
 
+            }
 
-if (
-role === "admin"
-) {
 
+            container.appendChild(div);
 
-const deleteButton =
-document.createElement(
-"button"
-);
-
-
-deleteButton.className =
-"delete";
-
-
-deleteButton.textContent =
-"Delete Student";
-
-
-deleteButton.onclick =
-function() {
-
-deleteStudent(
-index
-);
-
-};
-
-
-div.appendChild(
-document.createElement(
-"br"
-)
-);
-
-
-div.appendChild(
-deleteButton
-);
-
-}
-
-
-container.appendChild(
-div
-);
-
-
-}
-);
+        }
+    );
 
 }
 
@@ -1062,56 +960,62 @@ DELETE STUDENT
 ==================================================
 */
 
+function deleteStudent(index) {
 
-function deleteStudent(
-index
-) {
+    if (role !== "admin") {
 
+        alert(
+            "Only the Administrator can delete students."
+        );
 
-if (
-role !== "admin"
-) {
+        return;
 
-return;
-
-}
+    }
 
 
-const confirmed =
-confirm(
-
-"Are you sure you want to delete this student?"
-
-);
+    const student =
+        students[index];
 
 
-if (
-!confirmed
-) {
+    if (!student) {
 
-return;
+        return;
 
-}
+    }
 
 
-students.splice(
-index,
-1
-);
+    const confirmed =
+        confirm(
+            "Delete " +
+            (
+                student.name ||
+                student.fullName ||
+                "this student"
+            ) +
+            "? This action cannot be undone."
+        );
 
 
-localStorage.setItem(
+    if (!confirmed) {
 
-"students",
+        return;
 
-JSON.stringify(
-students
-)
-
-);
+    }
 
 
-displayStudents();
+    students.splice(
+        index,
+        1
+    );
+
+
+    localStorage.setItem(
+        "students",
+        JSON.stringify(students)
+    );
+
+
+    displayStudents();
 
 }
 
@@ -1122,11 +1026,10 @@ DASHBOARD
 ==================================================
 */
 
-
 function goDashboard() {
 
-window.location.href =
-"index.html";
+    window.location.href =
+        "index.html";
 
 }
 
@@ -1137,40 +1040,36 @@ HTML SECURITY
 ==================================================
 */
 
+function escapeHTML(value) {
 
-function escapeHTML(
-value
-) {
+    return String(
+        value ?? ""
+    )
 
-return String(
-value ??
-""
-)
+    .replace(
+        /&/g,
+        "&amp;"
+    )
 
-.replace(
-/&/g,
-"&amp;"
-)
+    .replace(
+        /</g,
+        "&lt;"
+    )
 
-.replace(
-/</g,
-"&lt;"
-)
+    .replace(
+        />/g,
+        "&gt;"
+    )
 
-.replace(
-/>/g,
-"&gt;"
-)
+    .replace(
+        /"/g,
+        "&quot;"
+    )
 
-.replace(
-/"/g,
-"&quot;"
-)
-
-.replace(
-/'/g,
-"&#039;"
-);
+    .replace(
+        /'/g,
+        "&#039;"
+    );
 
 }
 
@@ -1181,13 +1080,9 @@ START
 ==================================================
 */
 
-
 displayStudents();
-
 
 </script>
 
-
 </body>
-
 </html>
