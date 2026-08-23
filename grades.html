@@ -10,113 +10,121 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>NAI GARMAI | Grades</title>
+    <title>NAI GARMAI | Dashboard</title>
 
     <style>
 
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
             font-family: Arial, sans-serif;
             background: #f4f7fb;
-            margin: 0;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: auto;
+            color: #222;
         }
 
         .header {
             background: #0b3d62;
             color: white;
             padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
+        }
+
+        .header-content {
+            max-width: 1100px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
         }
 
         .header h1 {
-            margin: 0 0 5px;
+            font-size: 24px;
         }
 
-        .panel {
+        .header p {
+            margin-top: 5px;
+            opacity: 0.9;
+        }
+
+        .logout {
             background: white;
-            padding: 20px;
+            color: #0b3d62;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 7px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .welcome {
+            background: white;
+            padding: 25px;
             border-radius: 12px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
         }
 
-        input {
-            width: 100%;
-            padding: 12px;
-            margin: 8px 0;
-            border: 1px solid #ddd;
-            border-radius: 7px;
-            font-size: 15px;
-        }
-
-        button {
-            padding: 12px 18px;
-            margin-top: 10px;
-            border: none;
-            border-radius: 7px;
-            background: #0b3d62;
-            color: white;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .back {
-            background: white;
+        .welcome h2 {
             color: #0b3d62;
+            margin-bottom: 8px;
         }
 
-        .grade {
-            background: #f1f1f1;
-            padding: 15px;
-            margin-top: 12px;
-            border-radius: 8px;
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
         }
 
-        .approve {
-            background: #198754;
-            margin-right: 8px;
+        .dashboard-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #222;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: transform 0.2s;
+            display: block;
         }
 
-        .reject {
-            background: #d9534f;
+        .dashboard-card:hover {
+            transform: translateY(-3px);
         }
 
-        .status {
-            font-weight: bold;
+        .icon {
+            font-size: 35px;
+            margin-bottom: 12px;
         }
 
-        .pending {
-            color: #d97706;
+        .dashboard-card h3 {
+            color: #0b3d62;
+            margin-bottom: 8px;
         }
 
-        .approved {
-            color: #198754;
+        .dashboard-card p {
+            color: #666;
+            line-height: 1.5;
         }
 
-        .rejected {
-            color: #d9534f;
+        .admin-only {
+            display: block;
         }
 
-        .success-message {
-            color: #198754;
-            font-weight: bold;
-            margin-top: 12px;
-        }
-
-        .error-message {
-            color: #d9534f;
-            font-weight: bold;
-            margin-top: 12px;
+        .footer {
+            text-align: center;
+            color: #888;
+            margin: 40px 0 20px;
+            font-size: 13px;
         }
 
     </style>
@@ -127,478 +135,273 @@
 <body>
 
 
-<div class="container">
+<header class="header">
 
+    <div class="header-content">
 
-    <div class="header">
+        <div>
 
-        <h1>NAI GARMAI</h1>
+            <h1>NAI GARMAI</h1>
 
-        <p>Grades Management</p>
+            <p>
+                School System Management
+            </p>
+
+        </div>
 
         <button
-            class="back"
-            onclick="goDashboard()"
+            class="logout"
+            onclick="logout()"
         >
-            ← Dashboard
+            Logout
         </button>
 
     </div>
 
+</header>
 
-    <!-- INSTRUCTOR GRADE SUBMISSION -->
 
-    <div
-        class="panel"
-        id="submissionPanel"
-    >
+<main class="container">
 
-        <h2>Submit Grade</h2>
 
-        <input
-            id="student"
-            type="text"
-            placeholder="Student Name"
+    <section class="welcome">
+
+        <h2 id="welcomeText">
+            Welcome
+        </h2>
+
+        <p>
+            Manage your school activities
+            from the dashboard.
+        </p>
+
+    </section>
+
+
+    <section class="dashboard-grid">
+
+
+        <!-- GRADES -->
+
+        <a
+            href="grades.html"
+            class="dashboard-card"
         >
 
-        <input
-            id="studentId"
-            type="text"
-            placeholder="Student ID"
+            <div class="icon">
+                📊
+            </div>
+
+            <h3>
+                Grades
+            </h3>
+
+            <p>
+                Submit, review, approve,
+                and manage student grades.
+            </p>
+
+        </a>
+
+
+        <!-- ATTENDANCE -->
+
+        <a
+            href="attendance.html"
+            class="dashboard-card"
         >
 
-        <input
-            id="subject"
-            type="text"
-            placeholder="Subject"
+            <div class="icon">
+                📅
+            </div>
+
+            <h3>
+                Attendance
+            </h3>
+
+            <p>
+                Submit and review student
+                attendance records.
+            </p>
+
+        </a>
+
+
+        <!-- STUDENTS -->
+
+        <a
+            href="students.html"
+            class="dashboard-card"
         >
 
-        <input
-            id="score"
-            type="number"
-            min="0"
-            max="100"
-            placeholder="Score (0-100)"
+            <div class="icon">
+                👨‍🎓
+            </div>
+
+            <h3>
+                Students
+            </h3>
+
+            <p>
+                View and manage student
+                information.
+            </p>
+
+        </a>
+
+
+        <!-- INSTRUCTORS -->
+
+        <a
+            href="instructors.html"
+            class="dashboard-card admin-only"
         >
 
-        <button onclick="submitGrade()">
-            Submit Grade
-        </button>
+            <div class="icon">
+                👨‍🏫
+            </div>
 
-        <div id="message"></div>
+            <h3>
+                Instructors
+            </h3>
+
+            <p>
+                Manage instructor information
+                and assignments.
+            </p>
+
+        </a>
+
+
+        <!-- REPORTS -->
+
+        <a
+            href="reports.html"
+            class="dashboard-card"
+        >
+
+            <div class="icon">
+                📈
+            </div>
+
+            <h3>
+                Reports
+            </h3>
+
+            <p>
+                View school performance
+                and academic reports.
+            </p>
+
+        </a>
+
+
+        <!-- SETTINGS -->
+
+        <a
+            href="settings.html"
+            class="dashboard-card"
+        >
+
+            <div class="icon">
+                ⚙️
+            </div>
+
+            <h3>
+                Settings
+            </h3>
+
+            <p>
+                Manage system settings.
+            </p>
+
+        </a>
+
+
+    </section>
+
+
+    <div class="footer">
+
+        © 2026 NAI GARMAI SCHOOL SYSTEM
 
     </div>
 
 
-    <!-- GRADE RECORDS -->
-
-    <div class="panel">
-
-        <h2>Grade Records</h2>
-
-        <div id="grades"></div>
-
-    </div>
-
-
-</div>
+</main>
 
 
 <script>
 
 
-/* CURRENT USER ROLE */
+/* CHECK LOGIN */
+
+const loggedIn =
+    localStorage.getItem(
+        "loggedIn"
+    );
+
 
 const role =
-    localStorage.getItem("userRole");
-
-
-/* SAVED GRADES */
-
-let grades =
-    JSON.parse(
-        localStorage.getItem("grades")
-    ) || [];
-
-
-/* SHOW SUBMISSION FORM ONLY TO INSTRUCTOR */
-
-function setupRole() {
-
-    const submissionPanel =
-        document.getElementById(
-            "submissionPanel"
-        );
-
-    if (role === "instructor") {
-
-        submissionPanel.style.display =
-            "block";
-
-    } else {
-
-        submissionPanel.style.display =
-            "none";
-
-    }
-
-}
-
-
-/* SUBMIT GRADE */
-
-function submitGrade() {
-
-    if (role !== "instructor") {
-
-        alert(
-            "Only instructors can submit grades."
-        );
-
-        return;
-    }
-
-
-    const student =
-        document.getElementById(
-            "student"
-        ).value.trim();
-
-
-    const studentId =
-        document.getElementById(
-            "studentId"
-        ).value.trim();
-
-
-    const subject =
-        document.getElementById(
-            "subject"
-        ).value.trim();
-
-
-    const score =
-        document.getElementById(
-            "score"
-        ).value;
-
-
-    const message =
-        document.getElementById(
-            "message"
-        );
-
-
-    /* CHECK REQUIRED FIELDS */
-
-    if (
-        student === "" ||
-        studentId === "" ||
-        subject === "" ||
-        score === ""
-    ) {
-
-        message.className =
-            "error-message";
-
-        message.textContent =
-            "Please complete all fields.";
-
-        return;
-    }
-
-
-    /* CHECK SCORE */
-
-    if (
-        Number(score) < 0 ||
-        Number(score) > 100
-    ) {
-
-        message.className =
-            "error-message";
-
-        message.textContent =
-            "Score must be between 0 and 100.";
-
-        return;
-    }
-
-
-    /* CREATE NEW PENDING GRADE */
-
-    const newGrade = {
-
-        student: student,
-
-        studentId: studentId,
-
-        subject: subject,
-
-        score: Number(score),
-
-        status: "Pending",
-
-        locked: false
-
-    };
-
-
-    /* ADD GRADE */
-
-    grades.push(
-        newGrade
+    localStorage.getItem(
+        "userRole"
     );
 
 
-    /* SAVE GRADE */
-
-    localStorage.setItem(
-        "grades",
-        JSON.stringify(grades)
-    );
-
-
-    /* CLEAR FORM */
-
-    document.getElementById(
-        "student"
-    ).value = "";
-
-
-    document.getElementById(
-        "studentId"
-    ).value = "";
-
-
-    document.getElementById(
-        "subject"
-    ).value = "";
-
-
-    document.getElementById(
-        "score"
-    ).value = "";
-
-
-    /* SHOW SUCCESS MESSAGE */
-
-    message.className =
-        "success-message";
-
-
-    message.textContent =
-        "Grade submitted successfully — Status: Pending";
-
-
-    /* REFRESH RECORDS */
-
-    displayGrades();
-
-}
-
-
-/* DISPLAY GRADES */
-
-function displayGrades() {
-
-    const container =
-        document.getElementById(
-            "grades"
-        );
-
-
-    container.innerHTML = "";
-
-
-    if (grades.length === 0) {
-
-        container.innerHTML =
-            "<p>No grades submitted yet.</p>";
-
-        return;
-    }
-
-
-    grades.forEach(
-        function(grade, index) {
-
-
-            const div =
-                document.createElement(
-                    "div"
-                );
-
-
-            div.className =
-                "grade";
-
-
-            let statusClass =
-                "pending";
-
-
-            if (
-                grade.status === "Approved"
-            ) {
-
-                statusClass =
-                    "approved";
-
-            }
-
-
-            if (
-                grade.status === "Rejected"
-            ) {
-
-                statusClass =
-                    "rejected";
-
-            }
-
-
-            div.innerHTML =
-
-                "<strong>Student:</strong> "
-                + grade.student
-
-                + "<br><strong>ID:</strong> "
-                + grade.studentId
-
-                + "<br><strong>Subject:</strong> "
-                + grade.subject
-
-                + "<br><strong>Score:</strong> "
-                + grade.score
-
-                + "<br><strong>Status:</strong> "
-
-                + "<span class='status "
-                + statusClass
-                + "'>"
-
-                + grade.status
-
-                + "</span>";
-
-
-            /* ADMIN APPROVAL BUTTONS */
-
-            if (
-                role === "admin" &&
-                grade.status === "Pending" &&
-                grade.locked !== true
-            ) {
-
-
-                div.innerHTML +=
-
-                    "<br>"
-
-                    + "<button "
-                    + "class='approve' "
-                    + "onclick='approveGrade("
-                    + index
-                    + ")'>"
-                    + "Approve"
-                    + "</button>"
-
-
-                    + "<button "
-                    + "class='reject' "
-                    + "onclick='rejectGrade("
-                    + index
-                    + ")'>"
-                    + "Reject"
-                    + "</button>";
-
-            }
-
-
-            container.appendChild(
-                div
-            );
-
-        }
-    );
-
-}
-
-
-/* ADMIN APPROVES GRADE */
-
-function approveGrade(index) {
-
-    if (role !== "admin") {
-
-        return;
-    }
-
-
-    grades[index].status =
-        "Approved";
-
-
-    grades[index].locked =
-        true;
-
-
-    localStorage.setItem(
-        "grades",
-        JSON.stringify(grades)
-    );
-
-
-    displayGrades();
-
-}
-
-
-/* ADMIN REJECTS GRADE */
-
-function rejectGrade(index) {
-
-    if (role !== "admin") {
-
-        return;
-    }
-
-
-    grades[index].status =
-        "Rejected";
-
-
-    grades[index].locked =
-        true;
-
-
-    localStorage.setItem(
-        "grades",
-        JSON.stringify(grades)
-    );
-
-
-    displayGrades();
-
-}
-
-
-/* DASHBOARD */
-
-function goDashboard() {
+if (
+    loggedIn !== "true"
+) {
 
     window.location.href =
-        "index.html";
+        "login.html";
 
 }
 
 
-/* START PAGE */
+/* WELCOME MESSAGE */
 
-setupRole();
+const welcomeText =
+    document.getElementById(
+        "welcomeText"
+    );
 
-displayGrades();
+
+if (role === "admin") {
+
+    welcomeText.textContent =
+        "Welcome, Administrator";
+
+} else if (
+    role === "instructor"
+) {
+
+    welcomeText.textContent =
+        "Welcome, Instructor";
+
+} else {
+
+    welcomeText.textContent =
+        "Welcome to NAI GARMAI";
+
+}
+
+
+/* LOGOUT */
+
+function logout() {
+
+    localStorage.removeItem(
+        "loggedIn"
+    );
+
+    localStorage.removeItem(
+        "userRole"
+    );
+
+    window.location.href =
+        "login.html";
+
+}
 
 
 </script>
