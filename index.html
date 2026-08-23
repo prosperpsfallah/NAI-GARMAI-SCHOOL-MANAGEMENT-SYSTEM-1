@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>NAI GARMAI | Login</title>
 
     <style>
@@ -127,50 +126,31 @@
 
     <form id="loginForm">
 
-        <label for="role">
-            Login As
-        </label>
+        <label for="role">Login As</label>
 
         <select id="role" required>
-            <option value="">
-                Select role
-            </option>
-
-            <option value="admin">
-                Administrator
-            </option>
-
-            <option value="instructor">
-                Instructor
-            </option>
+            <option value="">Select role</option>
+            <option value="admin">Administrator</option>
+            <option value="instructor">Instructor</option>
         </select>
 
-
-        <label for="username">
-            Username
-        </label>
+        <label for="username">Username</label>
 
         <input
             id="username"
             type="text"
             placeholder="Enter username"
-            autocomplete="username"
             required
         >
 
-
-        <label for="password">
-            Password
-        </label>
+        <label for="password">Password</label>
 
         <input
             id="password"
             type="password"
             placeholder="Enter password"
-            autocomplete="current-password"
             required
         >
-
 
         <button type="submit">
             Login
@@ -180,107 +160,65 @@
 
     </form>
 
-
     <div class="footer">
         © 2026 NAI GARMAI SCHOOL SYSTEM
     </div>
 
 </div>
 
-
 <script>
 
-document
-    .getElementById("loginForm")
-    .addEventListener("submit", function(event) {
+document.getElementById("loginForm").addEventListener("submit", function(event) {
 
-        event.preventDefault();
+    event.preventDefault();
 
+    const role = document.getElementById("role").value;
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value;
 
-        const role =
-            document.getElementById("role").value;
-
-        const username =
-            document.getElementById("username")
-            .value
-            .trim();
-
-        const password =
-            document.getElementById("password")
-            .value;
+    const message = document.getElementById("message");
 
 
-        const message =
-            document.getElementById("message");
+    /* ADMINISTRATOR */
+
+    if (
+        role === "admin" &&
+        username === "admin" &&
+        password === "admi2000"
+    ) {
+
+        localStorage.setItem("userRole", "admin");
+        localStorage.setItem("loggedIn", "true");
+
+        window.location.href = "index.html";
+
+        return;
+    }
 
 
-        /*
-         * DEMO LOGIN
-         *
-         * This is temporary authentication.
-         * We will replace it with secure
-         * server-side authentication later.
-         */
+    /* INSTRUCTOR */
+
+    if (
+        role === "instructor" &&
+        username === "instructor" &&
+        password === "teacher1999"
+    ) {
+
+        localStorage.setItem("userRole", "instructor");
+        localStorage.setItem("loggedIn", "true");
+
+        window.location.href = "index.html";
+
+        return;
+    }
 
 
-        const adminUsername = "admin";
-        const adminPassword = "admin2000";
+    /* INVALID LOGIN */
 
+    message.style.color = "red";
+    message.textContent = "Invalid login details.";
 
-        const instructorUsername = "instructor";
-        const instructorPassword = "teacher1990";
-
-
-        if (
-            role === "admin" &&
-            username === adminUsername &&
-            password === adminPassword
-        ) {
-
-            localStorage.setItem(
-                "userRole",
-                "admin"
-            );
-
-            localStorage.setItem(
-                "loggedIn",
-                "true"
-            );
-
-            window.location.href = "Index.html";
-
-            return;
-        }
-
-
-        if (
-            role === "instructor" &&
-            username === instructorUsername &&
-            password === instructorPassword
-        ) {
-
-            localStorage.setItem(
-                "userRole",
-                "instructor"
-            );
-
-            localStorage.setItem(
-                "loggedIn",
-                "true"
-            );
-
-            window.location.href = "index.html";
-
-            return;
-        }
-
-
-        message.style.color = "red";
-
-        message.textContent =
-            "Invalid login details.";
-
-    });
+});
 
 </script>
 
