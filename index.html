@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>NAI GARMAI | Login</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    font-family: Arial, sans-serif;
+
+    background:
+        linear-gradient(
+            135deg,
+            #071d3a,
+            #0b4f8a
+        );
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+}
+
+.login-box {
+    width: 100%;
+    max-width: 420px;
+
+    background: white;
+
+    padding: 30px;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 15px 40px
+        rgba(0,0,0,0.25);
+}
+
+.logo {
+    text-align: center;
+
+    font-size: 45px;
+
+    margin-bottom: 5px;
+}
+
+h1 {
+    text-align: center;
+
+    margin: 0;
+
+    color: #071d3a;
+}
+
+.school-name {
+    text-align: center;
+
+    color: #666;
+
+    margin: 8px 0 25px;
+}
+
+label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    font-weight: bold;
+
+    color: #333;
+}
+
+select,
+input {
+    width: 100%;
+
+    padding: 13px;
+
+    margin-bottom: 18px;
+
+    border: 1px solid #ccc;
+
+    border-radius: 9px;
+
+    font-size: 16px;
+}
+
+button {
+    width: 100%;
+
+    padding: 14px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: #0b4f8a;
+
+    color: white;
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+button:hover {
+    background: #071d3a;
+}
+
+.message {
+    display: none;
+
+    margin-top: 15px;
+
+    padding: 12px;
+
+    border-radius: 8px;
+
+    text-align: center;
+
+    background: #ffe5e5;
+
+    color: #b00020;
+}
+
+.footer {
+    text-align: center;
+
+    margin-top: 20px;
+
+    color: #777;
+
+    font-size: 12px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="login-box">
+
+    <div class="logo">
+        🎓
+    </div>
+
+    <h1>
+        NAI GARMAI
+    </h1>
+
+    <div class="school-name">
+        SCHOOL MANAGEMENT SYSTEM
+    </div>
+
+
+    <form id="loginForm">
+
+        <label for="role">
+            Login As
+        </label>
+
+        <select id="role" required>
+
+            <option value="">
+                -- Select Account Type --
+            </option>
+
+            <option value="admin">
+                Administrator
+            </option>
+
+            <option value="instructor">
+                Instructor
+            </option>
+
+            <option value="student">
+                Student
+            </option>
+
+        </select>
+
+
+        <label for="userId">
+            User ID
+        </label>
+
+        <input
+            type="text"
+            id="userId"
+            placeholder="Enter your User ID"
+            required
+        >
+
+
+        <label for="password">
+            Password
+        </label>
+
+        <input
+            type="password"
+            id="password"
+            placeholder="Enter your Password"
+            required
+        >
+
+
+        <button type="submit">
+            Login
+        </button>
+
+    </form>
+
+
+    <div
+        id="message"
+        class="message">
+    </div>
+
+
+    <div class="footer">
+        © 2026 NAI GARMAI SCHOOL MANAGEMENT SYSTEM
+    </div>
+
+</div>
+
+
+<script>
+
+document
+.getElementById("loginForm")
+.addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    const role =
+        document.getElementById("role").value;
+
+    const userId =
+        document
+        .getElementById("userId")
+        .value
+        .trim();
+
+    const password =
+        document
+        .getElementById("password")
+        .value;
+
+
+    if (!role) {
+
+        showMessage(
+            "Please select your account type."
+        );
+
+        return;
+    }
+
+
+    if (!userId) {
+
+        showMessage(
+            "Please enter your User ID."
+        );
+
+        return;
+    }
+
+
+    if (!password) {
+
+        showMessage(
+            "Please enter your password."
+        );
+
+        return;
+    }
+
+
+    /*
+       ROLE ROUTING
+    */
+
+    if (role === "admin") {
+
+        window.location.href =
+            "admin.html";
+
+    }
+
+    else if (role === "instructor") {
+
+        window.location.href =
+            "instructor.html";
+
+    }
+
+    else if (role === "student") {
+
+        window.location.href =
+            "student.html";
+
+    }
+
+});
+
+
+function showMessage(text) {
+
+    const message =
+        document.getElementById("message");
+
+    message.textContent = text;
+
+    message.style.display = "block";
+}
+
+</script>
+
+</body>
+
+</html>
