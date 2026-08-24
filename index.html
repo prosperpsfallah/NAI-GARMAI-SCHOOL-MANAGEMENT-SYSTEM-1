@@ -1,24 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>NAI GARMAI School Management System</title>
+<title>NAI GARMAI Dashboard</title>
 
 <style>
-
-* {
-    box-sizing: border-box;
-}
 
 body {
     margin: 0;
     font-family: Arial, sans-serif;
     background: #f4f7fb;
-    color: #222;
 }
 
 header {
@@ -27,98 +21,31 @@ header {
     padding: 20px;
 }
 
-.header {
-    max-width: 1100px;
-    margin: auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-header h1 {
-    margin: 0;
-    font-size: 20px;
-}
-
-button {
-    cursor: pointer;
-}
-
-.logout {
-    background: #d9534f;
-    color: white;
-    border: none;
-    padding: 10px 16px;
-    border-radius: 8px;
-    font-weight: bold;
-}
-
-.container {
-    max-width: 1100px;
-    margin: auto;
-    padding: 25px 15px;
-}
-
-.welcome,
-.card,
-.panel {
-    background: white;
-    border-radius: 15px;
+main {
     padding: 25px;
-    margin-bottom: 20px;
-    box-shadow: 0 5px 20px rgba(0,0,0,.08);
-}
-
-.welcome h2,
-.panel h2,
-.card h3 {
-    color: #0b3d62;
-}
-
-.cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 18px;
+    max-width: 900px;
+    margin: auto;
 }
 
 .card {
-    text-align: center;
+    background: white;
+    padding: 25px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,.1);
 }
 
-.open-btn {
+button {
     background: #0b3d62;
     color: white;
     border: none;
-    padding: 10px 18px;
-    border-radius: 8px;
+    padding: 12px 18px;
+    border-radius: 7px;
+    margin: 5px;
 }
 
-.student-portal {
+#student {
     display: none;
-}
-
-.info-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
-}
-
-.info {
-    background: #f5f7fa;
-    padding: 15px;
-    border-radius: 8px;
-}
-
-.info strong {
-    display: block;
-    color: #0b3d62;
-    margin-bottom: 7px;
-}
-
-.footer {
-    text-align: center;
-    padding: 30px;
-    color: #777;
 }
 
 </style>
@@ -129,54 +56,30 @@ button {
 
 <header>
 
-<div class="header">
-
 <h1>NAI GARMAI SCHOOL SYSTEM</h1>
-
-<button
-    class="logout"
-    onclick="logout()"
->
-Logout
-</button>
-
-</div>
 
 </header>
 
+<main>
 
-<div class="container">
 
+<div id="admin">
 
-<!-- ADMIN DASHBOARD -->
-
-<div id="adminDashboard">
-
-<div class="welcome">
+<div class="card">
 
 <h2>Administrator Dashboard</h2>
 
-<p>
-Welcome to the NAI GARMAI School Management System.
-</p>
+<p>Welcome to the school management system.</p>
 
 </div>
-
-
-<div class="cards">
 
 
 <div class="card">
 
 <h3>Students</h3>
 
-<p>Manage students.</p>
-
-<button
-    class="open-btn"
-    onclick="openPage('students.html')"
->
-Open
+<button onclick="location.href='students.html'">
+Open Students
 </button>
 
 </div>
@@ -186,13 +89,8 @@ Open
 
 <h3>Instructors</h3>
 
-<p>Manage instructors.</p>
-
-<button
-    class="open-btn"
-    onclick="openPage('instructors.html')"
->
-Open
+<button onclick="location.href='instructors.html'">
+Open Instructors
 </button>
 
 </div>
@@ -202,13 +100,8 @@ Open
 
 <h3>Attendance</h3>
 
-<p>Manage attendance.</p>
-
-<button
-    class="open-btn"
-    onclick="openPage('attendance.html')"
->
-Open
+<button onclick="location.href='attendance.html'">
+Open Attendance
 </button>
 
 </div>
@@ -218,13 +111,8 @@ Open
 
 <h3>Grades</h3>
 
-<p>Manage grades.</p>
-
-<button
-    class="open-btn"
-    onclick="openPage('grades.html')"
->
-Open
+<button onclick="location.href='grades.html'">
+Open Grades
 </button>
 
 </div>
@@ -234,292 +122,67 @@ Open
 
 <h3>Reports</h3>
 
-<p>View school reports.</p>
-
-<button
-    class="open-btn"
-    onclick="openPage('reports.html')"
->
-Open
+<button onclick="location.href='reports.html'">
+Open Reports
 </button>
 
 </div>
 
+</div>
+
+
+<div id="student">
+
+<div class="card">
+
+<h2>Student Portal</h2>
+
+<p>Welcome, Student.</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>My Information</h3>
+
+<p>Student information will appear here.</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>My Grades</h3>
+
+<p>No grades posted yet.</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>My Attendance</h3>
+
+<p>No attendance posted yet.</p>
 
 </div>
 
 </div>
 
 
-<!-- STUDENT PORTAL -->
-
-<div
-    id="studentPortal"
-    class="student-portal"
->
-
-<div class="welcome">
-
-<h2>
-Welcome,
-<span id="studentName">Student</span>
-</h2>
-
-<p>
-This is your student portal.
-</p>
-
-</div>
-
-
-<div class="panel">
-
-<h2>My Information</h2>
-
-<div class="info-grid">
-
-
-<div class="info">
-
-<strong>Student ID</strong>
-
-<span id="studentId">-</span>
-
-</div>
-
-
-<div class="info">
-
-<strong>Full Name</strong>
-
-<span id="fullName">-</span>
-
-</div>
-
-
-<div class="info">
-
-<strong>Class / Grade</strong>
-
-<span id="studentClass">-</span>
-
-</div>
-
-
-<div class="info">
-
-<strong>Gender</strong>
-
-<span id="studentGender">-</span>
-
-</div>
-
-
-<div class="info">
-
-<strong>Date of Birth</strong>
-
-<span id="studentDOB">-</span>
-
-</div>
-
-
-<div class="info">
-
-<strong>Phone</strong>
-
-<span id="studentPhone">-</span>
-
-</div>
-
-
-<div class="info">
-
-<strong>Parent / Guardian</strong>
-
-<span id="guardianName">-</span>
-
-</div>
-
-
-<div class="info">
-
-<strong>Guardian Phone</strong>
-
-<span id="guardianPhone">-</span>
-
-</div>
-
-
-</div>
-
-</div>
-
-
-<div class="panel">
-
-<h2>My Grades</h2>
-
-<p>
-No grades have been posted yet.
-</p>
-
-</div>
-
-
-<div class="panel">
-
-<h2>My Attendance</h2>
-
-<p>
-No attendance records have been posted yet.
-</p>
-
-</div>
-
-
-</div>
-
-
-</div>
-
-
-<div class="footer">
-
-© 2026 NAI GARMAI SCHOOL SYSTEM
-
-</div>
+</main>
 
 
 <script>
 
-document.addEventListener("DOMContentLoaded", function() {
+var role = localStorage.getItem("userRole");
 
-    var role = localStorage.getItem("userRole");
+if (role === "student") {
 
-    var loggedIn = localStorage.getItem("loggedIn");
+    document.getElementById("admin").style.display = "none";
 
-    if (loggedIn !== "true") {
-
-        window.location.href = "login.html";
-
-        return;
-
-    }
-
-
-    if (role === "student") {
-
-        document.getElementById("adminDashboard").style.display = "none";
-
-        document.getElementById("studentPortal").style.display = "block";
-
-        loadStudent();
-
-    }
-
-    else {
-
-        document.getElementById("adminDashboard").style.display = "block";
-
-        document.getElementById("studentPortal").style.display = "none";
-
-    }
-
-});
-
-
-function loadStudent() {
-
-    var studentId =
-        localStorage.getItem("currentStudentId");
-
-    var students =
-        JSON.parse(
-            localStorage.getItem("students") || "[]"
-        );
-
-    var student = null;
-
-
-    for (var i = 0; i < students.length; i++) {
-
-        if (
-            String(students[i].studentId || "") ===
-            String(studentId || "")
-        ) {
-
-            student = students[i];
-
-            break;
-
-        }
-
-    }
-
-
-    if (!student) {
-
-        return;
-
-    }
-
-
-    var name =
-        student.name ||
-        student.fullName ||
-        "Student";
-
-
-    document.getElementById("studentName").textContent = name;
-
-    document.getElementById("studentId").textContent =
-        student.studentId || "-";
-
-    document.getElementById("fullName").textContent =
-        name;
-
-    document.getElementById("studentClass").textContent =
-        student.className || "-";
-
-    document.getElementById("studentGender").textContent =
-        student.gender || "-";
-
-    document.getElementById("studentDOB").textContent =
-        student.dateOfBirth || "-";
-
-    document.getElementById("studentPhone").textContent =
-        student.phone || "-";
-
-    document.getElementById("guardianName").textContent =
-        student.guardianName || "-";
-
-    document.getElementById("guardianPhone").textContent =
-        student.guardianPhone || "-";
-
-}
-
-
-function openPage(page) {
-
-    window.location.href = page;
-
-}
-
-
-function logout() {
-
-    localStorage.removeItem("loggedIn");
-
-    localStorage.removeItem("userRole");
-
-    localStorage.removeItem("currentUser");
-
-    localStorage.removeItem("currentStudentId");
-
-    localStorage.removeItem("currentStudentName");
-
-    window.location.href = "login.html";
+    document.getElementById("student").style.display = "block";
 
 }
 
