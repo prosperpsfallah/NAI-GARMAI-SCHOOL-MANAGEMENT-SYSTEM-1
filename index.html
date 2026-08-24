@@ -1,193 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>NAI GARMAI Dashboard</title>
-
-<style>
-
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f4f7fb;
-}
-
-header {
-    background: #0b3d62;
-    color: white;
-    padding: 20px;
-}
-
-main {
-    padding: 25px;
-    max-width: 900px;
-    margin: auto;
-}
-
-.card {
-    background: white;
-    padding: 25px;
-    margin-bottom: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,.1);
-}
-
-button {
-    background: #0b3d62;
-    color: white;
-    border: none;
-    padding: 12px 18px;
-    border-radius: 7px;
-    margin: 5px;
-}
-
-#student {
-    display: none;
-}
-
-</style>
-
+<title>NAI GARMAI</title>
 </head>
 
 <body>
 
-<header>
+<div style="
+    padding:50px;
+    text-align:center;
+    font-family:Arial;
+">
 
 <h1>NAI GARMAI SCHOOL SYSTEM</h1>
 
-</header>
+<h2>VERSION 999</h2>
 
-<main>
-
-
-<div id="admin">
-
-<div class="card">
-
-<h2>Administrator Dashboard</h2>
-
-<p>Welcome to the school management system.</p>
+<p>
+THIS IS THE CURRENT INDEX.HTML FILE.
+</p>
 
 </div>
-
-
-<div class="card">
-
-<h3>Students</h3>
-
-<button onclick="location.href='students.html'">
-Open Students
-</button>
-
-</div>
-
-
-<div class="card">
-
-<h3>Instructors</h3>
-
-<button onclick="location.href='instructors.html'">
-Open Instructors
-</button>
-
-</div>
-
-
-<div class="card">
-
-<h3>Attendance</h3>
-
-<button onclick="location.href='attendance.html'">
-Open Attendance
-</button>
-
-</div>
-
-
-<div class="card">
-
-<h3>Grades</h3>
-
-<button onclick="location.href='grades.html'">
-Open Grades
-</button>
-
-</div>
-
-
-<div class="card">
-
-<h3>Reports</h3>
-
-<button onclick="location.href='reports.html'">
-Open Reports
-</button>
-
-</div>
-
-</div>
-
-
-<div id="student">
-
-<div class="card">
-
-<h2>Student Portal</h2>
-
-<p>Welcome, Student.</p>
-
-</div>
-
-
-<div class="card">
-
-<h3>My Information</h3>
-
-<p>Student information will appear here.</p>
-
-</div>
-
-
-<div class="card">
-
-<h3>My Grades</h3>
-
-<p>No grades posted yet.</p>
-
-</div>
-
-
-<div class="card">
-
-<h3>My Attendance</h3>
-
-<p>No attendance posted yet.</p>
-
-</div>
-
-</div>
-
-
-</main>
-
-
-<script>
-
-var role = localStorage.getItem("userRole");
-
-if (role === "student") {
-
-    document.getElementById("admin").style.display = "none";
-
-    document.getElementById("student").style.display = "block";
-
-}
-
-</script>
 
 </body>
-
 </html>
