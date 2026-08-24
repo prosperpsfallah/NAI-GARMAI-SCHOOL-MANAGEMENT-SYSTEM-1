@@ -17,8 +17,8 @@ body {
     background: #f4f7fb;
     min-height: 100vh;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 }
 
 .login-box {
@@ -33,11 +33,13 @@ body {
 h1 {
     text-align: center;
     color: #0b3d62;
+    margin-bottom: 5px;
 }
 
 .subtitle {
     text-align: center;
     color: #777;
+    margin-bottom: 25px;
 }
 
 label {
@@ -56,16 +58,16 @@ select {
     font-size: 15px;
 }
 
-button {
+.login-button {
     width: 100%;
-    margin-top: 20px;
+    margin-top: 22px;
     padding: 13px;
     background: #0b3d62;
     color: white;
     border: none;
     border-radius: 8px;
-    font-weight: bold;
     font-size: 16px;
+    font-weight: bold;
 }
 
 .message {
@@ -128,7 +130,10 @@ Password
 >
 
 
-<button onclick="login()">
+<button
+    class="login-button"
+    onclick="login()"
+>
 LOGIN
 </button>
 
@@ -145,7 +150,7 @@ LOGIN
 
 function login() {
 
-    var type =
+    var loginType =
         document.getElementById("loginType").value;
 
     var username =
@@ -158,24 +163,29 @@ function login() {
         document.getElementById("message");
 
 
-    message.textContent = "";
-
-
-    if (username === "" || password === "") {
+    if (username === "") {
 
         message.textContent =
-            "Please enter your username and password.";
+            "Please enter your username or Student ID.";
 
         return;
 
     }
 
 
-    /*
-    ADMINISTRATOR LOGIN
-    */
+    if (password === "") {
 
-    if (type === "admin") {
+        message.textContent =
+            "Please enter your password.";
+
+        return;
+
+    }
+
+
+    /* ADMIN */
+
+    if (loginType === "admin") {
 
         if (
             username === "admin" &&
@@ -199,7 +209,7 @@ function login() {
 
 
             message.textContent =
-                "Login successful. Opening dashboard...";
+                "Login successful!";
 
 
             setTimeout(function() {
@@ -209,23 +219,20 @@ function login() {
 
             }, 500);
 
-
             return;
 
         }
 
 
         message.textContent =
-            "Invalid administrator username or password.";
+            "Invalid administrator login.";
 
         return;
 
     }
 
 
-    /*
-    STUDENT LOGIN
-    */
+    /* STUDENT */
 
     var students =
         JSON.parse(
@@ -311,7 +318,7 @@ function login() {
 
 
     message.textContent =
-        "Login successful. Opening portal...";
+        "Login successful!";
 
 
     setTimeout(function() {
