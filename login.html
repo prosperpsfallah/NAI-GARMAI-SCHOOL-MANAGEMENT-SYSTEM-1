@@ -1,384 +1,1767 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0"
 >
-<title>NAI GARMAI | Login</title>
+
+<title>NAI GARMAI | Students</title>
+
 <style>
+
 * {
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
 }
+
 body {
-    font-family: Arial, sans-serif;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background:
-        linear-gradient(
-            135deg,
-            #071a2f,
-            #0b3d62
-        );
+    margin: 0;
     padding: 20px;
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    color: #222;
 }
-.login-box {
-    width: 100%;
-    max-width: 420px;
-    background: white;
-    padding: 35px;
-    border-radius: 18px;
-    box-shadow:
-        0 15px 40px
-        rgba(0,0,0,.25);
+
+.container {
+    max-width: 1100px;
+    margin: auto;
 }
-.logo {
-    width: 75px;
-    height: 75px;
-    margin:
-        0 auto 15px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+
+.header {
     background: #0b3d62;
     color: white;
-    font-size: 24px;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    margin: 0 0 6px;
+}
+
+.header p {
+    margin: 0 0 15px;
+}
+
+button {
+    border: none;
+    border-radius: 7px;
+    padding: 12px 18px;
     font-weight: bold;
+    cursor: pointer;
 }
-h1 {
-    text-align: center;
+
+button:hover {
+    opacity: 0.9;
+}
+
+.back {
+    background: white;
     color: #0b3d62;
-    font-size: 24px;
-    margin-bottom: 5px;
 }
-.subtitle {
-    text-align: center;
-    color: #777;
-    margin-bottom: 28px;
+
+.add {
+    background: #198754;
+    color: white;
 }
+
+.edit {
+    background: #0b3d62;
+    color: white;
+    margin-right: 6px;
+}
+
+.delete {
+    background: #d9534f;
+    color: white;
+}
+
+.reset {
+    background: #d97706;
+    color: white;
+    margin-right: 6px;
+}
+
+.save {
+    background: #198754;
+    color: white;
+    margin-right: 8px;
+}
+
+.cancel {
+    background: #6c757d;
+    color: white;
+}
+
+.panel {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.panelHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.panel h2 {
+    margin: 0;
+    color: #0b3d62;
+}
+
+.formPanel {
+    display: none;
+}
+
+.formPanel.show {
+    display: block;
+}
+
 label {
     display: block;
-    margin-bottom: 7px;
+    margin-top: 12px;
     font-weight: bold;
-    color: #333;
 }
+
 input,
 select {
     width: 100%;
-    padding: 13px;
-    margin-bottom: 18px;
-    border:
-        1px solid #ddd;
-    border-radius: 9px;
+    padding: 12px;
+    margin-top: 7px;
+    border: 1px solid #ddd;
+    border-radius: 7px;
     font-size: 15px;
-    background: white;
 }
+
 input:focus,
 select:focus {
     outline: none;
     border-color: #0b3d62;
 }
-button {
-    width: 100%;
-    padding: 14px;
-    border: none;
-    border-radius: 9px;
-    background: #0b3d62;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
+
+.readonly {
+    background: #eef2f5;
+    color: #555;
 }
-button:hover {
-    opacity: .9;
-}
-#message {
-    text-align: center;
+
+.formActions {
     margin-top: 15px;
-    font-size: 14px;
 }
-.footer {
-    text-align: center;
-    margin-top: 25px;
-    color: #888;
-    font-size: 12px;
+
+.message {
+    margin-top: 12px;
+    font-weight: bold;
 }
+
+.success {
+    color: #198754;
+}
+
+.error {
+    color: #d9534f;
+}
+
+.search {
+    margin-bottom: 15px;
+}
+
+.studentCard {
+    background: #f8fafc;
+    border-left: 4px solid #0b3d62;
+    border-radius: 9px;
+    padding: 18px;
+    margin-top: 12px;
+}
+
+.studentCard h3 {
+    margin: 0 0 10px;
+    color: #0b3d62;
+}
+
+.studentCard p {
+    margin: 6px 0;
+}
+
+.actions {
+    margin-top: 12px;
+}
+
+.empty {
+    color: #777;
+}
+
+.adminNotice {
+    background: #eaf7ee;
+    color: #245c35;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+.passwordBox {
+    background: #fff7e6;
+    border: 1px solid #f0d28a;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 12px;
+}
+
+.passwordStatus {
+    font-weight: bold;
+}
+
+.passwordChanged {
+    color: #198754;
+}
+
+.passwordDefault {
+    color: #d97706;
+}
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 10px;
+    }
+
+    .panel {
+        padding: 15px;
+    }
+
+    .header {
+        padding: 15px;
+    }
+
+    button {
+        margin-top: 8px;
+    }
+
+    .edit,
+    .delete,
+    .reset {
+        width: auto;
+    }
+
+}
+
 </style>
+
 </head>
+
+
 <body>
-<div class="login-box">
-<div class="logo">
-NG
-</div>
+
+
+<div class="container">
+
+
+<!-- HEADER -->
+
+<div class="header">
+
 <h1>
-NAI GARMAI
+NAI GARMAI SCHOOL SYSTEM
 </h1>
-<p class="subtitle">
-School System Management
+
+<p>
+Student Management
 </p>
-<form id="loginForm">
-<label for="role">
-Login As
-</label>
-<select
-    id="role"
-    required
+
+<button
+class="back"
+onclick="goDashboard()"
 >
-<option value="">
-Select role
-</option>
-<option value="admin">
-Administrator
-</option>
-<option value="instructor">
-Instructor
-</option>
-<option value="student">
-Student
-</option>
-</select>
-<label for="username">
-Username
-</label>
-<input
-    id="username"
-    type="text"
-    placeholder="Enter username"
-    autocomplete="username"
-    required
->
-<label for="password">
-Password
-</label>
-<input
-    id="password"
-    type="password"
-    placeholder="Enter password"
-    autocomplete="current-password"
-    required
->
-<button type="submit">
-Login
+← Dashboard
 </button>
-<div id="message"></div>
-</form>
-<div class="footer">
-© 2026 NAI GARMAI SCHOOL SYSTEM
+
 </div>
+
+
+<!-- ADMIN NOTICE -->
+
+<div
+class="panel"
+>
+
+<h2>
+Student Management
+</h2>
+
+<div class="adminNotice">
+
+<strong>Administrator access:</strong>
+
+You can register students, edit student
+information, manage portal passwords,
+reset forgotten passwords and delete
+student records.
+
 </div>
+
+</div>
+
+
+<!-- ADD STUDENT -->
+
+<div
+class="panel"
+>
+
+<div class="panelHeader">
+
+<h2>
+Register Student
+</h2>
+
+<button
+class="add"
+onclick="openAddForm()"
+>
++ Add Student
+</button>
+
+</div>
+
+</div>
+
+
+<!-- STUDENT FORM -->
+
+<div
+class="panel formPanel"
+id="studentFormPanel"
+>
+
+<h2 id="formTitle">
+Register New Student
+</h2>
+
+
+<label>
+Student ID
+</label>
+
+<input
+id="studentId"
+type="text"
+class="readonly"
+readonly
+placeholder="Automatically generated"
+>
+
+
+<label>
+Full Name
+</label>
+
+<input
+id="studentName"
+type="text"
+placeholder="Enter student's full name"
+>
+
+
+<label>
+Date of Birth
+</label>
+
+<input
+id="studentDOB"
+type="date"
+>
+
+
+<label>
+Gender
+</label>
+
+<select id="studentGender">
+
+<option value="">
+Select gender
+</option>
+
+<option value="Male">
+Male
+</option>
+
+<option value="Female">
+Female
+</option>
+
+<option value="Other">
+Other
+</option>
+
+</select>
+
+
+<label>
+Class / Grade
+</label>
+
+<input
+id="studentClass"
+type="text"
+placeholder="Example: Grade 10"
+>
+
+
+<label>
+Phone Number
+</label>
+
+<input
+id="studentPhone"
+type="tel"
+placeholder="Enter phone number"
+>
+
+
+<label>
+Parent / Guardian Name
+</label>
+
+<input
+id="guardianName"
+type="text"
+placeholder="Enter parent or guardian name"
+>
+
+
+<label>
+Parent / Guardian Phone
+</label>
+
+<input
+id="guardianPhone"
+type="tel"
+placeholder="Enter guardian phone number"
+>
+
+
+<div class="formActions">
+
+<button
+class="save"
+onclick="saveStudent()"
+>
+Save Student
+</button>
+
+<button
+class="cancel"
+onclick="closeStudentForm()"
+>
+Cancel
+</button>
+
+</div>
+
+
+<div
+id="formMessage"
+class="message"
+></div>
+
+</div>
+
+
+<!-- STUDENTS LIST -->
+
+<div class="panel">
+
+<div class="panelHeader">
+
+<h2>
+Registered Students
+</h2>
+
+</div>
+
+
+<input
+class="search"
+id="searchInput"
+type="search"
+placeholder="Search by name, ID, class or phone..."
+oninput="displayStudents()"
+>
+
+
+<div id="studentsList">
+
+<p class="empty">
+Loading students...
+</p>
+
+</div>
+
+</div>
+
+
+</div>
+
+
 <script>
+
+
 /*
 ==================================================
-LOGIN SYSTEM
+LOGIN SECURITY
 ==================================================
 */
-document
-.getElementById("loginForm")
-.addEventListener(
-"submit",
-function(event) {
-event.preventDefault();
+
+
+const loggedIn =
+localStorage.getItem(
+"loggedIn"
+);
+
+
 const role =
-document
-.getElementById("role")
-.value;
-const username =
-document
-.getElementById("username")
-.value
-.trim();
-const password =
-document
-.getElementById("password")
-.value;
-const message =
-document
-.getElementById("message");
-message.textContent = "";
+localStorage.getItem(
+"userRole"
+);
+
+
+if (
+loggedIn !== "true"
+) {
+
+window.location.href =
+"login.html";
+
+}
+
+
 /*
 ==================================================
-ADMIN LOGIN
+ADMIN SECURITY
 ==================================================
 */
+
+
 if (
-role === "admin"
-&&
-username === "admin"
-&&
-password === "admi2000"
+role !== "admin"
 ) {
-localStorage.setItem(
-"userRole",
-"admin"
+
+alert(
+"Only the Administrator can manage students."
 );
-localStorage.setItem(
-"loggedIn",
-"true"
-);
-localStorage.removeItem(
-"studentId"
-);
+
 window.location.href =
 "index.html";
-return;
+
 }
+
+
 /*
 ==================================================
-INSTRUCTOR LOGIN
+DEFAULT STUDENT PASSWORD
 ==================================================
 */
-if (
-role === "instructor"
-&&
-username === "instructor"
-&&
-password === "teacher1999"
-) {
-localStorage.setItem(
-"userRole",
-"instructor"
-);
-localStorage.setItem(
-"loggedIn",
-"true"
-);
-localStorage.removeItem(
-"studentId"
-);
-window.location.href =
-"index.html";
-return;
-}
+
+const DEFAULT_STUDENT_PASSWORD =
+"000000";
+
+
 /*
 ==================================================
-STUDENT LOGIN
+LOAD STUDENTS
 ==================================================
 */
-if (
-role === "student"
-) {
-let students = [];
-try {
-students =
+
+
+let students =
 JSON.parse(
 localStorage.getItem(
 "students"
 )
 ) || [];
-} catch(error) {
-students = [];
-}
-/*
-Find student account
-using username AND password.
-*/
-const student =
-students.find(
-function(item) {
-const savedUsername =
-String(
-item.username ||
-item.userName ||
-""
-)
-.trim()
-.toLowerCase();
-const savedPassword =
-String(
-item.password ||
-item.studentPassword ||
-""
-);
-return (
-savedUsername ===
-username.toLowerCase()
-&&
-savedPassword ===
-password
-);
-});
-/*
-Student not found
-*/
-if (!student) {
-message.style.color =
-"red";
-message.textContent =
-"Invalid student username or password.";
-return;
-}
-/*
-Get student's real ID.
-*/
-const studentId =
-student.student_id
-||
-student.studentId
-||
-student.id;
-/*
-Make sure ID exists.
-*/
-if (
-!studentId
-) {
-message.style.color =
-"red";
-message.textContent =
-"This student account has no Student ID.";
-return;
-}
-/*
-SAVE STUDENT SESSION
-*/
-localStorage.setItem(
-"userRole",
-"student"
-);
-localStorage.setItem(
-"loggedIn",
-"true"
-);
-localStorage.setItem(
-"studentId",
-String(studentId)
-);
-/*
-SAVE STUDENT NAME
-*/
-localStorage.setItem(
-"studentName",
-student.full_name
-||
-student.fullName
-||
-student.name
-||
-"Student"
-);
-/*
-OPEN STUDENT PORTAL
-*/
-window.location.href =
-"student.html";
-return;
-}
+
+
 /*
 ==================================================
-INVALID LOGIN
+EDIT MODE
 ==================================================
 */
-message.style.color =
-"red";
-message.textContent =
-"Please select a valid login role.";
-});
+
+
+let editingIndex = -1;
+
+
+/*
+==================================================
+GENERATE UNIQUE 6-DIGIT STUDENT ID
+==================================================
+*/
+
+function generateStudentId() {
+
+    let id;
+
+    let exists = true;
+
+    while (exists) {
+
+        id =
+            String(
+                Math.floor(
+                    100000 +
+                    Math.random() *
+                    900000
+                )
+            );
+
+        exists =
+            students.some(
+                function(student) {
+
+                    return String(
+                        student.studentId
+                    ) === id;
+
+                }
+            );
+
+    }
+
+    return id;
+
+}
+
+
+/*
+==================================================
+OPEN ADD FORM
+==================================================
+*/
+
+function openAddForm() {
+
+    editingIndex = -1;
+
+    document.getElementById(
+        "formTitle"
+    ).textContent =
+        "Register New Student";
+
+    clearForm();
+
+    document.getElementById(
+        "studentId"
+    ).value =
+        generateStudentId();
+
+    document.getElementById(
+        "studentFormPanel"
+    ).classList.add(
+        "show"
+    );
+
+    document.getElementById(
+        "formMessage"
+    ).textContent = "";
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+/*
+==================================================
+OPEN EDIT FORM
+==================================================
+*/
+
+function openEditForm(index) {
+
+    if (
+        role !== "admin"
+    ) {
+
+        alert(
+            "Only the Administrator can edit students."
+        );
+
+        return;
+
+    }
+
+    const student =
+        students[index];
+
+    if (!student) {
+        return;
+    }
+
+    editingIndex =
+        index;
+
+    document.getElementById(
+        "formTitle"
+    ).textContent =
+        "Edit Student";
+
+    document.getElementById(
+        "studentId"
+    ).value =
+        student.studentId || "";
+
+    document.getElementById(
+        "studentName"
+    ).value =
+        student.name ||
+        student.fullName ||
+        "";
+
+    document.getElementById(
+        "studentDOB"
+    ).value =
+        student.dateOfBirth || "";
+
+    document.getElementById(
+        "studentGender"
+    ).value =
+        student.gender || "";
+
+    document.getElementById(
+        "studentClass"
+    ).value =
+        student.className || "";
+
+    document.getElementById(
+        "studentPhone"
+    ).value =
+        student.phone || "";
+
+    document.getElementById(
+        "guardianName"
+    ).value =
+        student.guardianName || "";
+
+    document.getElementById(
+        "guardianPhone"
+    ).value =
+        student.guardianPhone || "";
+
+    document.getElementById(
+        "formMessage"
+    ).textContent = "";
+
+    document.getElementById(
+        "studentFormPanel"
+    ).classList.add(
+        "show"
+    );
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+/*
+==================================================
+CLOSE FORM
+==================================================
+*/
+
+function closeStudentForm() {
+
+    editingIndex = -1;
+
+    document.getElementById(
+        "studentFormPanel"
+    ).classList.remove(
+        "show"
+    );
+
+    clearForm();
+
+    document.getElementById(
+        "formMessage"
+    ).textContent = "";
+
+}
+
+
+/*
+==================================================
+CLEAR FORM
+==================================================
+*/
+
+function clearForm() {
+
+    document.getElementById(
+        "studentId"
+    ).value = "";
+
+    document.getElementById(
+        "studentName"
+    ).value = "";
+
+    document.getElementById(
+        "studentDOB"
+    ).value = "";
+
+    document.getElementById(
+        "studentGender"
+    ).value = "";
+
+    document.getElementById(
+        "studentClass"
+    ).value = "";
+
+    document.getElementById(
+        "studentPhone"
+    ).value = "";
+
+    document.getElementById(
+        "guardianName"
+    ).value = "";
+
+    document.getElementById(
+        "guardianPhone"
+    ).value = "";
+
+}
+
+
+/*
+==================================================
+SAVE STUDENT
+==================================================
+*/
+
+function saveStudent() {
+
+    if (
+        role !== "admin"
+    ) {
+
+        alert(
+            "Only the Administrator can add or edit students."
+        );
+
+        return;
+
+    }
+
+    const studentId =
+        document.getElementById(
+            "studentId"
+        ).value.trim();
+
+    const name =
+        document.getElementById(
+            "studentName"
+        ).value.trim();
+
+    const dateOfBirth =
+        document.getElementById(
+            "studentDOB"
+        ).value;
+
+    const gender =
+        document.getElementById(
+            "studentGender"
+        ).value;
+
+    const className =
+        document.getElementById(
+            "studentClass"
+        ).value.trim();
+
+    const phone =
+        document.getElementById(
+            "studentPhone"
+        ).value.trim();
+
+    const guardianName =
+        document.getElementById(
+            "guardianName"
+        ).value.trim();
+
+    const guardianPhone =
+        document.getElementById(
+            "guardianPhone"
+        ).value.trim();
+
+    const message =
+        document.getElementById(
+            "formMessage"
+        );
+
+    message.textContent = "";
+
+
+    /*
+    VALIDATION
+    */
+
+    if (
+        name === ""
+    ) {
+
+        message.className =
+            "message error";
+
+        message.textContent =
+            "Please enter the student's full name.";
+
+        return;
+
+    }
+
+
+    if (
+        gender === ""
+    ) {
+
+        message.className =
+            "message error";
+
+        message.textContent =
+            "Please select the student's gender.";
+
+        return;
+
+    }
+
+
+    if (
+        className === ""
+    ) {
+
+        message.className =
+            "message error";
+
+        message.textContent =
+            "Please enter the student's class or grade.";
+
+        return;
+
+    }
+
+
+    /*
+    CREATE STUDENT DATA
+    */
+
+    const studentData = {
+
+        studentId:
+            studentId ||
+            generateStudentId(),
+
+        id:
+            studentId ||
+            generateStudentId(),
+
+        name:
+            name,
+
+        fullName:
+            name,
+
+        dateOfBirth:
+            dateOfBirth,
+
+        gender:
+            gender,
+
+        className:
+            className,
+
+        phone:
+            phone,
+
+        guardianName:
+            guardianName,
+
+        guardianPhone:
+            guardianPhone
+
+    };
+
+
+    /*
+    EDIT EXISTING STUDENT
+    */
+
+    if (
+        editingIndex !== -1
+    ) {
+
+        studentData.createdAt =
+            students[
+                editingIndex
+            ].createdAt ||
+            new Date()
+                .toISOString();
+
+        /*
+        KEEP EXISTING PASSWORD
+        */
+
+        studentData.password =
+            students[
+                editingIndex
+            ].password ||
+            DEFAULT_STUDENT_PASSWORD;
+
+        /*
+        KEEP PASSWORD STATUS
+        */
+
+        studentData.passwordChanged =
+            students[
+                editingIndex
+            ].passwordChanged === true;
+
+        studentData.updatedAt =
+            new Date()
+                .toISOString();
+
+        students[
+            editingIndex
+        ] =
+            studentData;
+
+        saveStudents();
+
+        message.className =
+            "message success";
+
+        message.textContent =
+            "Student updated successfully.";
+
+        displayStudents();
+
+        setTimeout(
+            function() {
+
+                closeStudentForm();
+
+            },
+            700
+        );
+
+        return;
+
+    }
+
+
+    /*
+    NEW STUDENT
+    */
+
+    studentData.createdAt =
+        new Date()
+            .toISOString();
+
+    /*
+    DEFAULT PORTAL PASSWORD
+    */
+
+    studentData.password =
+        DEFAULT_STUDENT_PASSWORD;
+
+    studentData.passwordChanged =
+        false;
+
+
+    students.push(
+        studentData
+    );
+
+
+    saveStudents();
+
+
+    message.className =
+        "message success";
+
+    message.textContent =
+        "Student registered successfully. Portal password: 000000";
+
+
+    displayStudents();
+
+
+    setTimeout(
+        function() {
+
+            closeStudentForm();
+
+        },
+        1000
+    );
+
+}
+
+
+/*
+==================================================
+RESET STUDENT PASSWORD
+==================================================
+*/
+
+function resetStudentPassword(index) {
+
+    if (
+        role !== "admin"
+    ) {
+
+        alert(
+            "Only the Administrator can reset student passwords."
+        );
+
+        return;
+
+    }
+
+    const student =
+        students[index];
+
+    if (!student) {
+        return;
+    }
+
+    const studentName =
+        student.name ||
+        student.fullName ||
+        "this student";
+
+
+    const confirmed =
+        confirm(
+            "Reset the portal password for "
+            +
+            studentName
+            +
+            "?\n\n"
+            +
+            "The new password will be:\n"
+            +
+            "000000"
+        );
+
+
+    if (
+        !confirmed
+    ) {
+        return;
+    }
+
+
+    student.password =
+        DEFAULT_STUDENT_PASSWORD;
+
+    student.passwordChanged =
+        false;
+
+    student.passwordResetAt =
+        new Date()
+            .toISOString();
+
+    student.passwordResetBy =
+        "Administrator";
+
+
+    saveStudents();
+
+
+    alert(
+        "Password reset successfully.\n\n"
+        +
+        "Student ID: "
+        +
+        student.studentId
+        +
+        "\n"
+        +
+        "Default Password: 000000"
+    );
+
+
+    displayStudents();
+
+}
+
+
+/*
+==================================================
+DELETE STUDENT
+==================================================
+*/
+
+function deleteStudent(index) {
+
+    if (
+        role !== "admin"
+    ) {
+
+        alert(
+            "Only the Administrator can delete students."
+        );
+
+        return;
+
+    }
+
+    const student =
+        students[index];
+
+    if (!student) {
+        return;
+    }
+
+    const studentName =
+        student.name ||
+        student.fullName ||
+        "this student";
+
+
+    const confirmed =
+        confirm(
+            "Are you sure you want to delete "
+            +
+            studentName
+            +
+            "?\n\n"
+            +
+            "This action cannot be undone."
+        );
+
+
+    if (
+        !confirmed
+    ) {
+        return;
+    }
+
+
+    students.splice(
+        index,
+        1
+    );
+
+
+    saveStudents();
+
+
+    displayStudents();
+
+}
+
+
+/*
+==================================================
+SAVE STUDENTS
+==================================================
+*/
+
+function saveStudents() {
+
+    localStorage.setItem(
+        "students",
+        JSON.stringify(
+            students
+        )
+    );
+
+}
+
+
+/*
+==================================================
+DISPLAY STUDENTS
+==================================================
+*/
+
+function displayStudents() {
+
+    const container =
+        document.getElementById(
+            "studentsList"
+        );
+
+    const search =
+        document.getElementById(
+            "searchInput"
+        ).value
+        .trim()
+        .toLowerCase();
+
+
+    container.innerHTML = "";
+
+
+    let filteredStudents =
+        students;
+
+
+    if (
+        search !== ""
+    ) {
+
+        filteredStudents =
+            students.filter(
+                function(student) {
+
+                    const text =
+
+                        String(
+                            student.studentId ||
+                            ""
+                        )
+
+                        + " " +
+
+                        String(
+                            student.name ||
+                            student.fullName ||
+                            ""
+                        )
+
+                        + " " +
+
+                        String(
+                            student.className ||
+                            ""
+                        )
+
+                        + " " +
+
+                        String(
+                            student.phone ||
+                            ""
+                        );
+
+
+                    return text
+                        .toLowerCase()
+                        .includes(
+                            search
+                        );
+
+                }
+            );
+
+    }
+
+
+    if (
+        filteredStudents.length === 0
+    ) {
+
+        container.innerHTML =
+
+            "<p class='empty'>"
+            +
+            (
+                search
+                ?
+                "No students match your search."
+                :
+                "No students registered yet."
+            )
+            +
+            "</p>";
+
+        return;
+
+    }
+
+
+    filteredStudents.forEach(
+        function(student) {
+
+
+            const realIndex =
+                students.indexOf(
+                    student
+                );
+
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "studentCard";
+
+
+            const name =
+                student.name ||
+                student.fullName ||
+                "Unknown Student";
+
+
+            card.innerHTML =
+
+                "<h3>"
+                +
+                escapeHTML(
+                    name
+                )
+                +
+                "</h3>"
+
+                +
+
+                "<p>"
+                +
+                "<strong>Student ID:</strong> "
+                +
+                escapeHTML(
+                    student.studentId ||
+                    "Unknown"
+                )
+                +
+                "</p>"
+
+                +
+
+                "<p>"
+                +
+                "<strong>Class:</strong> "
+                +
+                escapeHTML(
+                    student.className ||
+                    "Not provided"
+                )
+                +
+                "</p>"
+
+                +
+
+                "<p>"
+                +
+                "<strong>Gender:</strong> "
+                +
+                escapeHTML(
+                    student.gender ||
+                    "Not provided"
+                )
+                +
+                "</p>"
+
+                +
+
+                "<p>"
+                +
+                "<strong>Date of Birth:</strong> "
+                +
+                escapeHTML(
+                    student.dateOfBirth ||
+                    "Not provided"
+                )
+                +
+                "</p>"
+
+                +
+
+                "<p>"
+                +
+                "<strong>Phone:</strong> "
+                +
+                escapeHTML(
+                    student.phone ||
+                    "Not provided"
+                )
+                +
+                "</p>"
+
+                +
+
+                "<p>"
+                +
+                "<strong>Parent/Guardian:</strong> "
+                +
+                escapeHTML(
+                    student.guardianName ||
+                    "Not provided"
+                )
+                +
+                "</p>"
+
+                +
+
+                "<p>"
+                +
+                "<strong>Guardian Phone:</strong> "
+                +
+                escapeHTML(
+                    student.guardianPhone ||
+                    "Not provided"
+                )
+                +
+                "</p>";
+
+
+            /*
+            PASSWORD STATUS
+            */
+
+            const passwordBox =
+                document.createElement(
+                    "div"
+                );
+
+
+            passwordBox.className =
+                "passwordBox";
+
+
+            const passwordStatus =
+                student.passwordChanged === true
+                ?
+                "Student has changed their password."
+                :
+                "Student is using the default password: 000000";
+
+
+            passwordBox.innerHTML =
+
+                "<strong>Portal Password Status:</strong><br>"
+                +
+                "<span class='passwordStatus "
+                +
+                (
+                    student.passwordChanged === true
+                    ?
+                    "passwordChanged"
+                    :
+                    "passwordDefault"
+                )
+                +
+                "'>"
+                +
+                escapeHTML(
+                    passwordStatus
+                )
+                +
+                "</span>";
+
+
+            card.appendChild(
+                passwordBox
+            );
+
+
+            /*
+            ACTION BUTTONS
+            */
+
+            const actions =
+                document.createElement(
+                    "div"
+                );
+
+
+            actions.className =
+                "actions";
+
+
+            /*
+            EDIT
+            */
+
+            const editButton =
+                document.createElement(
+                    "button"
+                );
+
+
+            editButton.className =
+                "edit";
+
+
+            editButton.textContent =
+                "Edit";
+
+
+            editButton.onclick =
+                function() {
+
+                    openEditForm(
+                        realIndex
+                    );
+
+                };
+
+
+            /*
+            RESET PASSWORD
+            */
+
+            const resetButton =
+                document.createElement(
+                    "button"
+                );
+
+
+            resetButton.className =
+                "reset";
+
+
+            resetButton.textContent =
+                "Reset Password";
+
+
+            resetButton.onclick =
+                function() {
+
+                    resetStudentPassword(
+                        realIndex
+                    );
+
+                };
+
+
+            /*
+            DELETE
+            */
+
+            const deleteButton =
+                document.createElement(
+                    "button"
+                );
+
+
+            deleteButton.className =
+                "delete";
+
+
+            deleteButton.textContent =
+                "Delete";
+
+
+            deleteButton.onclick =
+                function() {
+
+                    deleteStudent(
+                        realIndex
+                    );
+
+                };
+
+
+            actions.appendChild(
+                editButton
+            );
+
+            actions.appendChild(
+                resetButton
+            );
+
+            actions.appendChild(
+                deleteButton
+            );
+
+
+            card.appendChild(
+                actions
+            );
+
+
+            container.appendChild(
+                card
+            );
+
+        }
+    );
+
+}
+
+
+/*
+==================================================
+DASHBOARD
+==================================================
+*/
+
+function goDashboard() {
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+/*
+==================================================
+HTML SECURITY
+==================================================
+*/
+
+function escapeHTML(value) {
+
+    return String(
+        value ?? ""
+    )
+
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+
+    .replace(
+        /</g,
+        "&lt;"
+    )
+
+    .replace(
+        />/g,
+        "&gt;"
+    )
+
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+
+/*
+==================================================
+START
+==================================================
+*/
+
+displayStudents();
+
+
 </script>
+
+
 </body>
+
 </html>
