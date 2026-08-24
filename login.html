@@ -1,529 +1,228 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
+    <title>NAI GARMAI | Login</title>
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
-<title>NAI GARMAI | Login</title>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #071d3a, #0b4f8a);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
 
-<style>
+        .login-box {
+            width: 100%;
+            max-width: 420px;
+            background: white;
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+        }
 
-* {
-    box-sizing: border-box;
-}
+        .logo {
+            text-align: center;
+            font-size: 42px;
+            margin-bottom: 5px;
+        }
 
-body {
-    margin: 0;
-    min-height: 100vh;
-    padding: 20px;
+        h1 {
+            text-align: center;
+            margin: 0;
+            color: #071d3a;
+            font-size: 25px;
+        }
 
-    font-family: Arial, sans-serif;
+        .school-name {
+            text-align: center;
+            color: #666;
+            margin: 8px 0 25px;
+            font-size: 14px;
+        }
 
-    background: #f4f7fb;
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+            color: #333;
+        }
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+        select,
+        input {
+            width: 100%;
+            padding: 13px;
+            margin-bottom: 18px;
+            border: 1px solid #ccc;
+            border-radius: 9px;
+            font-size: 16px;
+            outline: none;
+        }
 
-.login-box {
-    width: 100%;
-    max-width: 420px;
+        select:focus,
+        input:focus {
+            border-color: #0b4f8a;
+        }
 
-    background: white;
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 9px;
+            background: #0b4f8a;
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+        }
 
-    padding: 30px;
+        button:hover {
+            background: #071d3a;
+        }
 
-    border-radius: 16px;
+        .message {
+            display: none;
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 14px;
+        }
 
-    box-shadow:
-        0 8px 30px
-        rgba(0,0,0,.10);
-}
+        .error {
+            background: #ffe5e5;
+            color: #b00020;
+        }
 
-.logo {
-    width: 70px;
-    height: 70px;
-
-    margin: 0 auto 15px;
-
-    border-radius: 50%;
-
-    background: #0b3d62;
-
-    color: white;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-size: 24px;
-    font-weight: bold;
-}
-
-h1 {
-    margin: 0;
-
-    text-align: center;
-
-    color: #0b3d62;
-}
-
-.subtitle {
-    text-align: center;
-
-    color: #777;
-
-    margin-bottom: 25px;
-}
-
-label {
-    display: block;
-
-    margin-top: 15px;
-    margin-bottom: 7px;
-
-    font-weight: bold;
-}
-
-select,
-input {
-    width: 100%;
-
-    padding: 13px;
-
-    border: 1px solid #ccc;
-
-    border-radius: 8px;
-
-    font-size: 15px;
-}
-
-button {
-    width: 100%;
-
-    margin-top: 22px;
-
-    padding: 14px;
-
-    border: none;
-
-    border-radius: 8px;
-
-    background: #0b3d62;
-
-    color: white;
-
-    font-size: 16px;
-
-    font-weight: bold;
-}
-
-.message {
-    min-height: 22px;
-
-    margin-top: 15px;
-
-    text-align: center;
-
-    font-weight: bold;
-}
-
-.test-info {
-    margin-top: 20px;
-
-    padding: 12px;
-
-    background: #f4f7fb;
-
-    border-radius: 8px;
-
-    font-size: 12px;
-
-    color: #666;
-
-    line-height: 1.6;
-}
-
-</style>
-
+        .footer {
+            text-align: center;
+            margin-top: 22px;
+            color: #777;
+            font-size: 12px;
+        }
+    </style>
 </head>
 
 <body>
 
+    <div class="login-box">
 
-<div class="login-box">
+        <div class="logo">🎓</div>
 
+        <h1>NAI GARMAI</h1>
 
-<div class="logo">
-NG
-</div>
+        <div class="school-name">
+            School Management System
+        </div>
 
+        <form id="loginForm">
 
-<h1>
-NAI GARMAI
-</h1>
+            <label for="role">Login As</label>
 
+            <select id="role" required>
+                <option value="">-- Select Account Type --</option>
+                <option value="admin">Administrator</option>
+                <option value="instructor">Instructor</option>
+                <option value="student">Student</option>
+            </select>
 
-<p class="subtitle">
-School Management System
-</p>
+            <label for="userId">User ID</label>
 
+            <input
+                type="text"
+                id="userId"
+                placeholder="Enter your User ID"
+                required
+            >
 
-<label>
-Login As
-</label>
+            <label for="password">Password</label>
 
+            <input
+                type="password"
+                id="password"
+                placeholder="Enter your password"
+                required
+            >
 
-<select id="loginType">
+            <button type="submit">
+                Login
+            </button>
 
-<option value="admin">
-Administrator
-</option>
+        </form>
 
-<option value="instructor">
-Instructor
-</option>
+        <div id="message" class="message error"></div>
 
-<option value="student">
-Student
-</option>
+        <div class="footer">
+            © 2026 NAI GARMAI School Management System
+        </div>
 
-</select>
+    </div>
 
+    <script>
 
-<label>
-Username / ID
-</label>
+        const loginForm = document.getElementById("loginForm");
+        const message = document.getElementById("message");
 
+        loginForm.addEventListener("submit", function(event) {
 
-<input
-    id="username"
-    type="text"
-    placeholder="Enter username or ID"
->
+            event.preventDefault();
 
+            const role = document.getElementById("role").value;
+            const userId = document.getElementById("userId").value.trim();
+            const password = document.getElementById("password").value;
 
-<label>
-Password
-</label>
+            if (!role) {
+                showMessage("Please select your account type.");
+                return;
+            }
 
+            if (!userId) {
+                showMessage("Please enter your User ID.");
+                return;
+            }
 
-<input
-    id="password"
-    type="password"
-    placeholder="Enter password"
->
+            if (!password) {
+                showMessage("Please enter your password.");
+                return;
+            }
 
+            /*
+             * Temporary login routing.
+             *
+             * We will connect this to the real database
+             * and secure authentication after the pages are working.
+             */
 
-<button
-    onclick="login()"
->
-LOGIN
-</button>
+            if (role === "admin") {
+                window.location.href = "admin.html";
+            }
 
+            else if (role === "instructor") {
+                window.location.href = "instructor.html";
+            }
 
-<div
-    id="message"
-    class="message"
-></div>
+            else if (role === "student") {
+                window.location.href = "student.html";
+            }
 
+        });
 
-<div class="test-info">
+        function showMessage(text) {
+            message.textContent = text;
+            message.style.display = "block";
+        }
 
-<b>Test accounts</b><br>
-
-Administrator:
-admin / admin123<br>
-
-Instructor:
-instructor / instructor123<br>
-
-Student:
-student / student123
-
-</div>
-
-
-</div>
-
-
-<script>
-
-function login() {
-
-
-var type =
-    document.getElementById(
-        "loginType"
-    ).value;
-
-
-var username =
-    document.getElementById(
-        "username"
-    ).value.trim();
-
-
-var password =
-    document.getElementById(
-        "password"
-    ).value;
-
-
-var message =
-    document.getElementById(
-        "message"
-    );
-
-
-message.textContent = "";
-
-
-/*
-========================================
-CHECK EMPTY FIELDS
-========================================
-*/
-
-if (
-    username === ""
-    ||
-    password === ""
-) {
-
-    message.textContent =
-        "Please enter your username and password.";
-
-    message.style.color =
-        "#d9534f";
-
-    return;
-
-}
-
-
-/*
-========================================
-ADMINISTRATOR
-========================================
-*/
-
-if (
-    type === "admin"
-) {
-
-
-if (
-    username === "admin"
-    &&
-    password === "admin123"
-) {
-
-
-localStorage.setItem(
-    "loggedIn",
-    "true"
-);
-
-
-localStorage.setItem(
-    "userRole",
-    "admin"
-);
-
-
-localStorage.setItem(
-    "currentUser",
-    "Administrator"
-);
-
-
-message.textContent =
-    "Administrator login successful.";
-
-
-message.style.color =
-    "#198754";
-
-
-setTimeout(
-    function() {
-
-        window.location.href =
-            "index.html";
-
-    },
-    500
-);
-
-
-return;
-
-}
-
-
-message.textContent =
-    "Invalid Administrator login.";
-
-message.style.color =
-    "#d9534f";
-
-return;
-
-}
-
-
-/*
-========================================
-INSTRUCTOR
-========================================
-*/
-
-if (
-    type === "instructor"
-) {
-
-
-if (
-    username === "instructor"
-    &&
-    password === "instructor123"
-) {
-
-
-localStorage.setItem(
-    "loggedIn",
-    "true"
-);
-
-
-localStorage.setItem(
-    "userRole",
-    "instructor"
-);
-
-
-localStorage.setItem(
-    "currentUser",
-    "Instructor"
-);
-
-
-message.textContent =
-    "Instructor login successful.";
-
-
-message.style.color =
-    "#198754";
-
-
-setTimeout(
-    function() {
-
-        window.location.href =
-            "instructor-dashboard.html";
-
-    },
-    500
-);
-
-
-return;
-
-}
-
-
-message.textContent =
-    "Invalid Instructor login.";
-
-message.style.color =
-    "#d9534f";
-
-return;
-
-}
-
-
-/*
-========================================
-STUDENT
-========================================
-*/
-
-if (
-    type === "student"
-) {
-
-
-if (
-    username === "student"
-    &&
-    password === "student123"
-) {
-
-
-localStorage.setItem(
-    "loggedIn",
-    "true"
-);
-
-
-localStorage.setItem(
-    "userRole",
-    "student"
-);
-
-
-localStorage.setItem(
-    "currentUser",
-    "Student"
-);
-
-
-message.textContent =
-    "Student login successful.";
-
-
-message.style.color =
-    "#198754";
-
-
-setTimeout(
-    function() {
-
-        window.location.href =
-            "student-dashboard.html";
-
-    },
-    500
-);
-
-
-return;
-
-}
-
-
-message.textContent =
-    "Invalid Student login.";
-
-message.style.color =
-    "#d9534f";
-
-return;
-
-}
-
-}
-
-</script>
-
+    </script>
 
 </body>
-
 </html>
