@@ -5,7 +5,10 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
 <title>NAI GARMAI | Student Portal</title>
 
@@ -17,15 +20,28 @@
 
 body {
     margin: 0;
+    padding: 15px;
     font-family: Arial, sans-serif;
     background: #f4f7fb;
     color: #222;
+}
+
+.test {
+    background: white;
+    color: red;
+    text-align: center;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    font-size: 24px;
+    font-weight: bold;
 }
 
 header {
     background: #0b3d62;
     color: white;
     padding: 20px;
+    border-radius: 12px;
 }
 
 .header-inner {
@@ -44,7 +60,6 @@ header h1 {
 
 header p {
     margin: 6px 0 0;
-    opacity: .9;
 }
 
 .logout {
@@ -60,27 +75,10 @@ header p {
 .container {
     max-width: 1000px;
     margin: auto;
-    padding: 25px 15px;
+    padding: 25px 0;
 }
 
-.welcome {
-    background: white;
-    padding: 25px;
-    border-radius: 14px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 15px rgba(0,0,0,.08);
-}
-
-.welcome h2 {
-    margin: 0 0 8px;
-    color: #0b3d62;
-}
-
-.welcome p {
-    margin: 0;
-    color: #666;
-}
-
+.welcome,
 .panel {
     background: white;
     padding: 22px;
@@ -89,8 +87,8 @@ header p {
     box-shadow: 0 4px 15px rgba(0,0,0,.08);
 }
 
+.welcome h2,
 .panel h2 {
-    margin: 0 0 18px;
     color: #0b3d62;
 }
 
@@ -113,23 +111,14 @@ header p {
     margin-bottom: 7px;
 }
 
-.status {
-    padding: 14px;
-    border-radius: 8px;
-    background: #eaf7ee;
-    color: #245c35;
-}
-
 .empty {
     color: #777;
-    padding: 10px 0;
 }
 
 .footer {
     text-align: center;
     color: #888;
     padding: 25px;
-    font-size: 13px;
 }
 
 @media (max-width: 600px) {
@@ -151,15 +140,26 @@ header p {
 
 <body>
 
+<!-- VISIBLE TEST -->
+
+<div class="test">
+NAI GARMAI TEST — PORTAL.HTML IS LOADING
+</div>
+
+
 <header>
 
 <div class="header-inner">
 
 <div>
 
-<h1>NAI GARMAI SCHOOL SYSTEM</h1>
+<h1>
+NAI GARMAI SCHOOL SYSTEM
+</h1>
 
-<p>Student Portal</p>
+<p>
+Student Portal
+</p>
 
 </div>
 
@@ -178,22 +178,19 @@ Logout
 <div class="container">
 
 
-<!-- WELCOME -->
-
 <div class="welcome">
 
 <h2>
-Welcome, <span id="studentName">Student</span>
+Welcome,
+<span id="studentName">Student</span>
 </h2>
 
 <p id="loginStatus">
-Student portal loaded successfully.
+Student portal is working.
 </p>
 
 </div>
 
-
-<!-- STUDENT INFORMATION -->
 
 <div class="panel">
 
@@ -201,10 +198,7 @@ Student portal loaded successfully.
 My Information
 </h2>
 
-<div
-    id="studentInfo"
-    class="info-grid"
->
+<div class="info-grid">
 
 <div class="info-box">
 
@@ -298,22 +292,18 @@ Not available
 </div>
 
 
-<!-- GRADES -->
-
 <div class="panel">
 
 <h2>
 My Grades
 </h2>
 
-<div class="empty">
+<p class="empty">
 No grades have been posted yet.
-</div>
+</p>
 
 </div>
 
-
-<!-- ATTENDANCE -->
 
 <div class="panel">
 
@@ -321,9 +311,9 @@ No grades have been posted yet.
 My Attendance
 </h2>
 
-<div class="empty">
+<p class="empty">
 No attendance records have been posted yet.
-</div>
+</p>
 
 </div>
 
@@ -340,19 +330,12 @@ No attendance records have been posted yet.
 
 <script>
 
-/*
-==================================================
-LOAD CURRENT STUDENT
-==================================================
-*/
-
 function loadStudent() {
 
     const studentId =
         localStorage.getItem(
             "currentStudentId"
         );
-
 
     const students =
         JSON.parse(
@@ -361,13 +344,7 @@ function loadStudent() {
             )
         ) || [];
 
-
-    /*
-    FIND STUDENT
-    */
-
     let student = null;
-
 
     if (studentId) {
 
@@ -388,11 +365,6 @@ function loadStudent() {
 
     }
 
-
-    /*
-    IF STUDENT EXISTS
-    */
-
     if (student) {
 
         const name =
@@ -400,12 +372,9 @@ function loadStudent() {
             student.fullName ||
             "Student";
 
-
         document.getElementById(
             "studentName"
-        ).textContent =
-            name;
-
+        ).textContent = name;
 
         document.getElementById(
             "studentId"
@@ -413,12 +382,10 @@ function loadStudent() {
             student.studentId ||
             "Not available";
 
-
         document.getElementById(
             "fullName"
         ).textContent =
             name;
-
 
         document.getElementById(
             "studentClass"
@@ -426,13 +393,11 @@ function loadStudent() {
             student.className ||
             "Not available";
 
-
         document.getElementById(
             "gender"
         ).textContent =
             student.gender ||
             "Not available";
-
 
         document.getElementById(
             "dob"
@@ -440,13 +405,11 @@ function loadStudent() {
             student.dateOfBirth ||
             "Not available";
 
-
         document.getElementById(
             "phone"
         ).textContent =
             student.phone ||
             "Not available";
-
 
         document.getElementById(
             "guardian"
@@ -454,13 +417,11 @@ function loadStudent() {
             student.guardianName ||
             "Not available";
 
-
         document.getElementById(
             "guardianPhone"
         ).textContent =
             student.guardianPhone ||
             "Not available";
-
 
         document.getElementById(
             "loginStatus"
@@ -469,63 +430,26 @@ function loadStudent() {
 
     }
 
-
-    /*
-    IF NO STUDENT SESSION
-    */
-
-    else {
-
-        document.getElementById(
-            "loginStatus"
-        ).textContent =
-            "Portal is working. Log in as a student to display your information.";
-
-    }
-
 }
 
 
-/*
-==================================================
-LOGOUT
-==================================================
-*/
-
 function logout() {
 
-    localStorage.removeItem(
-        "loggedIn"
-    );
+    localStorage.removeItem("loggedIn");
 
-    localStorage.removeItem(
-        "userRole"
-    );
+    localStorage.removeItem("userRole");
 
-    localStorage.removeItem(
-        "currentStudentId"
-    );
+    localStorage.removeItem("currentStudentId");
 
-    localStorage.removeItem(
-        "currentStudentName"
-    );
+    localStorage.removeItem("currentStudentName");
 
-    localStorage.removeItem(
-        "studentPasswordChanged"
-    );
-
+    localStorage.removeItem("studentPasswordChanged");
 
     window.location.href =
         "login.html";
 
 }
 
-
-/*
-==================================================
-START
-==================================================
-*/
 
 loadStudent();
 
