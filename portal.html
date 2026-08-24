@@ -5,10 +5,7 @@
 
 <meta charset="UTF-8">
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>NAI GARMAI | Student Portal</title>
 
@@ -24,17 +21,6 @@ body {
     font-family: Arial, sans-serif;
     background: #f4f7fb;
     color: #222;
-}
-
-.test {
-    background: white;
-    color: red;
-    text-align: center;
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 10px;
-    font-size: 24px;
-    font-weight: bold;
 }
 
 header {
@@ -140,13 +126,6 @@ header p {
 
 <body>
 
-<!-- VISIBLE TEST -->
-
-<div class="test">
-NAI GARMAI TEST — PORTAL.HTML IS LOADING
-</div>
-
-
 <header>
 
 <div class="header-inner">
@@ -164,8 +143,8 @@ Student Portal
 </div>
 
 <button
-    class="logout"
-    onclick="logout()"
+class="logout"
+onclick="goLogin()"
 >
 Logout
 </button>
@@ -181,12 +160,11 @@ Logout
 <div class="welcome">
 
 <h2>
-Welcome,
-<span id="studentName">Student</span>
+Welcome, Student
 </h2>
 
-<p id="loginStatus">
-Student portal is working.
+<p>
+Your student portal is ready.
 </p>
 
 </div>
@@ -200,12 +178,13 @@ My Information
 
 <div class="info-grid">
 
+
 <div class="info-box">
 
 <strong>Student ID</strong>
 
-<span id="studentId">
-Not available
+<span>
+Your Student ID will appear here.
 </span>
 
 </div>
@@ -215,8 +194,8 @@ Not available
 
 <strong>Full Name</strong>
 
-<span id="fullName">
-Not available
+<span>
+Student name will appear here.
 </span>
 
 </div>
@@ -226,8 +205,8 @@ Not available
 
 <strong>Class / Grade</strong>
 
-<span id="studentClass">
-Not available
+<span>
+Your class will appear here.
 </span>
 
 </div>
@@ -237,8 +216,8 @@ Not available
 
 <strong>Gender</strong>
 
-<span id="gender">
-Not available
+<span>
+Your gender will appear here.
 </span>
 
 </div>
@@ -248,8 +227,8 @@ Not available
 
 <strong>Date of Birth</strong>
 
-<span id="dob">
-Not available
+<span>
+Your date of birth will appear here.
 </span>
 
 </div>
@@ -259,8 +238,8 @@ Not available
 
 <strong>Phone</strong>
 
-<span id="phone">
-Not available
+<span>
+Your phone number will appear here.
 </span>
 
 </div>
@@ -270,8 +249,8 @@ Not available
 
 <strong>Parent / Guardian</strong>
 
-<span id="guardian">
-Not available
+<span>
+Guardian information will appear here.
 </span>
 
 </div>
@@ -281,11 +260,12 @@ Not available
 
 <strong>Guardian Phone</strong>
 
-<span id="guardianPhone">
-Not available
+<span>
+Guardian phone will appear here.
 </span>
 
 </div>
+
 
 </div>
 
@@ -330,128 +310,11 @@ No attendance records have been posted yet.
 
 <script>
 
-function loadStudent() {
+function goLogin() {
 
-    const studentId =
-        localStorage.getItem(
-            "currentStudentId"
-        );
-
-    const students =
-        JSON.parse(
-            localStorage.getItem(
-                "students"
-            )
-        ) || [];
-
-    let student = null;
-
-    if (studentId) {
-
-        student =
-            students.find(
-                function(item) {
-
-                    return String(
-                        item.studentId || ""
-                    ).trim()
-                    ===
-                    String(
-                        studentId
-                    ).trim();
-
-                }
-            );
-
-    }
-
-    if (student) {
-
-        const name =
-            student.name ||
-            student.fullName ||
-            "Student";
-
-        document.getElementById(
-            "studentName"
-        ).textContent = name;
-
-        document.getElementById(
-            "studentId"
-        ).textContent =
-            student.studentId ||
-            "Not available";
-
-        document.getElementById(
-            "fullName"
-        ).textContent =
-            name;
-
-        document.getElementById(
-            "studentClass"
-        ).textContent =
-            student.className ||
-            "Not available";
-
-        document.getElementById(
-            "gender"
-        ).textContent =
-            student.gender ||
-            "Not available";
-
-        document.getElementById(
-            "dob"
-        ).textContent =
-            student.dateOfBirth ||
-            "Not available";
-
-        document.getElementById(
-            "phone"
-        ).textContent =
-            student.phone ||
-            "Not available";
-
-        document.getElementById(
-            "guardian"
-        ).textContent =
-            student.guardianName ||
-            "Not available";
-
-        document.getElementById(
-            "guardianPhone"
-        ).textContent =
-            student.guardianPhone ||
-            "Not available";
-
-        document.getElementById(
-            "loginStatus"
-        ).textContent =
-            "You are logged in to your student portal.";
-
-    }
+    window.location.href = "login.html";
 
 }
-
-
-function logout() {
-
-    localStorage.removeItem("loggedIn");
-
-    localStorage.removeItem("userRole");
-
-    localStorage.removeItem("currentStudentId");
-
-    localStorage.removeItem("currentStudentName");
-
-    localStorage.removeItem("studentPasswordChanged");
-
-    window.location.href =
-        "login.html";
-
-}
-
-
-loadStudent();
 
 </script>
 
