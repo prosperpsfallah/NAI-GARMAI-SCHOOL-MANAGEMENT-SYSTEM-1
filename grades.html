@@ -52,9 +52,7 @@ body {
     padding: 20px;
     border-radius: 12px;
     margin-bottom: 20px;
-    box-shadow:
-        0 4px 15px
-        rgba(0,0,0,0.08);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
 }
 
 label {
@@ -68,8 +66,7 @@ input {
     width: 100%;
     padding: 12px;
     margin: 8px 0;
-    border:
-        1px solid #ddd;
+    border: 1px solid #ddd;
     border-radius: 7px;
     font-size: 15px;
 }
@@ -91,6 +88,10 @@ button {
     font-weight: bold;
 }
 
+button:hover {
+    opacity: 0.9;
+}
+
 .back {
     background: white;
     color: #0b3d62;
@@ -103,6 +104,21 @@ button {
 
 .reject {
     background: #d9534f;
+    margin-right: 8px;
+}
+
+.edit {
+    background: #0b3d62;
+    margin-right: 8px;
+}
+
+.save {
+    background: #198754;
+    margin-right: 8px;
+}
+
+.cancel {
+    background: #6c757d;
 }
 
 .grade {
@@ -159,6 +175,34 @@ button {
     margin-bottom: 15px;
 }
 
+.adminNotice {
+    background: #eaf7ee;
+    padding: 12px;
+    border-radius: 8px;
+    color: #245c35;
+    margin-bottom: 15px;
+}
+
+.editBox {
+    background: white;
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+.editBox label {
+    margin-top: 8px;
+}
+
+.editBox input {
+    margin-bottom: 5px;
+}
+
+.actionRow {
+    margin-top: 10px;
+}
+
 </style>
 
 </head>
@@ -206,7 +250,9 @@ Submit Grade
 <div class="notice">
 
 Instructors can submit grades.
-Submitted grades remain <strong>Pending</strong>
+
+Submitted grades remain
+<strong>Pending</strong>
 until the Administrator reviews them.
 
 </div>
@@ -261,6 +307,33 @@ Submit Grade
 </div>
 
 
+<!-- ADMIN NOTICE -->
+
+<div
+class="panel"
+id="adminPanel"
+style="display:none;"
+>
+
+<h2>
+Administrator Grade Management
+</h2>
+
+<div class="adminNotice">
+
+<strong>Administrator access:</strong>
+
+You can review, approve, reject,
+and re-edit grades.
+
+Approved or rejected grades can
+still be edited by the Administrator.
+
+</div>
+
+</div>
+
+
 <!-- GRADE RECORDS -->
 
 <div class="panel">
@@ -288,7 +361,7 @@ Loading grades...
 
 /*
 ==================================================
-SECURITY
+LOGIN SECURITY
 ==================================================
 */
 
@@ -340,7 +413,7 @@ localStorage.getItem(
 
 /*
 ==================================================
-SET PERMISSIONS
+ROLE SETUP
 ==================================================
 */
 
@@ -348,33 +421,84 @@ SET PERMISSIONS
 function setupRole() {
 
 
-const panel =
+const submissionPanel =
 document.getElementById(
 "submissionPanel"
 );
 
 
+const adminPanel =
+document.getElementById(
+"adminPanel"
+);
+
+
+/*
+INSTRUCTOR
+*/
+
 if (
 role === "instructor"
 ) {
 
-panel.style.display =
+submissionPanel.style.display =
 "block";
 
-}
-
-else {
-
-panel.style.display =
+adminPanel.style.display =
 "none";
+
+return;
 
 }
 
 
 /*
-ADMIN CAN REVIEW.
-STUDENT CANNOT MANAGE GRADES.
+ADMINISTRATOR
 */
+
+if (
+role === "admin"
+) {
+
+submissionPanel.style.display =
+"none";
+
+adminPanel.style.display =
+"block";
+
+return;
+
+}
+
+
+/*
+STUDENT
+*/
+
+if (
+role === "student"
+) {
+
+submissionPanel.style.display =
+"none";
+
+adminPanel.style.display =
+"none";
+
+return;
+
+}
+
+
+/*
+UNKNOWN ROLE
+*/
+
+submissionPanel.style.display =
+"none";
+
+adminPanel.style.display =
+"none";
 
 }
 
@@ -476,6 +600,10 @@ SUBMIT GRADE
 function submitGrade() {
 
 
+/*
+ONLY INSTRUCTOR
+*/
+
 if (
 role !== "instructor"
 ) {
@@ -498,9 +626,7 @@ document.getElementById(
 const subject =
 document.getElementById(
 "subject"
-)
-.value
-.trim();
+).value.trim();
 
 
 const score =
@@ -522,7 +648,6 @@ message.textContent =
 /*
 VALIDATION
 */
-
 
 if (
 studentId === ""
@@ -570,7 +695,6 @@ return;
 FIND STUDENT
 */
 
-
 const student =
 students.find(
 function(item) {
@@ -585,6 +709,7 @@ return String(id)
 String(studentId);
 
 });
+
 
 if (!student) {
 
@@ -611,7 +736,6 @@ student.fullName
 CREATE GRADE
 */
 
-
 const newGrade = {
 
 student:
@@ -634,36 +758,29 @@ false,
 
 submittedAt:
 new Date()
-.toISOString()
+.toISOString(),
+
+submittedBy:
+"instructor"
 
 };
 
 
 /*
-SAVE GRADE
+SAVE
 */
-
 
 grades.push(
 newGrade
 );
 
 
-localStorage.setItem(
-
-"grades",
-
-JSON.stringify(
-grades
-)
-
-);
+saveGrades();
 
 
 /*
 CLEAR FORM
 */
-
 
 document.getElementById(
 "studentSelect"
@@ -723,6 +840,7 @@ STUDENT VIEW
 if (
 role === "student"
 ) {
+
 
 const studentId =
 localStorage.getItem(
@@ -788,6 +906,7 @@ false
 
 });
 
+
 return;
 
 }
@@ -796,7 +915,6 @@ return;
 /*
 ADMIN / INSTRUCTOR VIEW
 */
-
 
 if (
 grades.length === 0
@@ -862,6 +980,8 @@ let statusClass =
 if (
 String(
 grade.status
+||
+""
 )
 .toLowerCase()
 ===
@@ -877,6 +997,8 @@ statusClass =
 if (
 String(
 grade.status
+||
+""
 )
 .toLowerCase()
 ===
@@ -969,16 +1091,33 @@ grade.status
 
 
 /*
+==================================================
 ADMIN CONTROLS
+==================================================
 */
 
 
 if (
 role === "admin"
-&&
-grade.status === "Pending"
-&&
-grade.locked !== true
+) {
+
+
+const actionRow =
+document.createElement(
+"div"
+);
+
+
+actionRow.className =
+"actionRow";
+
+
+/*
+APPROVE BUTTON
+*/
+
+if (
+grade.status !== "Approved"
 ) {
 
 
@@ -1006,6 +1145,22 @@ index
 };
 
 
+actionRow.appendChild(
+approveButton
+);
+
+}
+
+
+/*
+REJECT BUTTON
+*/
+
+if (
+grade.status !== "Rejected"
+) {
+
+
 const rejectButton =
 document.createElement(
 "button"
@@ -1030,6 +1185,50 @@ index
 };
 
 
+actionRow.appendChild(
+rejectButton
+);
+
+}
+
+
+/*
+EDIT BUTTON
+*
+* ADMIN CAN EDIT EVEN IF
+* GRADE IS LOCKED.
+*/
+
+const editButton =
+document.createElement(
+"button"
+);
+
+
+editButton.className =
+"edit";
+
+
+editButton.textContent =
+"Edit / Re-edit";
+
+
+editButton.onclick =
+function() {
+
+showEditForm(
+index,
+div
+);
+
+};
+
+
+actionRow.appendChild(
+editButton
+);
+
+
 div.appendChild(
 document.createElement(
 "br"
@@ -1038,25 +1237,20 @@ document.createElement(
 
 
 div.appendChild(
-approveButton
-);
-
-
-div.appendChild(
-rejectButton
+actionRow
 );
 
 }
 
 
 /*
-LOCKED MESSAGE
+INSTRUCTOR MESSAGE
 */
 
-
 if (
-grade.locked === true
+role === "instructor"
 ) {
+
 
 const lockedText =
 document.createElement(
@@ -1068,8 +1262,21 @@ lockedText.className =
 "locked";
 
 
+if (
+grade.status === "Pending"
+) {
+
 lockedText.textContent =
-"🔒 This grade is locked and cannot be changed.";
+"⏳ Waiting for Administrator review.";
+
+}
+
+else {
+
+lockedText.textContent =
+"🔒 This grade has been reviewed. Only the Administrator can change it.";
+
+}
 
 
 div.appendChild(
@@ -1079,9 +1286,377 @@ lockedText
 }
 
 
+/*
+STUDENT MESSAGE
+*/
+
+if (
+role === "student"
+) {
+
+
+const studentMessage =
+document.createElement(
+"div"
+);
+
+
+studentMessage.className =
+"locked";
+
+
+studentMessage.textContent =
+"Approved grade.";
+
+
+div.appendChild(
+studentMessage
+);
+
+}
+
+
 container.appendChild(
 div
 );
+
+}
+
+
+/*
+==================================================
+SHOW EDIT FORM
+==================================================
+*/
+
+
+function showEditForm(
+index,
+div
+) {
+
+
+if (
+role !== "admin"
+) {
+
+alert(
+"Only the Administrator can edit grades."
+);
+
+return;
+
+}
+
+
+const grade =
+grades[index];
+
+
+if (!grade) {
+
+return;
+
+}
+
+
+/*
+REMOVE OLD EDIT BOX
+*/
+
+const oldBox =
+div.querySelector(
+".editBox"
+);
+
+
+if (
+oldBox
+) {
+
+oldBox.remove();
+
+return;
+
+}
+
+
+/*
+CREATE EDIT BOX
+*/
+
+const editBox =
+document.createElement(
+"div"
+);
+
+
+editBox.className =
+"editBox";
+
+
+editBox.innerHTML =
+
+"<label>Subject</label>"
+
++
+
+"<input "
++
+"type='text' "
++
+"class='editSubject' "
++
+"value='"
++
+escapeAttribute(
+grade.subject
+)
++
+"'>"
+
++
+
+"<label>Score</label>"
+
++
+
+"<input "
++
+"type='number' "
++
+"class='editScore' "
++
+"min='0' "
++
+"max='100' "
++
+"value='"
++
+escapeAttribute(
+grade.score
+)
++
+"'>";
+
+
+/*
+SAVE BUTTON
+*/
+
+const saveButton =
+document.createElement(
+"button"
+);
+
+
+saveButton.className =
+"save";
+
+
+saveButton.textContent =
+"Save Changes";
+
+
+saveButton.onclick =
+function() {
+
+saveEditedGrade(
+index,
+editBox
+);
+
+};
+
+
+/*
+CANCEL BUTTON
+*/
+
+const cancelButton =
+document.createElement(
+"button"
+);
+
+
+cancelButton.className =
+"cancel";
+
+
+cancelButton.textContent =
+"Cancel";
+
+
+cancelButton.onclick =
+function() {
+
+editBox.remove();
+
+};
+
+
+editBox.appendChild(
+document.createElement(
+"br"
+)
+);
+
+
+editBox.appendChild(
+saveButton
+);
+
+
+editBox.appendChild(
+cancelButton
+);
+
+
+div.appendChild(
+editBox
+);
+
+}
+
+
+/*
+==================================================
+SAVE EDITED GRADE
+==================================================
+*/
+
+
+function saveEditedGrade(
+index,
+editBox
+) {
+
+
+if (
+role !== "admin"
+) {
+
+alert(
+"Only the Administrator can edit grades."
+);
+
+return;
+
+}
+
+
+const grade =
+grades[index];
+
+
+if (!grade) {
+
+return;
+
+}
+
+
+const subjectInput =
+editBox.querySelector(
+".editSubject"
+);
+
+
+const scoreInput =
+editBox.querySelector(
+".editScore"
+);
+
+
+const newSubject =
+subjectInput.value.trim();
+
+
+const newScore =
+Number(
+scoreInput.value
+);
+
+
+/*
+VALIDATION
+*/
+
+if (
+newSubject === ""
+) {
+
+alert(
+"Subject cannot be empty."
+);
+
+return;
+
+}
+
+
+if (
+isNaN(newScore)
+||
+newScore < 0
+||
+newScore > 100
+) {
+
+alert(
+"Score must be between 0 and 100."
+);
+
+return;
+
+}
+
+
+/*
+SAVE CHANGES
+*/
+
+grade.subject =
+newSubject;
+
+
+grade.score =
+newScore;
+
+
+/*
+IMPORTANT:
+*
+* The Administrator has corrected
+* the grade, but we keep the
+* current approval status.
+*/
+
+grade.editedBy =
+"Administrator";
+
+
+grade.editedAt =
+new Date()
+.toISOString();
+
+
+/*
+KEEP APPROVED STATUS
+*
+* If the grade was already approved,
+* it remains approved.
+*/
+
+saveGrades();
+
+
+alert(
+"Grade successfully re-edited by the Administrator."
+);
+
+
+displayGrades();
 
 }
 
@@ -1120,19 +1695,6 @@ return;
 }
 
 
-if (
-grades[index].locked === true
-) {
-
-alert(
-"This grade is already locked."
-);
-
-return;
-
-}
-
-
 grades[index].status =
 "Approved";
 
@@ -1146,15 +1708,11 @@ new Date()
 .toISOString();
 
 
-localStorage.setItem(
+grades[index].approvedBy =
+"Administrator";
 
-"grades",
 
-JSON.stringify(
-grades
-)
-
-);
+saveGrades();
 
 
 displayGrades();
@@ -1196,19 +1754,6 @@ return;
 }
 
 
-if (
-grades[index].locked === true
-) {
-
-alert(
-"This grade is already locked."
-);
-
-return;
-
-}
-
-
 grades[index].status =
 "Rejected";
 
@@ -1222,18 +1767,34 @@ new Date()
 .toISOString();
 
 
-localStorage.setItem(
+grades[index].rejectedBy =
+"Administrator";
 
-"grades",
 
-JSON.stringify(
-grades
-)
-
-);
+saveGrades();
 
 
 displayGrades();
+
+}
+
+
+/*
+==================================================
+SAVE GRADES
+==================================================
+*/
+
+
+function saveGrades() {
+
+
+localStorage.setItem(
+"grades",
+JSON.stringify(
+grades
+)
+);
 
 }
 
@@ -1265,8 +1826,7 @@ value
 ) {
 
 return String(
-value ??
-""
+value ?? ""
 )
 
 .replace(
@@ -1297,9 +1857,40 @@ value ??
 }
 
 
+function escapeAttribute(
+value
+) {
+
+return String(
+value ?? ""
+)
+
+.replace(
+/&/g,
+"&amp;"
+)
+
+.replace(
+/"/g,
+"&quot;"
+)
+
+.replace(
+/</g,
+"&lt;"
+)
+
+.replace(
+/>/g,
+"&gt;"
+);
+
+}
+
+
 /*
 ==================================================
-START
+START APPLICATION
 ==================================================
 */
 
