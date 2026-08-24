@@ -1,368 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>NAI GARMAI | Login</title>
-
-<style>
-
-* {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    background: #f4f7fb;
-    color: #222;
-}
-
-.loginBox {
-    width: 100%;
-    max-width: 430px;
-    background: white;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 5px 25px rgba(0,0,0,0.12);
-}
-
-.logo {
-    text-align: center;
-    margin-bottom: 25px;
-}
-
-.logo h1 {
-    margin: 0;
-    color: #0b3d62;
-    font-size: 27px;
-}
-
-.logo p {
-    margin-top: 8px;
-    color: #666;
-}
-
-h2 {
-    color: #0b3d62;
-    margin-bottom: 20px;
-}
-
-label {
-    display: block;
-    margin-top: 15px;
-    font-weight: bold;
-}
-
-input,
-select {
-    width: 100%;
-    padding: 13px;
-    margin-top: 7px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 16px;
-}
-
-input:focus,
-select:focus {
-    outline: none;
-    border-color: #0b3d62;
-}
-
-button {
-    width: 100%;
-    padding: 14px;
-    margin-top: 20px;
-    border: none;
-    border-radius: 8px;
-    background: #0b3d62;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-button:hover {
-    opacity: 0.9;
-}
-
-.message {
-    margin-top: 15px;
-    text-align: center;
-    font-weight: bold;
-}
-
-.error {
-    color: #d9534f;
-}
-
-.success {
-    color: #198754;
-}
-
-.info {
-    background: #eaf7ee;
-    color: #245c35;
-    padding: 12px;
-    border-radius: 8px;
-    margin-top: 15px;
-    font-size: 14px;
-}
-
-.passwordWrap {
-    position: relative;
-}
-
-.passwordWrap input {
-    padding-right: 50px;
-}
-
-.showPassword {
-    position: absolute;
-    right: 10px;
-    top: 7px;
-    width: auto;
-    margin: 0;
-    padding: 9px;
-    background: transparent;
-    color: #0b3d62;
-    font-size: 13px;
-}
-
-.divider {
-    text-align: center;
-    margin: 25px 0;
-    color: #999;
-}
-
-@media (max-width: 500px) {
-
-    .loginBox {
-        padding: 22px;
-    }
-
-}
-
-</style>
-
-</head>
-
-<body>
-
-<div class="loginBox">
-
-<div class="logo">
-
-<h1>
-NAI GARMAI
-</h1>
-
-<p>
-SCHOOL MANAGEMENT SYSTEM
-</p>
-
-</div>
-
-
-<h2>
-Portal Login
-</h2>
-
-
-<label>
-Login As
-</label>
-
-<select id="loginType">
-
-<option value="student">
-Student
-</option>
-
-<option value="admin">
-Administrator
-</option>
-
-</select>
-
-
-<label>
-Student ID / Administrator Username
-</label>
-
-<input
-id="username"
-type="text"
-placeholder="Enter your ID or username"
-autocomplete="username"
->
-
-
-<label>
-Password
-</label>
-
-<div class="passwordWrap">
-
-<input
-id="password"
-type="password"
-placeholder="Enter your password"
-autocomplete="current-password"
->
-
-<button
-type="button"
-class="showPassword"
-onclick="togglePassword()"
->
-Show
-</button>
-
-</div>
-
-
-<button
-onclick="login()"
->
-Login
-</button>
-
-
-<div
-id="message"
-class="message"
-></div>
-
-
-<div class="info">
-
-<strong>Students:</strong><br>
-
-Use the Student ID given to you by the
-school administrator.
-
-<br><br>
-
-New students receive the default password:
-
-<strong>000000</strong>
-
-<br><br>
-
-You can change your password after logging
-into your student portal.
-
-</div>
-
-
-</div>
-
-
 <script>
 
-/*
-==================================================
-DEFAULT STUDENT PASSWORD
-==================================================
-*/
-
 const DEFAULT_STUDENT_PASSWORD = "000000";
-
-
-/*
-==================================================
-LOGIN
-==================================================
-*/
 
 function login() {
 
     const loginType =
-        document.getElementById(
-            "loginType"
-        ).value;
+        document.getElementById("loginType").value;
 
     const username =
-        document.getElementById(
-            "username"
-        ).value.trim();
+        document.getElementById("username").value.trim();
 
     const password =
-        document.getElementById(
-            "password"
-        ).value;
+        document.getElementById("password").value;
 
     const message =
-        document.getElementById(
-            "message"
-        );
-
+        document.getElementById("message");
 
     message.textContent = "";
     message.className = "message";
 
-
     if (username === "") {
-
-        message.className =
-            "message error";
-
+        message.className = "message error";
         message.textContent =
             "Please enter your ID or username.";
-
         return;
-
     }
-
 
     if (password === "") {
-
-        message.className =
-            "message error";
-
+        message.className = "message error";
         message.textContent =
             "Please enter your password.";
-
         return;
-
     }
 
 
-    /*
-    ==============================================
-    ADMINISTRATOR LOGIN
-    ==============================================
-    */
+    /* ADMIN LOGIN */
 
     if (loginType === "admin") {
 
-        /*
-        These are the administrator credentials
-        already stored by the existing system.
-        */
-
         const adminUsername =
-            localStorage.getItem(
-                "adminUsername"
-            ) || "admin";
+            localStorage.getItem("adminUsername") || "admin";
 
         const adminPassword =
-            localStorage.getItem(
-                "adminPassword"
-            ) || "admin123";
-
+            localStorage.getItem("adminPassword") || "admin123";
 
         if (
             username === adminUsername &&
@@ -384,28 +64,21 @@ function login() {
                 "Administrator"
             );
 
-
             message.className =
                 "message success";
 
             message.textContent =
                 "Administrator login successful.";
 
+            setTimeout(function() {
 
-            setTimeout(
-                function() {
+                window.location.href =
+                    "index.html";
 
-                    window.location.href =
-                        "index.html";
-
-                },
-                500
-            );
+            }, 500);
 
             return;
-
         }
-
 
         message.className =
             "message error";
@@ -414,40 +87,24 @@ function login() {
             "Invalid administrator username or password.";
 
         return;
-
     }
 
 
-    /*
-    ==============================================
-    STUDENT LOGIN
-    ==============================================
-    */
+    /* STUDENT LOGIN */
 
     const students =
         JSON.parse(
-            localStorage.getItem(
-                "students"
-            )
+            localStorage.getItem("students")
         ) || [];
 
-
-    /*
-    Find student by ID
-    */
-
     const student =
-        students.find(
-            function(item) {
+        students.find(function(item) {
 
-                return String(
-                    item.studentId || ""
-                ).trim()
-                ===
-                username;
+            return String(
+                item.studentId || ""
+            ).trim() === username;
 
-            }
-        );
+        });
 
 
     if (!student) {
@@ -459,13 +116,8 @@ function login() {
             "Student ID not found.";
 
         return;
-
     }
 
-
-    /*
-    Student password
-    */
 
     const studentPassword =
         String(
@@ -474,9 +126,7 @@ function login() {
         );
 
 
-    if (
-        password !== studentPassword
-    ) {
+    if (password !== studentPassword) {
 
         message.className =
             "message error";
@@ -485,15 +135,10 @@ function login() {
             "Incorrect password.";
 
         return;
-
     }
 
 
-    /*
-    ==============================================
-    STUDENT LOGIN SUCCESS
-    ==============================================
-    */
+    /* SAVE STUDENT SESSION */
 
     localStorage.setItem(
         "loggedIn",
@@ -507,9 +152,7 @@ function login() {
 
     localStorage.setItem(
         "currentStudentId",
-        String(
-            student.studentId
-        )
+        String(student.studentId)
     );
 
     localStorage.setItem(
@@ -520,19 +163,6 @@ function login() {
     );
 
 
-    /*
-    Mark whether student is
-    still using default password.
-    */
-
-    localStorage.setItem(
-        "studentPasswordChanged",
-        student.passwordChanged === true
-            ? "true"
-            : "false"
-    );
-
-
     message.className =
         "message success";
 
@@ -540,84 +170,53 @@ function login() {
         "Login successful. Opening student portal...";
 
 
-    setTimeout(
-        function() {
+    /* IMPORTANT:
+       Your file is portal.html
+    */
 
-            window.location.href =
-                "student-portal.html";
+    setTimeout(function() {
 
-        },
-        500
-    );
+        window.location.href =
+            "portal.html";
+
+    }, 500);
 
 }
 
 
-/*
-==================================================
-SHOW / HIDE PASSWORD
-==================================================
-*/
-
 function togglePassword() {
 
     const password =
-        document.getElementById(
-            "password"
-        );
+        document.getElementById("password");
 
     const button =
-        document.querySelector(
-            ".showPassword"
-        );
+        document.querySelector(".showPassword");
 
 
-    if (
-        password.type === "password"
-    ) {
+    if (password.type === "password") {
 
-        password.type =
-            "text";
-
-        button.textContent =
-            "Hide";
+        password.type = "text";
+        button.textContent = "Hide";
 
     } else {
 
-        password.type =
-            "password";
-
-        button.textContent =
-            "Show";
+        password.type = "password";
+        button.textContent = "Show";
 
     }
 
 }
 
 
-/*
-==================================================
-ENTER KEY LOGIN
-==================================================
-*/
-
 document.addEventListener(
     "keydown",
     function(event) {
 
-        if (
-            event.key === "Enter"
-        ) {
-
+        if (event.key === "Enter") {
             login();
-
         }
 
     }
 );
 
 </script>
-
-</body>
-
-</html>
