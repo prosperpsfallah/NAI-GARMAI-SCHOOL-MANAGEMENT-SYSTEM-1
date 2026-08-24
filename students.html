@@ -1,325 +1,491 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>NAI GARMAI | Dashboard</title>
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>NAI GARMAI | Students</title>
 
 <style>
+
 * {
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
 }
 
 body {
+    margin: 0;
+    padding: 20px;
     font-family: Arial, sans-serif;
     background: #f4f7fb;
     color: #222;
 }
 
-header {
-    background: #0b3d62;
-    color: white;
-    padding: 18px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 15px;
-}
-
-header h1 {
-    font-size: 20px;
-}
-
-.logout {
-    background: #d9534f;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
 .container {
-    padding: 25px 20px;
     max-width: 1100px;
     margin: auto;
 }
 
-.welcome {
+.header {
+    background: #0b3d62;
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    margin: 0 0 6px;
+}
+
+.header p {
+    margin: 0 0 15px;
+}
+
+button {
+    border: none;
+    border-radius: 7px;
+    padding: 12px 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+.back {
     background: white;
-    padding: 25px;
-    border-radius: 15px;
-    margin-bottom: 25px;
-    box-shadow: 0 5px 20px rgba(0,0,0,.08);
-}
-
-.welcome h2 {
     color: #0b3d62;
-    margin-bottom: 8px;
 }
 
-.welcome p {
-    color: #666;
+.add {
+    background: #198754;
+    color: white;
 }
 
-.role {
-    display: inline-block;
+.edit {
+    background: #0b3d62;
+    color: white;
+    margin-right: 6px;
+}
+
+.delete {
+    background: #d9534f;
+    color: white;
+}
+
+.save {
+    background: #198754;
+    color: white;
+    margin-right: 8px;
+}
+
+.cancel {
+    background: #6c757d;
+    color: white;
+}
+
+.panel {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.panelHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.panel h2 {
+    margin: 0;
+    color: #0b3d62;
+}
+
+.formPanel {
+    display: none;
+}
+
+.formPanel.show {
+    display: block;
+}
+
+label {
+    display: block;
     margin-top: 12px;
-    padding: 8px 12px;
-    border-radius: 20px;
-    background: #eef5fa;
-    color: #0b3d62;
     font-weight: bold;
 }
 
-.cards {
-    display: grid;
-    grid-template-columns: repeat(
-        auto-fit,
-        minmax(180px, 1fr)
-    );
-    gap: 18px;
+input,
+select {
+    width: 100%;
+    padding: 12px;
+    margin-top: 7px;
+    border: 1px solid #ddd;
+    border-radius: 7px;
+    font-size: 15px;
 }
 
-.card {
-    background: white;
-    padding: 25px;
-    border-radius: 15px;
-    text-align: center;
-    box-shadow: 0 5px 20px rgba(0,0,0,.08);
-    cursor: pointer;
-    transition: .2s;
+input:focus,
+select:focus {
+    outline: none;
+    border-color: #0b3d62;
 }
 
-.card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(0,0,0,.12);
+.formActions {
+    margin-top: 15px;
 }
 
-.card h3 {
+.message {
+    margin-top: 12px;
+    font-weight: bold;
+}
+
+.success {
+    color: #198754;
+}
+
+.error {
+    color: #d9534f;
+}
+
+.search {
+    margin-bottom: 15px;
+}
+
+.studentCard {
+    background: #f8fafc;
+    border-left: 4px solid #0b3d62;
+    border-radius: 9px;
+    padding: 18px;
+    margin-top: 12px;
+}
+
+.studentCard h3 {
+    margin: 0 0 10px;
     color: #0b3d62;
-    margin-bottom: 10px;
 }
 
-.card p {
+.studentCard p {
+    margin: 6px 0;
+}
+
+.actions {
+    margin-top: 12px;
+}
+
+.empty {
     color: #777;
 }
 
-.admin-card {
-    border-top: 5px solid #0b3d62;
-}
-
-.instructor-card {
-    border-top: 5px solid #198754;
-}
-
-.student-card {
-    border-top: 5px solid #d97706;
+.adminNotice {
+    background: #eaf7ee;
+    color: #245c35;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 15px;
 }
 
 .hidden {
     display: none !important;
 }
 
-.footer {
-    text-align: center;
-    padding: 30px;
-    color: #888;
-    font-size: 13px;
-}
-
 @media (max-width: 600px) {
 
-    header {
-        flex-direction: column;
-        align-items: flex-start;
+    body {
+        padding: 10px;
     }
 
-    header .logout {
-        width: 100%;
+    .panel {
+        padding: 15px;
     }
+
+    .header {
+        padding: 15px;
+    }
+
+    button {
+        width: 100%;
+        margin-top: 8px;
+    }
+
+    .edit,
+    .delete {
+        width: auto;
+    }
+
 }
+
 </style>
+
 </head>
 
+
 <body>
-
-<header>
-
-    <h1>
-        NAI GARMAI SCHOOL SYSTEM
-    </h1>
-
-    <button
-        class="logout"
-        onclick="logout()"
-    >
-        Logout
-    </button>
-
-</header>
 
 
 <div class="container">
 
 
-    <!-- WELCOME -->
+<!-- HEADER -->
 
-    <div class="welcome">
+<div class="header">
 
-        <h2>
-            Welcome to NAI GARMAI
-        </h2>
+<h1>
+NAI GARMAI SCHOOL SYSTEM
+</h1>
 
-        <p id="userInfo">
-            Loading...
-        </p>
+<p>
+Student Management
+</p>
 
-        <div
-            class="role"
-            id="roleDisplay"
-        >
-            Loading role...
-        </div>
-
-    </div>
-
-
-    <!-- DASHBOARD -->
-
-    <div class="cards">
-
-
-        <!-- ADMIN: STUDENTS -->
-
-        <div
-            class="card admin-card"
-            id="studentsCard"
-            onclick="openPage('students.html')"
-        >
-
-            <h3>
-                Students
-            </h3>
-
-            <p>
-                Add, edit and manage students
-            </p>
-
-        </div>
-
-
-        <!-- ADMIN: INSTRUCTORS -->
-
-        <div
-            class="card admin-card"
-            id="instructorsCard"
-            onclick="openPage('instructors.html')"
-        >
-
-            <h3>
-                Instructors
-            </h3>
-
-            <p>
-                Add and manage instructors
-            </p>
-
-        </div>
-
-
-        <!-- ATTENDANCE -->
-
-        <div
-            class="card instructor-card"
-            id="attendanceCard"
-            onclick="openPage('attendance.html')"
-        >
-
-            <h3>
-                Attendance
-            </h3>
-
-            <p>
-                Submit and approve attendance
-            </p>
-
-        </div>
-
-
-        <!-- GRADES -->
-
-        <div
-            class="card instructor-card"
-            id="gradesCard"
-            onclick="openPage('grades.html')"
-        >
-
-            <h3>
-                Grades
-            </h3>
-
-            <p>
-                Submit and approve grades
-            </p>
-
-        </div>
-
-
-        <!-- REPORTS -->
-
-        <div
-            class="card admin-card"
-            id="reportsCard"
-            onclick="openPage('reports.html')"
-        >
-
-            <h3>
-                Reports
-            </h3>
-
-            <p>
-                View school statistics
-            </p>
-
-        </div>
-
-
-        <!-- STUDENT PORTAL -->
-
-        <div
-            class="card student-card hidden"
-            id="studentPortalCard"
-            onclick="openPage('student.html')"
-        >
-
-            <h3>
-                Student Portal
-            </h3>
-
-            <p>
-                View approved grades and attendance
-            </p>
-
-        </div>
-
-    </div>
+<button
+class="back"
+onclick="goDashboard()"
+>
+← Dashboard
+</button>
 
 </div>
 
 
-<div class="footer">
+<!-- ADMIN NOTICE -->
 
-    © 2026 NAI GARMAI SCHOOL SYSTEM
+<div
+class="panel"
+id="adminNotice"
+>
+
+<h2>
+Student Management
+</h2>
+
+<div class="adminNotice">
+
+Administrator access only.
+
+You can add, edit, search and delete
+student records.
+
+</div>
+
+</div>
+
+
+<!-- ADD STUDENT -->
+
+<div
+class="panel"
+id="addPanel"
+>
+
+<div class="panelHeader">
+
+<h2>
+Add Student
+</h2>
+
+<button
+class="add"
+onclick="openAddForm()"
+>
++ Add Student
+</button>
+
+</div>
+
+</div>
+
+
+<!-- STUDENT FORM -->
+
+<div
+class="panel formPanel"
+id="studentFormPanel"
+>
+
+<h2 id="formTitle">
+Add New Student
+</h2>
+
+
+<label>
+Student ID
+</label>
+
+<input
+id="studentId"
+type="text"
+placeholder="Example: NGS-2026-001"
+readonly
+>
+
+
+<label>
+Full Name
+</label>
+
+<input
+id="studentName"
+type="text"
+placeholder="Enter student's full name"
+>
+
+
+<label>
+Date of Birth
+</label>
+
+<input
+id="studentDOB"
+type="date"
+>
+
+
+<label>
+Gender
+</label>
+
+<select id="studentGender">
+
+<option value="">
+Select gender
+</option>
+
+<option value="Male">
+Male
+</option>
+
+<option value="Female">
+Female
+</option>
+
+<option value="Other">
+Other
+</option>
+
+</select>
+
+
+<label>
+Class / Grade
+</label>
+
+<input
+id="studentClass"
+type="text"
+placeholder="Example: Grade 10"
+>
+
+
+<label>
+Phone Number
+</label>
+
+<input
+id="studentPhone"
+type="tel"
+placeholder="Enter phone number"
+>
+
+
+<label>
+Parent / Guardian Name
+</label>
+
+<input
+id="guardianName"
+type="text"
+placeholder="Enter parent or guardian name"
+>
+
+
+<label>
+Parent / Guardian Phone
+</label>
+
+<input
+id="guardianPhone"
+type="tel"
+placeholder="Enter guardian phone number"
+>
+
+
+<div class="formActions">
+
+<button
+class="save"
+onclick="saveStudent()"
+>
+Save Student
+</button>
+
+<button
+class="cancel"
+onclick="closeStudentForm()"
+>
+Cancel
+</button>
+
+</div>
+
+
+<div
+id="formMessage"
+class="message"
+></div>
+
+</div>
+
+
+<!-- STUDENTS LIST -->
+
+<div class="panel">
+
+<div class="panelHeader">
+
+<h2>
+Registered Students
+</h2>
+
+</div>
+
+
+<input
+class="search"
+id="searchInput"
+type="search"
+placeholder="Search by name, student ID, class or phone..."
+oninput="displayStudents()"
+>
+
+
+<div id="studentsList">
+
+<p class="empty">
+Loading students...
+</p>
+
+</div>
+
+</div>
+
 
 </div>
 
 
 <script>
+
 
 /*
 ==================================================
@@ -327,342 +493,1210 @@ LOGIN SECURITY
 ==================================================
 */
 
+
 const loggedIn =
-    localStorage.getItem("loggedIn");
+localStorage.getItem(
+"loggedIn"
+);
 
-const userRole =
-    localStorage.getItem("userRole");
 
+const role =
+localStorage.getItem(
+"userRole"
+);
 
-/*
-==================================================
-CHECK LOGIN
-==================================================
-*/
 
 if (
-    loggedIn !== "true" ||
-    !userRole
+loggedIn !== "true"
 ) {
 
-    window.location.href =
-        "login.html";
+window.location.href =
+"login.html";
 
 }
 
 
 /*
 ==================================================
-ROLE SETUP
+ADMIN SECURITY
 ==================================================
 */
 
-function setupDashboard() {
 
-    const studentsCard =
-        document.getElementById(
-            "studentsCard"
-        );
+if (
+role !== "admin"
+) {
 
-    const instructorsCard =
-        document.getElementById(
-            "instructorsCard"
-        );
+alert(
+"Only the Administrator can manage students."
+);
 
-    const attendanceCard =
-        document.getElementById(
-            "attendanceCard"
-        );
-
-    const gradesCard =
-        document.getElementById(
-            "gradesCard"
-        );
-
-    const reportsCard =
-        document.getElementById(
-            "reportsCard"
-        );
-
-    const studentPortalCard =
-        document.getElementById(
-            "studentPortalCard"
-        );
-
-    const userInfo =
-        document.getElementById(
-            "userInfo"
-        );
-
-    const roleDisplay =
-        document.getElementById(
-            "roleDisplay"
-        );
-
-
-    /*
-    ==============================================
-    ADMINISTRATOR
-    ==============================================
-    */
-
-    if (
-        userRole === "admin"
-    ) {
-
-        userInfo.textContent =
-            "You have full Administrator access to the school management system.";
-
-        roleDisplay.textContent =
-            "Administrator";
-
-        /*
-        ADMIN CAN ACCESS EVERYTHING
-        */
-
-        studentsCard.classList.remove(
-            "hidden"
-        );
-
-        instructorsCard.classList.remove(
-            "hidden"
-        );
-
-        attendanceCard.classList.remove(
-            "hidden"
-        );
-
-        gradesCard.classList.remove(
-            "hidden"
-        );
-
-        reportsCard.classList.remove(
-            "hidden"
-        );
-
-        studentPortalCard.classList.add(
-            "hidden"
-        );
-
-        return;
-    }
-
-
-    /*
-    ==============================================
-    INSTRUCTOR
-    ==============================================
-    */
-
-    if (
-        userRole === "instructor"
-    ) {
-
-        userInfo.textContent =
-            "You are logged in as an Instructor.";
-
-        roleDisplay.textContent =
-            "Instructor";
-
-        /*
-        INSTRUCTOR CANNOT MANAGE USERS
-        */
-
-        studentsCard.classList.add(
-            "hidden"
-        );
-
-        instructorsCard.classList.add(
-            "hidden"
-        );
-
-        reportsCard.classList.add(
-            "hidden"
-        );
-
-        attendanceCard.classList.remove(
-            "hidden"
-        );
-
-        gradesCard.classList.remove(
-            "hidden"
-        );
-
-        studentPortalCard.classList.add(
-            "hidden"
-        );
-
-        return;
-    }
-
-
-    /*
-    ==============================================
-    STUDENT
-    ==============================================
-    */
-
-    if (
-        userRole === "student"
-    ) {
-
-        userInfo.textContent =
-            "You are logged in as a Student.";
-
-        roleDisplay.textContent =
-            "Student";
-
-        /*
-        STUDENT CANNOT MANAGE ANYTHING
-        */
-
-        studentsCard.classList.add(
-            "hidden"
-        );
-
-        instructorsCard.classList.add(
-            "hidden"
-        );
-
-        attendanceCard.classList.add(
-            "hidden"
-        );
-
-        gradesCard.classList.add(
-            "hidden"
-        );
-
-        reportsCard.classList.add(
-            "hidden"
-        );
-
-        studentPortalCard.classList.remove(
-            "hidden"
-        );
-
-        return;
-    }
-
-
-    /*
-    ==============================================
-    UNKNOWN ROLE
-    ==============================================
-    */
-
-    alert(
-        "Invalid user role. Please login again."
-    );
-
-    logout();
+window.location.href =
+"index.html";
 
 }
 
 
 /*
 ==================================================
-OPEN PAGE WITH EXTRA SECURITY
+LOAD STUDENTS
 ==================================================
 */
 
-function openPage(page) {
 
-    /*
-    ADMIN
-    */
-
-    if (
-        userRole === "admin"
-    ) {
-
-        window.location.href =
-            page;
-
-        return;
-    }
+let students =
+JSON.parse(
+localStorage.getItem(
+"students"
+)
+) || [];
 
 
-    /*
-    INSTRUCTOR
-    */
-
-    if (
-        userRole === "instructor"
-    ) {
-
-        if (
-            page === "attendance.html" ||
-            page === "grades.html"
-        ) {
-
-            window.location.href =
-                page;
-
-            return;
-        }
-
-        alert(
-            "You do not have permission to open this page."
-        );
-
-        return;
-    }
+/*
+==================================================
+EDIT MODE
+==================================================
+*/
 
 
-    /*
-    STUDENT
-    */
+let editingIndex = -1;
 
-    if (
-        userRole === "student"
-    ) {
 
-        if (
-            page === "student.html"
-        ) {
+/*
+==================================================
+GENERATE STUDENT ID
+==================================================
+*/
 
-            window.location.href =
-                page;
 
-            return;
-        }
+function generateStudentId() {
 
-        alert(
-            "Students do not have permission to access this management page."
-        );
 
-        return;
-    }
+let highestNumber = 0;
+
+
+students.forEach(
+function(student) {
+
+
+const id =
+String(
+student.studentId
+||
+""
+);
+
+
+const match =
+id.match(
+/NGS-2026-(\d+)/
+);
+
+
+if (
+match
+) {
+
+const number =
+parseInt(
+match[1],
+10
+);
+
+
+if (
+number > highestNumber
+) {
+
+highestNumber =
+number;
+
+}
+
+}
+
+});
+
+
+const nextNumber =
+highestNumber + 1;
+
+
+return (
+"NGS-2026-"
++
+String(
+nextNumber
+).padStart(
+3,
+"0"
+)
+);
 
 }
 
 
 /*
 ==================================================
-LOGOUT
+OPEN ADD FORM
 ==================================================
 */
 
-function logout() {
 
-    localStorage.removeItem(
-        "loggedIn"
-    );
+function openAddForm() {
 
-    localStorage.removeItem(
-        "userRole"
-    );
 
-    localStorage.removeItem(
-        "studentId"
-    );
+editingIndex = -1;
 
-    localStorage.removeItem(
-        "studentName"
-    );
 
-    window.location.href =
-        "login.html";
+document.getElementById(
+"formTitle"
+).textContent =
+"Add New Student";
+
+
+clearForm();
+
+
+document.getElementById(
+"studentId"
+).value =
+generateStudentId();
+
+
+document.getElementById(
+"studentFormPanel"
+).classList.add(
+"show"
+);
+
+
+document.getElementById(
+"formMessage"
+).textContent =
+"";
+
+
+window.scrollTo(
+{
+top: 0,
+behavior: "smooth"
+}
+);
+
+}
+
+
+/*
+==================================================
+OPEN EDIT FORM
+==================================================
+*/
+
+
+function openEditForm(
+index
+) {
+
+
+if (
+role !== "admin"
+) {
+
+alert(
+"Only the Administrator can edit students."
+);
+
+return;
+
+}
+
+
+const student =
+students[index];
+
+
+if (!student) {
+
+return;
+
+}
+
+
+editingIndex =
+index;
+
+
+document.getElementById(
+"formTitle"
+).textContent =
+"Edit Student";
+
+
+document.getElementById(
+"studentId"
+).value =
+student.studentId
+||
+"";
+
+
+document.getElementById(
+"studentName"
+).value =
+student.name
+||
+student.fullName
+||
+"";
+
+
+document.getElementById(
+"studentDOB"
+).value =
+student.dateOfBirth
+||
+"";
+
+
+document.getElementById(
+"studentGender"
+).value =
+student.gender
+||
+"";
+
+
+document.getElementById(
+"studentClass"
+).value =
+student.className
+||
+"";
+
+
+document.getElementById(
+"studentPhone"
+).value =
+student.phone
+||
+"";
+
+
+document.getElementById(
+"guardianName"
+).value =
+student.guardianName
+||
+"";
+
+
+document.getElementById(
+"guardianPhone"
+).value =
+student.guardianPhone
+||
+"";
+
+
+document.getElementById(
+"formMessage"
+).textContent =
+"";
+
+
+document.getElementById(
+"studentFormPanel"
+).classList.add(
+"show"
+);
+
+
+window.scrollTo(
+{
+top: 0,
+behavior: "smooth"
+}
+);
+
+}
+
+
+/*
+==================================================
+CLOSE FORM
+==================================================
+*/
+
+
+function closeStudentForm() {
+
+
+editingIndex =
+-1;
+
+
+document.getElementById(
+"studentFormPanel"
+).classList.remove(
+"show"
+);
+
+
+clearForm();
+
+
+document.getElementById(
+"formMessage"
+).textContent =
+"";
+
+}
+
+
+/*
+==================================================
+CLEAR FORM
+==================================================
+*/
+
+
+function clearForm() {
+
+
+document.getElementById(
+"studentId"
+).value =
+"";
+
+
+document.getElementById(
+"studentName"
+).value =
+"";
+
+
+document.getElementById(
+"studentDOB"
+).value =
+"";
+
+
+document.getElementById(
+"studentGender"
+).value =
+"";
+
+
+document.getElementById(
+"studentClass"
+).value =
+"";
+
+
+document.getElementById(
+"studentPhone"
+).value =
+"";
+
+
+document.getElementById(
+"guardianName"
+).value =
+"";
+
+
+document.getElementById(
+"guardianPhone"
+).value =
+"";
+
+}
+
+
+/*
+==================================================
+SAVE STUDENT
+==================================================
+*/
+
+
+function saveStudent() {
+
+
+if (
+role !== "admin"
+) {
+
+alert(
+"Only the Administrator can add or edit students."
+);
+
+return;
+
+}
+
+
+const studentId =
+document.getElementById(
+"studentId"
+).value.trim();
+
+
+const name =
+document.getElementById(
+"studentName"
+).value.trim();
+
+
+const dateOfBirth =
+document.getElementById(
+"studentDOB"
+).value;
+
+
+const gender =
+document.getElementById(
+"studentGender"
+).value;
+
+
+const className =
+document.getElementById(
+"studentClass"
+).value.trim();
+
+
+const phone =
+document.getElementById(
+"studentPhone"
+).value.trim();
+
+
+const guardianName =
+document.getElementById(
+"guardianName"
+).value.trim();
+
+
+const guardianPhone =
+document.getElementById(
+"guardianPhone"
+).value.trim();
+
+
+const message =
+document.getElementById(
+"formMessage"
+);
+
+
+message.textContent =
+"";
+
+
+/*
+VALIDATION
+*/
+
+
+if (
+name === ""
+) {
+
+message.className =
+"message error";
+
+message.textContent =
+"Please enter the student's full name.";
+
+return;
+
+}
+
+
+if (
+gender === ""
+) {
+
+message.className =
+"message error";
+
+message.textContent =
+"Please select the student's gender.";
+
+return;
+
+}
+
+
+if (
+className === ""
+) {
+
+message.className =
+"message error";
+
+message.textContent =
+"Please enter the student's class or grade.";
+
+return;
+
+}
+
+
+/*
+CREATE STUDENT
+*/
+
+
+const studentData = {
+
+studentId:
+studentId
+||
+generateStudentId(),
+
+id:
+studentId
+||
+generateStudentId(),
+
+name:
+name,
+
+fullName:
+name,
+
+dateOfBirth:
+dateOfBirth,
+
+gender:
+gender,
+
+className:
+className,
+
+phone:
+phone,
+
+guardianName:
+guardianName,
+
+guardianPhone:
+guardianPhone,
+
+createdAt:
+new Date()
+.toISOString()
+
+};
+
+
+/*
+EDIT EXISTING STUDENT
+*/
+
+
+if (
+editingIndex !== -1
+) {
+
+
+studentData.createdAt =
+students[
+editingIndex
+].createdAt
+||
+studentData.createdAt;
+
+
+studentData.updatedAt =
+new Date()
+.toISOString();
+
+
+students[
+editingIndex
+] =
+studentData;
+
+
+saveStudents();
+
+
+message.className =
+"message success";
+
+message.textContent =
+"Student updated successfully.";
+
+
+displayStudents();
+
+
+setTimeout(
+function() {
+
+closeStudentForm();
+
+},
+700
+);
+
+
+return;
+
+}
+
+
+/*
+ADD NEW STUDENT
+*/
+
+
+students.push(
+studentData
+);
+
+
+saveStudents();
+
+
+message.className =
+"message success";
+
+message.textContent =
+"Student added successfully.";
+
+
+displayStudents();
+
+
+setTimeout(
+function() {
+
+closeStudentForm();
+
+},
+700
+);
+
+}
+
+
+/*
+==================================================
+SAVE STUDENTS
+==================================================
+*/
+
+
+function saveStudents() {
+
+
+localStorage.setItem(
+"students",
+JSON.stringify(
+students
+)
+);
+
+}
+
+
+/*
+==================================================
+DELETE STUDENT
+==================================================
+*/
+
+
+function deleteStudent(
+index
+) {
+
+
+if (
+role !== "admin"
+) {
+
+alert(
+"Only the Administrator can delete students."
+);
+
+return;
+
+}
+
+
+const student =
+students[index];
+
+
+if (!student) {
+
+return;
+
+}
+
+
+const studentName =
+student.name
+||
+student.fullName
+||
+"this student";
+
+
+const confirmed =
+confirm(
+"Are you sure you want to delete "
++
+studentName
++
+"? This action cannot be undone."
+);
+
+
+if (
+!confirmed
+) {
+
+return;
+
+}
+
+
+/*
+DELETE STUDENT
+*/
+
+students.splice(
+index,
+1
+);
+
+
+saveStudents();
+
+
+/*
+REMOVE STUDENT'S GRADES
+*
+* We intentionally do NOT
+* automatically delete grades.
+*
+* Existing academic records
+* should remain available.
+*/
+
+displayStudents();
+
+}
+
+
+/*
+==================================================
+DISPLAY STUDENTS
+==================================================
+*/
+
+
+function displayStudents() {
+
+
+const container =
+document.getElementById(
+"studentsList"
+);
+
+
+const search =
+document.getElementById(
+"searchInput"
+).value
+.trim()
+.toLowerCase();
+
+
+container.innerHTML =
+"";
+
+
+let filteredStudents =
+students;
+
+
+if (
+search !== ""
+) {
+
+filteredStudents =
+students.filter(
+function(student) {
+
+
+const text =
+
+String(
+student.studentId
+||
+""
+)
++
+
+" "
+
++
+
+String(
+student.name
+||
+student.fullName
+||
+""
+)
+
++
+
+" "
+
++
+
+String(
+student.className
+||
+""
+)
+
++
+
+" "
+
++
+
+String(
+student.phone
+||
+""
+);
+
+
+return text
+.toLowerCase()
+.includes(
+search
+);
+
+});
+
+}
+
+
+if (
+filteredStudents.length === 0
+) {
+
+container.innerHTML =
+
+"<p class='empty'>"
++
+(
+search
+?
+"No students match your search."
+:
+"No students registered yet."
+)
++
+"</p>";
+
+return;
+
+}
+
+
+/*
+DISPLAY NEWEST FIRST
+*/
+
+filteredStudents.forEach(
+function(student) {
+
+
+const realIndex =
+students.indexOf(
+student
+);
+
+
+const card =
+document.createElement(
+"div"
+);
+
+
+card.className =
+"studentCard";
+
+
+const name =
+student.name
+||
+student.fullName
+||
+"Unknown Student";
+
+
+card.innerHTML =
+
+"<h3>"
++
+escapeHTML(
+name
+)
++
+"</h3>"
+
++
+
+"<p>"
++
+"<strong>Student ID:</strong> "
++
+escapeHTML(
+student.studentId
+||
+"Unknown"
+)
++
+"</p>"
+
++
+
+"<p>"
++
+"<strong>Class:</strong> "
++
+escapeHTML(
+student.className
+||
+"Not provided"
+)
++
+"</p>"
+
++
+
+"<p>"
++
+"<strong>Gender:</strong> "
++
+escapeHTML(
+student.gender
+||
+"Not provided"
+)
++
+"</p>"
+
++
+
+"<p>"
++
+"<strong>Date of Birth:</strong> "
++
+escapeHTML(
+student.dateOfBirth
+||
+"Not provided"
+)
++
+"</p>"
+
++
+
+"<p>"
++
+"<strong>Phone:</strong> "
++
+escapeHTML(
+student.phone
+||
+"Not provided"
+)
++
+"</p>"
+
++
+
+"<p>"
++
+"<strong>Parent/Guardian:</strong> "
++
+escapeHTML(
+student.guardianName
+||
+"Not provided"
+)
++
+"</p>"
+
++
+
+"<p>"
++
+"<strong>Guardian Phone:</strong> "
++
+escapeHTML(
+student.guardianPhone
+||
+"Not provided"
+)
++
+"</p>";
+
+
+/*
+ACTION BUTTONS
+*/
+
+const actions =
+document.createElement(
+"div"
+);
+
+
+actions.className =
+"actions";
+
+
+const editButton =
+document.createElement(
+"button"
+);
+
+
+editButton.className =
+"edit";
+
+
+editButton.textContent =
+"Edit";
+
+
+editButton.onclick =
+function() {
+
+openEditForm(
+realIndex
+);
+
+};
+
+
+const deleteButton =
+document.createElement(
+"button"
+);
+
+
+deleteButton.className =
+"delete";
+
+
+deleteButton.textContent =
+"Delete";
+
+
+deleteButton.onclick =
+function() {
+
+deleteStudent(
+realIndex
+);
+
+};
+
+
+actions.appendChild(
+editButton
+);
+
+actions.appendChild(
+deleteButton
+);
+
+
+card.appendChild(
+actions
+);
+
+
+container.appendChild(
+card
+);
+
+});
+
+}
+
+
+/*
+==================================================
+DASHBOARD
+==================================================
+*/
+
+
+function goDashboard() {
+
+window.location.href =
+"index.html";
+
+}
+
+
+/*
+==================================================
+HTML SECURITY
+==================================================
+*/
+
+
+function escapeHTML(
+value
+) {
+
+return String(
+value ?? ""
+)
+
+.replace(
+/&/g,
+"&amp;"
+)
+
+.replace(
+/</g,
+"&lt;"
+)
+
+.replace(
+/>/g,
+"&gt;"
+)
+
+.replace(
+/"/g,
+"&quot;"
+)
+
+.replace(
+/'/g,
+"&#039;"
+);
 
 }
 
@@ -673,16 +1707,13 @@ START
 ==================================================
 */
 
-if (
-    loggedIn === "true" &&
-    userRole
-) {
 
-    setupDashboard();
+displayStudents();
 
-}
 
 </script>
 
+
 </body>
+
 </html>
