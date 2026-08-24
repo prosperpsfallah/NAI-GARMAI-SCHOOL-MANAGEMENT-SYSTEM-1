@@ -1,337 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>NAI GARMAI Login</title>
-
-<style>
-
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f4f7fb;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.login-box {
-    width: 90%;
-    max-width: 400px;
-    background: white;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 5px 20px rgba(0,0,0,.1);
-}
-
-h1 {
-    text-align: center;
-    color: #0b3d62;
-    margin-bottom: 5px;
-}
-
-.subtitle {
-    text-align: center;
-    color: #777;
-    margin-bottom: 25px;
-}
-
-label {
-    display: block;
-    margin-top: 15px;
-    font-weight: bold;
-}
-
-input,
-select {
-    width: 100%;
-    padding: 12px;
-    margin-top: 7px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 15px;
-}
-
-.login-button {
-    width: 100%;
-    margin-top: 22px;
-    padding: 13px;
-    background: #0b3d62;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: bold;
-}
-
-.message {
-    text-align: center;
-    margin-top: 15px;
-    font-weight: bold;
-}
-
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAI GARMAI Login</title>
 </head>
 
 <body>
 
-<div class="login-box">
-
 <h1>NAI GARMAI</h1>
 
-<p class="subtitle">
-School Management System
-</p>
+<h2>Login Test</h2>
 
+<input id="username" placeholder="Username">
 
-<label>
-Login Type
-</label>
+<input id="password" type="password" placeholder="Password">
 
-<select id="loginType">
+<button onclick="login()">LOGIN</button>
 
-<option value="admin">
-Administrator
-</option>
-
-<option value="student">
-Student
-</option>
-
-</select>
-
-
-<label>
-Username / Student ID
-</label>
-
-<input
-    id="username"
-    type="text"
-    placeholder="Enter username or Student ID"
->
-
-
-<label>
-Password
-</label>
-
-<input
-    id="password"
-    type="password"
-    placeholder="Enter password"
->
-
-
-<button
-    class="login-button"
-    onclick="login()"
->
-LOGIN
-</button>
-
-
-<div
-    id="message"
-    class="message"
-></div>
-
-</div>
-
+<p id="message"></p>
 
 <script>
 
 function login() {
 
-    var loginType =
-        document.getElementById("loginType").value;
-
     var username =
-        document.getElementById("username").value.trim();
+        document.getElementById("username").value;
 
     var password =
         document.getElementById("password").value;
 
-    var message =
-        document.getElementById("message");
-
-
-    if (username === "") {
-
-        message.textContent =
-            "Please enter your username or Student ID.";
-
-        return;
-
-    }
-
-
-    if (password === "") {
-
-        message.textContent =
-            "Please enter your password.";
-
-        return;
-
-    }
-
-
-    /* ADMIN */
-
-    if (loginType === "admin") {
-
-        if (
-            username === "admin" &&
-            password === "admin123"
-        ) {
-
-            localStorage.setItem(
-                "loggedIn",
-                "true"
-            );
-
-            localStorage.setItem(
-                "userRole",
-                "admin"
-            );
-
-            localStorage.setItem(
-                "currentUser",
-                "Administrator"
-            );
-
-
-            message.textContent =
-                "Login successful!";
-
-
-            setTimeout(function() {
-
-                window.location.href =
-                    "index.html";
-
-            }, 500);
-
-            return;
-
-        }
-
-
-        message.textContent =
-            "Invalid administrator login.";
-
-        return;
-
-    }
-
-
-    /* STUDENT */
-
-    var students =
-        JSON.parse(
-            localStorage.getItem("students") || "[]"
-        );
-
-
-    var student = null;
-
-
-    for (
-        var i = 0;
-        i < students.length;
-        i++
-    ) {
-
-        if (
-            String(
-                students[i].studentId || ""
-            ).trim()
-            ===
-            username
-        ) {
-
-            student = students[i];
-
-            break;
-
-        }
-
-    }
-
-
-    if (!student) {
-
-        message.textContent =
-            "Student ID not found.";
-
-        return;
-
-    }
-
-
-    var studentPassword =
-        String(
-            student.password || "000000"
-        );
-
-
     if (
-        password !== studentPassword
+        username === "admin" &&
+        password === "admin123"
     ) {
 
-        message.textContent =
-            "Incorrect password.";
+        document.getElementById("message").innerHTML =
+            "LOGIN SUCCESSFUL — OPENING DASHBOARD";
 
-        return;
+        localStorage.setItem(
+            "loggedIn",
+            "true"
+        );
+
+        localStorage.setItem(
+            "userRole",
+            "admin"
+        );
+
+        setTimeout(function() {
+
+            window.location.href = "./index.html";
+
+        }, 1000);
+
+    } else {
+
+        document.getElementById("message").innerHTML =
+            "Wrong username or password.";
 
     }
-
-
-    localStorage.setItem(
-        "loggedIn",
-        "true"
-    );
-
-    localStorage.setItem(
-        "userRole",
-        "student"
-    );
-
-    localStorage.setItem(
-        "currentStudentId",
-        String(student.studentId)
-    );
-
-    localStorage.setItem(
-        "currentStudentName",
-        student.name ||
-        student.fullName ||
-        ""
-    );
-
-
-    message.textContent =
-        "Login successful!";
-
-
-    setTimeout(function() {
-
-        window.location.href =
-            "index.html";
-
-    }, 500);
 
 }
 
 </script>
 
 </body>
-
 </html>
