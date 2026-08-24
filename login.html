@@ -1,14 +1,674 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>NAI GARMAI Login Test</title>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NAI GARMAI | Login</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 420px;
+}
+
+.login-box {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+
+    box-shadow:
+        0 8px 30px
+        rgba(0, 0, 0, 0.10);
+}
+
+.logo {
+    width: 70px;
+    height: 70px;
+
+    margin: 0 auto 15px;
+
+    border-radius: 50%;
+
+    background: #0b3d62;
+
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 25px;
+    font-weight: bold;
+}
+
+h1 {
+    text-align: center;
+    color: #0b3d62;
+    margin: 0;
+    font-size: 24px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #777;
+    margin: 8px 0 25px;
+}
+
+label {
+    display: block;
+    margin-top: 16px;
+    margin-bottom: 7px;
+
+    font-weight: bold;
+    color: #333;
+}
+
+select,
+input {
+    width: 100%;
+
+    padding: 13px;
+
+    border: 1px solid #ccc;
+
+    border-radius: 8px;
+
+    font-size: 16px;
+
+    background: white;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: #0b3d62;
+}
+
+.password-row {
+    position: relative;
+}
+
+.password-row input {
+    padding-right: 70px;
+}
+
+.show-button {
+    position: absolute;
+
+    right: 8px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: auto;
+
+    margin: 0;
+
+    padding: 7px 10px;
+
+    background: #eee;
+
+    color: #333;
+
+    border: none;
+
+    border-radius: 6px;
+
+    cursor: pointer;
+}
+
+.login-button {
+    width: 100%;
+
+    margin-top: 25px;
+
+    padding: 14px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #0b3d62;
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.login-button:active {
+    transform: scale(.98);
+}
+
+.message {
+    min-height: 22px;
+
+    margin-top: 15px;
+
+    text-align: center;
+
+    font-weight: bold;
+}
+
+.footer {
+    text-align: center;
+
+    margin-top: 18px;
+
+    color: #888;
+
+    font-size: 13px;
+}
+
+</style>
+
 </head>
+
 
 <body>
 
-<h1>NAI GARMAI SCHOOL SYSTEM</h1>
 
-<h2>LOGIN PAGE WORKING</h2>
+<div class="login-container">
+
+
+<div class="login-box">
+
+
+<div class="logo">
+NG
+</div>
+
+
+<h1>
+NAI GARMAI
+</h1>
+
+
+<p class="subtitle">
+School Management System
+</p>
+
+
+<label for="loginType">
+Login Type
+</label>
+
+<select id="loginType">
+
+<option value="admin">
+Administrator
+</option>
+
+<option value="student">
+Student
+</option>
+
+</select>
+
+
+<label for="username">
+Username / Student ID
+</label>
+
+<input
+    id="username"
+    type="text"
+    placeholder="Enter username or Student ID"
+    autocomplete="username"
+>
+
+
+<label for="password">
+Password
+</label>
+
+
+<div class="password-row">
+
+<input
+    id="password"
+    type="password"
+    placeholder="Enter password"
+    autocomplete="current-password"
+>
+
+
+<button
+    type="button"
+    class="show-button"
+    onclick="togglePassword()"
+    id="showButton"
+>
+Show
+</button>
+
+</div>
+
+
+<button
+    type="button"
+    class="login-button"
+    onclick="login()"
+>
+LOGIN
+</button>
+
+
+<div
+    id="message"
+    class="message"
+></div>
+
+
+</div>
+
+
+<div class="footer">
+
+© 2026 NAI GARMAI SCHOOL SYSTEM
+
+</div>
+
+
+</div>
+
+
+<script>
+
+/*
+==================================================
+DEFAULT STUDENT PASSWORD
+==================================================
+*/
+
+var DEFAULT_STUDENT_PASSWORD = "000000";
+
+
+/*
+==================================================
+LOGIN FUNCTION
+==================================================
+*/
+
+function login() {
+
+    var loginType =
+        document.getElementById("loginType").value;
+
+    var username =
+        document
+        .getElementById("username")
+        .value
+        .trim();
+
+    var password =
+        document
+        .getElementById("password")
+        .value;
+
+    var message =
+        document.getElementById("message");
+
+
+    message.textContent = "";
+
+
+    /*
+    ==============================================
+    CHECK EMPTY FIELDS
+    ==============================================
+    */
+
+    if (username === "") {
+
+        message.textContent =
+            "Please enter your username or Student ID.";
+
+        message.style.color = "#d9534f";
+
+        return;
+
+    }
+
+
+    if (password === "") {
+
+        message.textContent =
+            "Please enter your password.";
+
+        message.style.color = "#d9534f";
+
+        return;
+
+    }
+
+
+    /*
+    ==============================================
+    ADMINISTRATOR LOGIN
+    ==============================================
+    */
+
+    if (loginType === "admin") {
+
+
+        var adminUsername =
+            localStorage.getItem("adminUsername")
+            || "admin";
+
+
+        var adminPassword =
+            localStorage.getItem("adminPassword")
+            || "admin123";
+
+
+        if (
+            username === adminUsername
+            &&
+            password === adminPassword
+        ) {
+
+
+            localStorage.setItem(
+                "loggedIn",
+                "true"
+            );
+
+
+            localStorage.setItem(
+                "userRole",
+                "admin"
+            );
+
+
+            localStorage.setItem(
+                "currentUser",
+                "Administrator"
+            );
+
+
+            message.textContent =
+                "Login successful. Opening dashboard...";
+
+
+            message.style.color =
+                "#198754";
+
+
+            setTimeout(function() {
+
+                window.location.href =
+                    "index.html";
+
+            }, 500);
+
+
+            return;
+
+        }
+
+
+        message.textContent =
+            "Invalid administrator username or password.";
+
+        message.style.color =
+            "#d9534f";
+
+
+        return;
+
+    }
+
+
+    /*
+    ==============================================
+    STUDENT LOGIN
+    ==============================================
+    */
+
+    var students = [];
+
+
+    try {
+
+        students =
+            JSON.parse(
+                localStorage.getItem("students")
+                || "[]"
+            );
+
+    }
+
+    catch (error) {
+
+        students = [];
+
+    }
+
+
+    var student = null;
+
+
+    for (
+        var i = 0;
+        i < students.length;
+        i++
+    ) {
+
+
+        var savedStudentId =
+            String(
+                students[i].studentId
+                || ""
+            ).trim();
+
+
+        if (
+            savedStudentId === username
+        ) {
+
+            student =
+                students[i];
+
+            break;
+
+        }
+
+    }
+
+
+    /*
+    ==============================================
+    STUDENT NOT FOUND
+    ==============================================
+    */
+
+    if (!student) {
+
+        message.textContent =
+            "Student ID not found.";
+
+        message.style.color =
+            "#d9534f";
+
+        return;
+
+    }
+
+
+    /*
+    ==============================================
+    STUDENT PASSWORD
+    ==============================================
+    */
+
+    var studentPassword =
+        String(
+            student.password
+            ||
+            DEFAULT_STUDENT_PASSWORD
+        );
+
+
+    if (
+        password !== studentPassword
+    ) {
+
+        message.textContent =
+            "Incorrect password.";
+
+        message.style.color =
+            "#d9534f";
+
+        return;
+
+    }
+
+
+    /*
+    ==============================================
+    SAVE STUDENT SESSION
+    ==============================================
+    */
+
+    localStorage.setItem(
+        "loggedIn",
+        "true"
+    );
+
+
+    localStorage.setItem(
+        "userRole",
+        "student"
+    );
+
+
+    localStorage.setItem(
+        "currentStudentId",
+        String(student.studentId)
+    );
+
+
+    localStorage.setItem(
+        "currentStudentName",
+        student.name
+        ||
+        student.fullName
+        ||
+        ""
+    );
+
+
+    /*
+    ==============================================
+    OPEN STUDENT PORTAL
+    ==============================================
+    */
+
+    message.textContent =
+        "Login successful. Opening student portal...";
+
+
+    message.style.color =
+        "#198754";
+
+
+    setTimeout(function() {
+
+        window.location.href =
+            "portal.html";
+
+    }, 500);
+
+}
+
+
+/*
+==================================================
+SHOW / HIDE PASSWORD
+==================================================
+*/
+
+function togglePassword() {
+
+    var password =
+        document.getElementById("password");
+
+    var button =
+        document.getElementById("showButton");
+
+
+    if (
+        password.type === "password"
+    ) {
+
+        password.type = "text";
+
+        button.textContent =
+            "Hide";
+
+    }
+
+    else {
+
+        password.type = "password";
+
+        button.textContent =
+            "Show";
+
+    }
+
+}
+
+
+/*
+==================================================
+ENTER KEY LOGIN
+==================================================
+*/
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key === "Enter"
+        ) {
+
+            login();
+
+        }
+
+    }
+);
+
+</script>
+
 
 </body>
+
 </html>
