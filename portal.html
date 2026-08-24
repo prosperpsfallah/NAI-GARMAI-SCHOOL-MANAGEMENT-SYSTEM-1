@@ -10,133 +10,122 @@
     content="width=device-width, initial-scale=1.0"
 >
 
-<title>NAI GARMAI | Dashboard</title>
+<title>NAI GARMAI | Student Portal</title>
 
 <style>
 
 * {
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
 }
 
 body {
+    margin: 0;
+    padding: 15px;
     font-family: Arial, sans-serif;
     background: #f4f7fb;
     color: #222;
 }
 
-header {
-    background: #0b3d62;
-    color: white;
-    padding: 18px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 15px;
+.container {
+    max-width: 1000px;
+    margin: auto;
 }
 
-header h1 {
-    font-size: 20px;
+.header {
+    background: #0b3d62;
+    color: white;
+    padding: 22px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    margin: 0 0 8px;
+}
+
+.header p {
+    margin: 0;
+}
+
+button {
+    border: none;
+    border-radius: 8px;
+    padding: 12px 18px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 .logout {
     background: #d9534f;
     color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
+    margin-top: 15px;
 }
 
-.container {
-    padding: 25px 20px;
-    max-width: 1100px;
-    margin: auto;
-}
-
-.welcome {
+.panel {
     background: white;
-    padding: 25px;
-    border-radius: 15px;
-    margin-bottom: 25px;
-    box-shadow:
-        0 5px 20px
-        rgba(0,0,0,.08);
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
 }
 
-.welcome h2 {
+.panel h2 {
     color: #0b3d62;
-    margin-bottom: 8px;
+    margin-top: 0;
 }
 
-.welcome p {
-    color: #666;
-}
-
-.cards {
+.infoGrid {
     display: grid;
     grid-template-columns:
         repeat(
             auto-fit,
-            minmax(180px, 1fr)
+            minmax(200px, 1fr)
         );
-    gap: 18px;
+    gap: 15px;
 }
 
-.card {
-    background: white;
-    padding: 25px;
-    border-radius: 15px;
-    text-align: center;
-    box-shadow:
-        0 5px 20px
-        rgba(0,0,0,.08);
-    cursor: pointer;
-    transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
+.infoBox {
+    background: #f8fafc;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid #0b3d62;
 }
 
-.card:hover {
-    transform: translateY(-3px);
-    box-shadow:
-        0 8px 25px
-        rgba(0,0,0,.12);
-}
-
-.card h3 {
+.infoBox strong {
+    display: block;
     color: #0b3d62;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
-.card p {
+.empty {
     color: #777;
 }
 
-/* STUDENT PORTAL */
-
-#studentPortalCard {
-    display: none;
+.message {
+    margin-top: 12px;
+    font-weight: bold;
 }
 
-.footer {
-    text-align: center;
-    padding: 30px;
-    color: #888;
-    font-size: 13px;
+.error {
+    color: #d9534f;
+}
+
+.success {
+    color: #198754;
 }
 
 @media (max-width: 600px) {
 
-    header {
-        flex-direction: column;
-        align-items: flex-start;
+    body {
+        padding: 10px;
     }
 
-    header .logout {
-        width: 100%;
+    .panel {
+        padding: 15px;
+    }
+
+    .header {
+        padding: 18px;
     }
 
 }
@@ -145,15 +134,21 @@ header h1 {
 
 </head>
 
-
 <body>
 
+<div class="container">
 
-<header>
+<!-- HEADER -->
+
+<div class="header">
 
 <h1>
 NAI GARMAI SCHOOL SYSTEM
 </h1>
+
+<p>
+Student Portal
+</p>
 
 <button
     class="logout"
@@ -162,160 +157,77 @@ NAI GARMAI SCHOOL SYSTEM
 Logout
 </button>
 
-</header>
+</div>
 
 
-<div class="container">
+<!-- STUDENT INFORMATION -->
 
-
-<!-- WELCOME -->
-
-<div class="welcome">
+<div class="panel">
 
 <h2>
-Welcome to the Dashboard
+Welcome, <span id="studentName">Student</span>
 </h2>
 
-<p id="userInfo">
-Loading user information...
+<p>
+Here is your student information.
 </p>
-
-</div>
-
-
-<!-- DASHBOARD CARDS -->
-
-<div class="cards">
-
-
-<!-- STUDENTS -->
 
 <div
-    class="card"
-    onclick="openPage('students.html')"
+    id="studentInfo"
+    class="infoGrid"
 >
-
-<h3>
-Students
-</h3>
-
-<p>
-Manage students
-</p>
 
 </div>
-
-
-<!-- INSTRUCTORS -->
-
-<div
-    class="card"
-    onclick="openPage('instructors.html')"
->
-
-<h3>
-Instructors
-</h3>
-
-<p>
-Manage instructors
-</p>
-
-</div>
-
-
-<!-- ATTENDANCE -->
-
-<div
-    class="card"
-    onclick="openPage('attendance.html')"
->
-
-<h3>
-Attendance
-</h3>
-
-<p>
-Manage student attendance
-</p>
 
 </div>
 
 
 <!-- GRADES -->
 
-<div
-    class="card"
-    onclick="openPage('grades.html')"
->
+<div class="panel">
 
-<h3>
-Grades
-</h3>
+<h2>
+My Grades
+</h2>
 
-<p>
-Manage student grades
+<div id="grades">
+
+<p class="empty">
+No grades have been posted yet.
 </p>
 
 </div>
 
+</div>
 
-<!-- REPORTS -->
 
-<div
-    class="card"
-    onclick="openPage('reports.html')"
->
+<!-- ATTENDANCE -->
 
-<h3>
-Reports
-</h3>
+<div class="panel">
 
-<p>
-View school reports
+<h2>
+My Attendance
+</h2>
+
+<div id="attendance">
+
+<p class="empty">
+No attendance records have been posted yet.
 </p>
 
 </div>
 
-
-<!-- STUDENT PORTAL -->
-
-<div
-    class="card"
-    id="studentPortalCard"
-    onclick="openPage('portal.html')"
->
-
-<h3>
-Student Portal
-</h3>
-
-<p>
-View your grades
-and attendance
-</p>
-
 </div>
 
-
-</div>
-
-</div>
-
-
-<div class="footer">
-
-© 2026 NAI GARMAI SCHOOL SYSTEM
 
 </div>
 
 
 <script>
 
-
 /*
 ==================================================
-CURRENT LOGIN SESSION
+STUDENT LOGIN SECURITY
 ==================================================
 */
 
@@ -332,14 +244,14 @@ const userRole =
 
 /*
 ==================================================
-CHECK LOGIN
+MAKE SURE USER IS A STUDENT
 ==================================================
 */
 
 if (
     loggedIn !== "true"
     ||
-    !userRole
+    userRole !== "student"
 ) {
 
     window.location.href =
@@ -350,88 +262,234 @@ if (
 
 /*
 ==================================================
-DISPLAY USER ROLE
+GET CURRENT STUDENT
 ==================================================
 */
 
-else {
-
-    let roleName;
-
-
-    if (
-        userRole === "admin"
-    ) {
-
-        roleName =
-            "Administrator";
-
-    }
-
-    else if (
-        userRole === "instructor"
-    ) {
-
-        roleName =
-            "Instructor";
-
-    }
-
-    else if (
-        userRole === "student"
-    ) {
-
-        roleName =
-            "Student";
-
-    }
-
-    else {
-
-        roleName =
-            "User";
-
-    }
+const currentStudentId =
+    localStorage.getItem(
+        "currentStudentId"
+    );
 
 
-    document.getElementById(
-        "userInfo"
-    ).textContent =
-        "Logged in as: "
-        +
-        roleName;
+const students =
+    JSON.parse(
+        localStorage.getItem(
+            "students"
+        )
+    ) || [];
 
 
-    /*
-    ==============================================
-    STUDENT PORTAL
-    ==============================================
-    */
+const student =
+    students.find(
+        function(item) {
 
-    if (
-        userRole === "student"
-    ) {
+            return String(
+                item.studentId || ""
+            ) ===
+            String(
+                currentStudentId || ""
+            );
 
-        document.getElementById(
-            "studentPortalCard"
-        ).style.display =
-            "block";
+        }
+    );
 
-    }
+
+/*
+==================================================
+CHECK STUDENT
+==================================================
+*/
+
+if (!student) {
+
+    alert(
+        "Student account could not be found."
+    );
+
+    localStorage.removeItem(
+        "loggedIn"
+    );
+
+    localStorage.removeItem(
+        "userRole"
+    );
+
+    window.location.href =
+        "login.html";
 
 }
 
 
 /*
 ==================================================
-OPEN PAGE
+DISPLAY STUDENT INFORMATION
 ==================================================
 */
 
-function openPage(page) {
+else {
 
-    window.location.href =
-        page;
+    const name =
+        student.name ||
+        student.fullName ||
+        "Student";
+
+
+    document.getElementById(
+        "studentName"
+    ).textContent =
+        name;
+
+
+    const info =
+        document.getElementById(
+            "studentInfo"
+        );
+
+
+    info.innerHTML =
+
+        createInfoBox(
+            "Student ID",
+            student.studentId
+        )
+
+        +
+
+        createInfoBox(
+            "Full Name",
+            name
+        )
+
+        +
+
+        createInfoBox(
+            "Date of Birth",
+            student.dateOfBirth ||
+            "Not provided"
+        )
+
+        +
+
+        createInfoBox(
+            "Gender",
+            student.gender ||
+            "Not provided"
+        )
+
+        +
+
+        createInfoBox(
+            "Class / Grade",
+            student.className ||
+            "Not provided"
+        )
+
+        +
+
+        createInfoBox(
+            "Phone",
+            student.phone ||
+            "Not provided"
+        )
+
+        +
+
+        createInfoBox(
+            "Parent / Guardian",
+            student.guardianName ||
+            "Not provided"
+        )
+
+        +
+
+        createInfoBox(
+            "Guardian Phone",
+            student.guardianPhone ||
+            "Not provided"
+        );
+
+}
+
+
+/*
+==================================================
+CREATE INFORMATION BOX
+==================================================
+*/
+
+function createInfoBox(
+    title,
+    value
+) {
+
+    return (
+
+        "<div class='infoBox'>"
+
+        +
+
+        "<strong>"
+        +
+        escapeHTML(title)
+        +
+        "</strong>"
+
+        +
+
+        "<span>"
+        +
+        escapeHTML(value)
+        +
+        "</span>"
+
+        +
+
+        "</div>"
+
+    );
+
+}
+
+
+/*
+==================================================
+HTML SECURITY
+==================================================
+*/
+
+function escapeHTML(
+    value
+) {
+
+    return String(
+        value ?? ""
+    )
+
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+
+    .replace(
+        /</g,
+        "&lt;"
+    )
+
+    .replace(
+        />/g,
+        "&gt;"
+    )
+
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+
+    .replace(
+        /'/g,
+        "&#039;"
+    );
 
 }
 
@@ -453,10 +511,6 @@ function logout() {
     );
 
     localStorage.removeItem(
-        "currentUser"
-    );
-
-    localStorage.removeItem(
         "currentStudentId"
     );
 
@@ -475,7 +529,6 @@ function logout() {
 }
 
 </script>
-
 
 </body>
 
