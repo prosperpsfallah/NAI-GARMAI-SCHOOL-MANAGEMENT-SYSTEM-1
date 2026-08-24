@@ -1,21 +1,616 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>NAI GARMAI TEST</title>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>NAI GARMAI | Dashboard</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    color: #222;
+}
+
+header {
+    background: #0b3d62;
+    color: white;
+    padding: 20px;
+}
+
+.header-inner {
+    max-width: 1100px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.logout {
+    background: #d9534f;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px 15px;
+}
+
+.welcome {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 20px rgba(0,0,0,.08);
+}
+
+.welcome h2 {
+    margin: 0 0 8px;
+    color: #0b3d62;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(180px, 1fr)
+    );
+
+    gap: 18px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(0,0,0,.08);
+}
+
+.card h3 {
+    color: #0b3d62;
+}
+
+.card button {
+    background: #0b3d62;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 7px;
+}
+
+.studentPortal {
+    display: none;
+}
+
+.panel {
+    background: white;
+    padding: 22px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 20px rgba(0,0,0,.08);
+}
+
+.panel h2 {
+    color: #0b3d62;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(200px, 1fr)
+        );
+
+    gap: 15px;
+}
+
+.info-box {
+    background: #f8fafc;
+    padding: 15px;
+    border-radius: 9px;
+    border-left: 4px solid #0b3d62;
+}
+
+.info-box strong {
+    display: block;
+    color: #0b3d62;
+    margin-bottom: 7px;
+}
+
+.empty {
+    color: #777;
+}
+
+.footer {
+    text-align: center;
+    color: #888;
+    padding: 30px;
+}
+
+</style>
+
 </head>
+
 <body>
 
-<h1 style="color:blue;">
+
+<header>
+
+<div class="header-inner">
+
+<h1>
 NAI GARMAI SCHOOL SYSTEM
 </h1>
 
+<button
+class="logout"
+onclick="logout()"
+>
+Logout
+</button>
+
+</div>
+
+</header>
+
+
+<div class="container">
+
+
+<!-- ADMIN DASHBOARD -->
+
+<div id="adminDashboard">
+
+<div class="welcome">
+
 <h2>
-DASHBOARD TEST
+Administrator Dashboard
 </h2>
 
 <p>
-If you can see this, index.html is working.
+Welcome to NAI GARMAI School Management System.
 </p>
 
+</div>
+
+
+<div class="cards">
+
+
+<div class="card">
+
+<h3>Students</h3>
+
+<p>Manage students</p>
+
+<button
+onclick="goTo('students.html')"
+>
+Open
+</button>
+
+</div>
+
+
+<div class="card">
+
+<h3>Instructors</h3>
+
+<p>Manage instructors</p>
+
+<button
+onclick="goTo('instructors.html')"
+>
+Open
+</button>
+
+</div>
+
+
+<div class="card">
+
+<h3>Attendance</h3>
+
+<p>Manage attendance</p>
+
+<button
+onclick="goTo('attendance.html')"
+>
+Open
+</button>
+
+</div>
+
+
+<div class="card">
+
+<h3>Grades</h3>
+
+<p>Manage grades</p>
+
+<button
+onclick="goTo('grades.html')"
+>
+Open
+</button>
+
+</div>
+
+
+<div class="card">
+
+<h3>Reports</h3>
+
+<p>View reports</p>
+
+<button
+onclick="goTo('reports.html')"
+>
+Open
+</button>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<!-- STUDENT PORTAL -->
+
+<div
+id="studentPortal"
+class="studentPortal"
+>
+
+
+<div class="welcome">
+
+<h2>
+Welcome,
+<span id="studentName">
+Student
+</span>
+</h2>
+
+<p>
+Student Portal
+</p>
+
+</div>
+
+
+<div class="panel">
+
+<h2>
+My Information
+</h2>
+
+<div class="info-grid">
+
+
+<div class="info-box">
+
+<strong>
+Student ID
+</strong>
+
+<span id="studentId">
+Not available
+</span>
+
+</div>
+
+
+<div class="info-box">
+
+<strong>
+Full Name
+</strong>
+
+<span id="fullName">
+Not available
+</span>
+
+</div>
+
+
+<div class="info-box">
+
+<strong>
+Class / Grade
+</strong>
+
+<span id="studentClass">
+Not available
+</span>
+
+</div>
+
+
+<div class="info-box">
+
+<strong>
+Gender
+</strong>
+
+<span id="studentGender">
+Not available
+</span>
+
+</div>
+
+
+<div class="info-box">
+
+<strong>
+Date of Birth
+</strong>
+
+<span id="studentDOB">
+Not available
+</span>
+
+</div>
+
+
+<div class="info-box">
+
+<strong>
+Phone
+</strong>
+
+<span id="studentPhone">
+Not available
+</span>
+
+</div>
+
+
+<div class="info-box">
+
+<strong>
+Parent / Guardian
+</strong>
+
+<span id="guardianName">
+Not available
+</span>
+
+</div>
+
+
+<div class="info-box">
+
+<strong>
+Guardian Phone
+</strong>
+
+<span id="guardianPhone">
+Not available
+</span>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<div class="panel">
+
+<h2>
+My Grades
+</h2>
+
+<p class="empty">
+No grades have been posted yet.
+</p>
+
+</div>
+
+
+<div class="panel">
+
+<h2>
+My Attendance
+</h2>
+
+<p class="empty">
+No attendance records have been posted yet.
+</p>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+<div class="footer">
+
+© 2026 NAI GARMAI SCHOOL SYSTEM
+
+</div>
+
+
+<script>
+
+const role =
+localStorage.getItem("userRole");
+
+
+/* SHOW CORRECT DASHBOARD */
+
+if (role === "student") {
+
+    document.getElementById(
+        "adminDashboard"
+    ).style.display = "none";
+
+    document.getElementById(
+        "studentPortal"
+    ).style.display = "block";
+
+    loadStudent();
+
+}
+
+
+/* LOAD STUDENT */
+
+function loadStudent() {
+
+    const id =
+        localStorage.getItem(
+            "currentStudentId"
+        );
+
+    const students =
+        JSON.parse(
+            localStorage.getItem(
+                "students"
+            ) || "[]"
+        );
+
+    const student =
+        students.find(
+            function(item) {
+
+                return String(
+                    item.studentId || ""
+                ) === String(id || "");
+
+            }
+        );
+
+
+    if (!student) {
+
+        return;
+
+    }
+
+
+    const name =
+        student.name ||
+        student.fullName ||
+        "Student";
+
+
+    document.getElementById(
+        "studentName"
+    ).textContent = name;
+
+
+    document.getElementById(
+        "studentId"
+    ).textContent =
+        student.studentId || "-";
+
+
+    document.getElementById(
+        "fullName"
+    ).textContent = name;
+
+
+    document.getElementById(
+        "studentClass"
+    ).textContent =
+        student.className || "-";
+
+
+    document.getElementById(
+        "studentGender"
+    ).textContent =
+        student.gender || "-";
+
+
+    document.getElementById(
+        "studentDOB"
+    ).textContent =
+        student.dateOfBirth || "-";
+
+
+    document.getElementById(
+        "studentPhone"
+    ).textContent =
+        student.phone || "-";
+
+
+    document.getElementById(
+        "guardianName"
+    ).textContent =
+        student.guardianName || "-";
+
+
+    document.getElementById(
+        "guardianPhone"
+    ).textContent =
+        student.guardianPhone || "-";
+
+}
+
+
+/* PAGE NAVIGATION */
+
+function goTo(page) {
+
+    window.location.href = page;
+
+}
+
+
+/* LOGOUT */
+
+function logout() {
+
+    localStorage.removeItem("loggedIn");
+
+    localStorage.removeItem("userRole");
+
+    localStorage.removeItem("currentUser");
+
+    localStorage.removeItem("currentStudentId");
+
+    localStorage.removeItem("currentStudentName");
+
+    window.location.href =
+        "login.html";
+
+}
+
+</script>
+
 </body>
+
 </html>
