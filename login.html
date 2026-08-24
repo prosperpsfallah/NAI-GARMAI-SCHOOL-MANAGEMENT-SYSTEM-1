@@ -35,7 +35,7 @@ h1 {
     color: #0b3d62;
 }
 
-p {
+.subtitle {
     text-align: center;
     color: #777;
 }
@@ -53,6 +53,7 @@ select {
     margin-top: 7px;
     border: 1px solid #ccc;
     border-radius: 8px;
+    font-size: 15px;
 }
 
 button {
@@ -64,6 +65,13 @@ button {
     border: none;
     border-radius: 8px;
     font-weight: bold;
+    font-size: 16px;
+}
+
+.message {
+    text-align: center;
+    margin-top: 15px;
+    font-weight: bold;
 }
 
 </style>
@@ -74,53 +82,248 @@ button {
 
 <div class="login-box">
 
-<h1>
-NAI GARMAI
-</h1>
+<h1>NAI GARMAI</h1>
 
-<p>
+<p class="subtitle">
 School Management System
 </p>
+
 
 <label>
 Login Type
 </label>
 
-<select>
+<select id="loginType">
 
-<option>
+<option value="admin">
 Administrator
 </option>
 
-<option>
+<option value="student">
 Student
 </option>
 
 </select>
+
 
 <label>
 Username / Student ID
 </label>
 
 <input
-type="text"
-placeholder="Enter username or Student ID"
+    id="username"
+    type="text"
+    placeholder="Enter username or Student ID"
 >
+
 
 <label>
 Password
 </label>
 
 <input
-type="password"
-placeholder="Enter password"
+    id="password"
+    type="password"
+    placeholder="Enter password"
 >
 
-<button>
+
+<button onclick="login()">
 LOGIN
 </button>
 
+
+<div
+    id="message"
+    class="message"
+></div>
+
 </div>
+
+
+<script>
+
+function login() {
+
+    var type =
+        document.getElementById("loginType").value;
+
+    var username =
+        document.getElementById("username").value.trim();
+
+    var password =
+        document.getElementById("password").value;
+
+    var message =
+        document.getElementById("message");
+
+
+    message.textContent = "";
+
+
+    if (username === "" || password === "") {
+
+        message.textContent =
+            "Please enter your username and password.";
+
+        return;
+
+    }
+
+
+    /*
+    ADMINISTRATOR LOGIN
+    */
+
+    if (type === "admin") {
+
+        if (
+            username === "admin" &&
+            password === "admin123"
+        ) {
+
+            localStorage.setItem(
+                "loggedIn",
+                "true"
+            );
+
+            localStorage.setItem(
+                "userRole",
+                "admin"
+            );
+
+            localStorage.setItem(
+                "currentUser",
+                "Administrator"
+            );
+
+
+            message.textContent =
+                "Login successful. Opening dashboard...";
+
+
+            setTimeout(function() {
+
+                window.location.href =
+                    "index.html";
+
+            }, 500);
+
+
+            return;
+
+        }
+
+
+        message.textContent =
+            "Invalid administrator username or password.";
+
+        return;
+
+    }
+
+
+    /*
+    STUDENT LOGIN
+    */
+
+    var students =
+        JSON.parse(
+            localStorage.getItem("students") || "[]"
+        );
+
+
+    var student = null;
+
+
+    for (
+        var i = 0;
+        i < students.length;
+        i++
+    ) {
+
+        if (
+            String(
+                students[i].studentId || ""
+            ).trim()
+            ===
+            username
+        ) {
+
+            student = students[i];
+
+            break;
+
+        }
+
+    }
+
+
+    if (!student) {
+
+        message.textContent =
+            "Student ID not found.";
+
+        return;
+
+    }
+
+
+    var studentPassword =
+        String(
+            student.password || "000000"
+        );
+
+
+    if (
+        password !== studentPassword
+    ) {
+
+        message.textContent =
+            "Incorrect password.";
+
+        return;
+
+    }
+
+
+    localStorage.setItem(
+        "loggedIn",
+        "true"
+    );
+
+    localStorage.setItem(
+        "userRole",
+        "student"
+    );
+
+    localStorage.setItem(
+        "currentStudentId",
+        String(student.studentId)
+    );
+
+    localStorage.setItem(
+        "currentStudentName",
+        student.name ||
+        student.fullName ||
+        ""
+    );
+
+
+    message.textContent =
+        "Login successful. Opening portal...";
+
+
+    setTimeout(function() {
+
+        window.location.href =
+            "index.html";
+
+    }, 500);
+
+}
+
+</script>
 
 </body>
 
