@@ -1,16 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>NAI GARMAI | Login</title>
+<title>NAI GARMAI School Management System</title>
 
 <style>
 
@@ -20,117 +16,109 @@
 
 body {
     margin: 0;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
     font-family: Arial, sans-serif;
     background: #f4f7fb;
+    color: #222;
 }
 
-.login-box {
-    width: 100%;
-    max-width: 420px;
-    background: white;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 5px 25px rgba(0,0,0,.10);
+header {
+    background: #0b3d62;
+    color: white;
+    padding: 20px;
 }
 
-h1 {
+.header {
+    max-width: 1100px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
     margin: 0;
-    text-align: center;
+    font-size: 20px;
+}
+
+button {
+    cursor: pointer;
+}
+
+.logout {
+    background: #d9534f;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px 15px;
+}
+
+.welcome,
+.card,
+.panel {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 20px rgba(0,0,0,.08);
+}
+
+.welcome h2,
+.panel h2,
+.card h3 {
     color: #0b3d62;
 }
 
-.subtitle {
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 18px;
+}
+
+.card {
     text-align: center;
-    color: #777;
-    margin-bottom: 25px;
 }
 
-label {
-    display: block;
-    margin-top: 15px;
-    font-weight: bold;
-    color: #333;
-}
-
-select,
-input {
-    width: 100%;
-    padding: 13px;
-    margin-top: 7px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 15px;
-}
-
-input:focus,
-select:focus {
-    outline: none;
-    border-color: #0b3d62;
-}
-
-.password-row {
-    position: relative;
-}
-
-.password-row input {
-    padding-right: 70px;
-}
-
-.showPassword {
-    position: absolute;
-    right: 8px;
-    bottom: 7px;
-    border: none;
-    background: #eee;
-    padding: 7px 10px;
-    border-radius: 6px;
-    cursor: pointer;
-}
-
-.login-button {
-    width: 100%;
-    margin-top: 22px;
-    padding: 13px;
-    border: none;
-    border-radius: 8px;
+.open-btn {
     background: #0b3d62;
     color: white;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.login-button:hover {
-    opacity: .9;
-}
-
-.message {
-    margin-top: 15px;
-    text-align: center;
-    font-weight: bold;
-}
-
-.success {
-    color: #198754;
-}
-
-.error {
-    color: #d9534f;
-}
-
-.note {
-    margin-top: 20px;
-    padding: 12px;
-    background: #f8fafc;
+    border: none;
+    padding: 10px 18px;
     border-radius: 8px;
-    color: #666;
-    font-size: 13px;
+}
+
+.student-portal {
+    display: none;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.info {
+    background: #f5f7fa;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.info strong {
+    display: block;
+    color: #0b3d62;
+    margin-bottom: 7px;
+}
+
+.footer {
     text-align: center;
+    padding: 30px;
+    color: #777;
 }
 
 </style>
@@ -139,464 +127,403 @@ select:focus {
 
 <body>
 
+<header>
 
-<div class="login-box">
+<div class="header">
 
-<h1>
-NAI GARMAI
-</h1>
+<h1>NAI GARMAI SCHOOL SYSTEM</h1>
 
-<p class="subtitle">
-School Management System
+<button
+    class="logout"
+    onclick="logout()"
+>
+Logout
+</button>
+
+</div>
+
+</header>
+
+
+<div class="container">
+
+
+<!-- ADMIN DASHBOARD -->
+
+<div id="adminDashboard">
+
+<div class="welcome">
+
+<h2>Administrator Dashboard</h2>
+
+<p>
+Welcome to the NAI GARMAI School Management System.
 </p>
 
-
-<label>
-Login As
-</label>
-
-<select id="loginType">
-
-<option value="admin">
-Administrator
-</option>
-
-<option value="student">
-Student
-</option>
-
-</select>
+</div>
 
 
-<label>
-Student ID / Username
-</label>
-
-<input
-    id="username"
-    type="text"
-    placeholder="Enter your ID or username"
-    autocomplete="username"
->
+<div class="cards">
 
 
-<label>
-Password
-</label>
+<div class="card">
 
-<div class="password-row">
+<h3>Students</h3>
 
-<input
-    id="password"
-    type="password"
-    placeholder="Enter your password"
-    autocomplete="current-password"
->
+<p>Manage students.</p>
 
 <button
-    type="button"
-    class="showPassword"
-    onclick="togglePassword()"
+    class="open-btn"
+    onclick="openPage('students.html')"
 >
-Show
+Open
 </button>
 
 </div>
 
 
+<div class="card">
+
+<h3>Instructors</h3>
+
+<p>Manage instructors.</p>
+
 <button
-    type="button"
-    class="login-button"
-    onclick="login()"
+    class="open-btn"
+    onclick="openPage('instructors.html')"
 >
-Login
+Open
 </button>
 
+</div>
+
+
+<div class="card">
+
+<h3>Attendance</h3>
+
+<p>Manage attendance.</p>
+
+<button
+    class="open-btn"
+    onclick="openPage('attendance.html')"
+>
+Open
+</button>
+
+</div>
+
+
+<div class="card">
+
+<h3>Grades</h3>
+
+<p>Manage grades.</p>
+
+<button
+    class="open-btn"
+    onclick="openPage('grades.html')"
+>
+Open
+</button>
+
+</div>
+
+
+<div class="card">
+
+<h3>Reports</h3>
+
+<p>View school reports.</p>
+
+<button
+    class="open-btn"
+    onclick="openPage('reports.html')"
+>
+Open
+</button>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<!-- STUDENT PORTAL -->
 
 <div
-    id="message"
-    class="message"
-></div>
+    id="studentPortal"
+    class="student-portal"
+>
 
+<div class="welcome">
 
-<div class="note">
+<h2>
+Welcome,
+<span id="studentName">Student</span>
+</h2>
 
-Students use their registered Student ID
-and student password.
+<p>
+This is your student portal.
+</p>
 
 </div>
+
+
+<div class="panel">
+
+<h2>My Information</h2>
+
+<div class="info-grid">
+
+
+<div class="info">
+
+<strong>Student ID</strong>
+
+<span id="studentId">-</span>
+
+</div>
+
+
+<div class="info">
+
+<strong>Full Name</strong>
+
+<span id="fullName">-</span>
+
+</div>
+
+
+<div class="info">
+
+<strong>Class / Grade</strong>
+
+<span id="studentClass">-</span>
+
+</div>
+
+
+<div class="info">
+
+<strong>Gender</strong>
+
+<span id="studentGender">-</span>
+
+</div>
+
+
+<div class="info">
+
+<strong>Date of Birth</strong>
+
+<span id="studentDOB">-</span>
+
+</div>
+
+
+<div class="info">
+
+<strong>Phone</strong>
+
+<span id="studentPhone">-</span>
+
+</div>
+
+
+<div class="info">
+
+<strong>Parent / Guardian</strong>
+
+<span id="guardianName">-</span>
+
+</div>
+
+
+<div class="info">
+
+<strong>Guardian Phone</strong>
+
+<span id="guardianPhone">-</span>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<div class="panel">
+
+<h2>My Grades</h2>
+
+<p>
+No grades have been posted yet.
+</p>
+
+</div>
+
+
+<div class="panel">
+
+<h2>My Attendance</h2>
+
+<p>
+No attendance records have been posted yet.
+</p>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+<div class="footer">
+
+© 2026 NAI GARMAI SCHOOL SYSTEM
 
 </div>
 
 
 <script>
 
+document.addEventListener("DOMContentLoaded", function() {
 
-/*
-==================================================
-DEFAULT STUDENT PASSWORD
-==================================================
-*/
+    var role = localStorage.getItem("userRole");
 
-const DEFAULT_STUDENT_PASSWORD = "000000";
+    var loggedIn = localStorage.getItem("loggedIn");
 
+    if (loggedIn !== "true") {
 
-/*
-==================================================
-LOGIN
-==================================================
-*/
+        window.location.href = "login.html";
 
-function login() {
+        return;
 
+    }
 
-const loginType =
-    document.getElementById(
-        "loginType"
-    ).value;
 
+    if (role === "student") {
 
-const username =
-    document.getElementById(
-        "username"
-    ).value.trim();
+        document.getElementById("adminDashboard").style.display = "none";
 
+        document.getElementById("studentPortal").style.display = "block";
 
-const password =
-    document.getElementById(
-        "password"
-    ).value;
+        loadStudent();
 
+    }
 
-const message =
-    document.getElementById(
-        "message"
-    );
+    else {
 
+        document.getElementById("adminDashboard").style.display = "block";
 
-message.textContent = "";
+        document.getElementById("studentPortal").style.display = "none";
 
-message.className =
-    "message";
+    }
 
+});
 
-/*
-==================================================
-VALIDATION
-==================================================
-*/
 
-if (username === "") {
+function loadStudent() {
 
-    message.className =
-        "message error";
+    var studentId =
+        localStorage.getItem("currentStudentId");
 
-    message.textContent =
-        "Please enter your ID or username.";
+    var students =
+        JSON.parse(
+            localStorage.getItem("students") || "[]"
+        );
 
-    return;
+    var student = null;
 
-}
 
-
-if (password === "") {
-
-    message.className =
-        "message error";
-
-    message.textContent =
-        "Please enter your password.";
-
-    return;
-
-}
-
-
-/*
-==================================================
-ADMIN LOGIN
-==================================================
-*/
-
-if (
-    loginType === "admin"
-) {
-
-
-const adminUsername =
-    localStorage.getItem(
-        "adminUsername"
-    ) || "admin";
-
-
-const adminPassword =
-    localStorage.getItem(
-        "adminPassword"
-    ) || "admin123";
-
-
-if (
-    username === adminUsername &&
-    password === adminPassword
-) {
-
-
-localStorage.setItem(
-    "loggedIn",
-    "true"
-);
-
-
-localStorage.setItem(
-    "userRole",
-    "admin"
-);
-
-
-localStorage.setItem(
-    "currentUser",
-    "Administrator"
-);
-
-
-message.className =
-    "message success";
-
-
-message.textContent =
-    "Administrator login successful.";
-
-
-setTimeout(
-    function() {
-
-        window.location.href =
-            "index.html";
-
-    },
-    500
-);
-
-
-return;
-
-}
-
-
-message.className =
-    "message error";
-
-
-message.textContent =
-    "Invalid administrator username or password.";
-
-
-return;
-
-}
-
-
-/*
-==================================================
-STUDENT LOGIN
-==================================================
-*/
-
-
-const students =
-    JSON.parse(
-        localStorage.getItem(
-            "students"
-        ) || "[]"
-    );
-
-
-const student =
-    students.find(
-        function(item) {
-
-            return String(
-                item.studentId || ""
-            ).trim()
-            ===
-            username;
-
-        }
-    );
-
-
-if (!student) {
-
-    message.className =
-        "message error";
-
-    message.textContent =
-        "Student ID not found.";
-
-    return;
-
-}
-
-
-/*
-==================================================
-STUDENT PASSWORD
-==================================================
-*/
-
-const studentPassword =
-    String(
-        student.password ||
-        DEFAULT_STUDENT_PASSWORD
-    );
-
-
-if (
-    password !== studentPassword
-) {
-
-    message.className =
-        "message error";
-
-    message.textContent =
-        "Incorrect password.";
-
-    return;
-
-}
-
-
-/*
-==================================================
-SAVE STUDENT SESSION
-==================================================
-*/
-
-localStorage.setItem(
-    "loggedIn",
-    "true"
-);
-
-
-localStorage.setItem(
-    "userRole",
-    "student"
-);
-
-
-localStorage.setItem(
-    "currentStudentId",
-    String(
-        student.studentId
-    )
-);
-
-
-localStorage.setItem(
-    "currentStudentName",
-    student.name ||
-    student.fullName ||
-    ""
-);
-
-
-message.className =
-    "message success";
-
-
-message.textContent =
-    "Login successful. Opening student portal...";
-
-
-/*
-==================================================
-IMPORTANT
-STUDENT GOES TO INDEX.HTML
-==================================================
-*/
-
-setTimeout(
-    function() {
-
-        window.location.href =
-            "index.html";
-
-    },
-    500
-);
-
-}
-
-
-/*
-==================================================
-SHOW / HIDE PASSWORD
-==================================================
-*/
-
-function togglePassword() {
-
-
-const password =
-    document.getElementById(
-        "password"
-    );
-
-
-const button =
-    document.querySelector(
-        ".showPassword"
-    );
-
-
-if (
-    password.type === "password"
-) {
-
-    password.type =
-        "text";
-
-    button.textContent =
-        "Hide";
-
-}
-
-else {
-
-    password.type =
-        "password";
-
-    button.textContent =
-        "Show";
-
-}
-
-}
-
-
-/*
-==================================================
-ENTER KEY
-==================================================
-*/
-
-document.addEventListener(
-    "keydown",
-    function(event) {
+    for (var i = 0; i < students.length; i++) {
 
         if (
-            event.key === "Enter"
+            String(students[i].studentId || "") ===
+            String(studentId || "")
         ) {
 
-            login();
+            student = students[i];
+
+            break;
 
         }
 
     }
-);
+
+
+    if (!student) {
+
+        return;
+
+    }
+
+
+    var name =
+        student.name ||
+        student.fullName ||
+        "Student";
+
+
+    document.getElementById("studentName").textContent = name;
+
+    document.getElementById("studentId").textContent =
+        student.studentId || "-";
+
+    document.getElementById("fullName").textContent =
+        name;
+
+    document.getElementById("studentClass").textContent =
+        student.className || "-";
+
+    document.getElementById("studentGender").textContent =
+        student.gender || "-";
+
+    document.getElementById("studentDOB").textContent =
+        student.dateOfBirth || "-";
+
+    document.getElementById("studentPhone").textContent =
+        student.phone || "-";
+
+    document.getElementById("guardianName").textContent =
+        student.guardianName || "-";
+
+    document.getElementById("guardianPhone").textContent =
+        student.guardianPhone || "-";
+
+}
+
+
+function openPage(page) {
+
+    window.location.href = page;
+
+}
+
+
+function logout() {
+
+    localStorage.removeItem("loggedIn");
+
+    localStorage.removeItem("userRole");
+
+    localStorage.removeItem("currentUser");
+
+    localStorage.removeItem("currentStudentId");
+
+    localStorage.removeItem("currentStudentName");
+
+    window.location.href = "login.html";
+
+}
 
 </script>
-
 
 </body>
 
