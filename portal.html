@@ -10,7 +10,7 @@
     content="width=device-width, initial-scale=1.0"
 >
 
-<title>NAI GARMAI | Student Portal</title>
+<title>NAI GARMAI | Login</title>
 
 <style>
 
@@ -20,132 +20,138 @@
 
 body {
     margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 20px;
     font-family: Arial, sans-serif;
     background: #f4f7fb;
     color: #222;
 }
 
-.container {
-    max-width: 1100px;
-    margin: auto;
+.loginBox {
+    width: 100%;
+    max-width: 430px;
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.12);
 }
 
-.header {
-    background: #0b3d62;
-    color: white;
-    padding: 20px;
-    border-radius: 12px;
+.logo {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.logo h1 {
+    margin: 0;
+    color: #0b3d62;
+    font-size: 27px;
+}
+
+.logo p {
+    margin-top: 8px;
+    color: #666;
+}
+
+h2 {
+    color: #0b3d62;
     margin-bottom: 20px;
 }
 
-.header h1 {
-    margin: 0 0 8px;
+label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
 }
 
-.header p {
-    margin: 0;
+input,
+select {
+    width: 100%;
+    padding: 13px;
+    margin-top: 7px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: #0b3d62;
 }
 
 button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 20px;
     border: none;
     border-radius: 8px;
-    padding: 12px 18px;
+    background: #0b3d62;
+    color: white;
+    font-size: 16px;
     font-weight: bold;
     cursor: pointer;
 }
 
-.logout {
-    background: #d9534f;
-    color: white;
+button:hover {
+    opacity: 0.9;
+}
+
+.message {
     margin-top: 15px;
-}
-
-.panel {
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-}
-
-.panel h2 {
-    margin-top: 0;
-    color: #0b3d62;
-}
-
-.studentInfo {
-    display: grid;
-    grid-template-columns:
-        repeat(
-            auto-fit,
-            minmax(200px, 1fr)
-        );
-    gap: 15px;
-}
-
-.infoBox {
-    background: #f8fafc;
-    padding: 15px;
-    border-radius: 8px;
-    border-left: 4px solid #0b3d62;
-}
-
-.infoBox strong {
-    display: block;
-    color: #0b3d62;
-    margin-bottom: 5px;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 15px;
-}
-
-th,
-td {
-    padding: 12px;
-    border-bottom: 1px solid #ddd;
-    text-align: left;
-}
-
-th {
-    background: #0b3d62;
-    color: white;
-}
-
-.empty {
-    color: #777;
-}
-
-.success {
-    color: #198754;
+    text-align: center;
     font-weight: bold;
 }
 
 .error {
     color: #d9534f;
-    font-weight: bold;
 }
 
-@media (max-width: 600px) {
+.success {
+    color: #198754;
+}
 
-    body {
-        padding: 10px;
-    }
+.info {
+    background: #eaf7ee;
+    color: #245c35;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 15px;
+    font-size: 14px;
+}
 
-    .panel {
-        padding: 15px;
-    }
+.passwordWrap {
+    position: relative;
+}
 
-    table {
-        font-size: 13px;
-    }
+.passwordWrap input {
+    padding-right: 70px;
+}
 
-    th,
-    td {
-        padding: 8px;
+.showPassword {
+    position: absolute;
+    right: 8px;
+    top: 7px;
+    width: auto;
+    margin: 0;
+    padding: 9px 10px;
+    background: transparent;
+    color: #0b3d62;
+    font-size: 13px;
+}
+
+.divider {
+    text-align: center;
+    margin: 25px 0;
+    color: #999;
+}
+
+@media (max-width: 500px) {
+
+    .loginBox {
+        padding: 22px;
     }
 
 }
@@ -156,82 +162,112 @@ th {
 
 <body>
 
-<div class="container">
+<div class="loginBox">
 
-    <div class="header">
+    <div class="logo">
 
         <h1>
-            NAI GARMAI SCHOOL SYSTEM
+            NAI GARMAI
         </h1>
 
         <p>
-            Student Portal
+            SCHOOL MANAGEMENT SYSTEM
         </p>
 
-        <button
-            class="logout"
-            onclick="logout()"
+    </div>
+
+
+    <h2>
+        Portal Login
+    </h2>
+
+
+    <label>
+        Login As
+    </label>
+
+    <select id="loginType">
+
+        <option value="student">
+            Student
+        </option>
+
+        <option value="admin">
+            Administrator
+        </option>
+
+    </select>
+
+
+    <label>
+        Student ID / Administrator Username
+    </label>
+
+    <input
+        id="username"
+        type="text"
+        placeholder="Enter your ID or username"
+        autocomplete="username"
+    >
+
+
+    <label>
+        Password
+    </label>
+
+    <div class="passwordWrap">
+
+        <input
+            id="password"
+            type="password"
+            placeholder="Enter your password"
+            autocomplete="current-password"
         >
-            Logout
+
+        <button
+            type="button"
+            class="showPassword"
+            onclick="togglePassword()"
+        >
+            Show
         </button>
 
     </div>
 
 
-    <!-- STUDENT INFORMATION -->
-
-    <div class="panel">
-
-        <h2>
-            My Information
-        </h2>
-
-        <div
-            class="studentInfo"
-            id="studentInfo"
-        >
-            Loading...
-        </div>
-
-    </div>
+    <button
+        onclick="login()"
+    >
+        Login
+    </button>
 
 
-    <!-- GRADES -->
+    <div
+        id="message"
+        class="message"
+    ></div>
 
-    <div class="panel">
 
-        <h2>
-            My Grades
-        </h2>
+    <div class="info">
 
-        <div id="gradesContainer">
+        <strong>Students:</strong><br>
 
-            <p class="empty">
-                No grades available yet.
-            </p>
+        Use the Student ID given to you by the
+        school administrator.
 
-        </div>
+        <br><br>
+
+        New students receive the default password:
+
+        <strong>000000</strong>
+
+        <br><br>
+
+        You can change your password after logging
+        into your student portal.
 
     </div>
 
-
-    <!-- ATTENDANCE -->
-
-    <div class="panel">
-
-        <h2>
-            My Attendance
-        </h2>
-
-        <div id="attendanceContainer">
-
-            <p class="empty">
-                No attendance records available yet.
-            </p>
-
-        </div>
-
-    </div>
 
 </div>
 
@@ -240,500 +276,370 @@ th {
 
 /*
 ==================================================
-LOGIN SECURITY
+DEFAULT STUDENT PASSWORD
 ==================================================
 */
 
-const loggedIn =
-    localStorage.getItem(
-        "loggedIn"
-    );
-
-const role =
-    localStorage.getItem(
-        "userRole"
-    );
-
-const currentStudentId =
-    localStorage.getItem(
-        "currentStudentId"
-    );
+const DEFAULT_STUDENT_PASSWORD = "000000";
 
 
 /*
 ==================================================
-CHECK STUDENT LOGIN
+LOGIN
 ==================================================
 */
 
-if (
-    loggedIn !== "true"
-    ||
-    role !== "student"
-    ||
-    !currentStudentId
-) {
+function login() {
 
-    window.location.href =
-        "login.html";
+    const loginType =
+        document.getElementById(
+            "loginType"
+        ).value;
 
-}
+    const username =
+        document.getElementById(
+            "username"
+        ).value.trim();
 
+    const password =
+        document.getElementById(
+            "password"
+        ).value;
 
-/*
-==================================================
-LOAD STUDENTS
-==================================================
-*/
-
-const students =
-    JSON.parse(
-        localStorage.getItem(
-            "students"
-        )
-    ) || [];
+    const message =
+        document.getElementById(
+            "message"
+        );
 
 
-/*
-==================================================
-FIND CURRENT STUDENT
-==================================================
-*/
+    message.textContent = "";
 
-const student =
-    students.find(
-        function(item) {
+    message.className =
+        "message";
 
-            return String(
-                item.studentId || ""
-            )
-            ===
-            String(
-                currentStudentId
+
+    /*
+    ==============================================
+    VALIDATION
+    ==============================================
+    */
+
+    if (username === "") {
+
+        message.className =
+            "message error";
+
+        message.textContent =
+            "Please enter your ID or username.";
+
+        return;
+
+    }
+
+
+    if (password === "") {
+
+        message.className =
+            "message error";
+
+        message.textContent =
+            "Please enter your password.";
+
+        return;
+
+    }
+
+
+    /*
+    ==============================================
+    ADMINISTRATOR LOGIN
+    ==============================================
+    */
+
+    if (
+        loginType === "admin"
+    ) {
+
+        const adminUsername =
+            localStorage.getItem(
+                "adminUsername"
+            ) || "admin";
+
+        const adminPassword =
+            localStorage.getItem(
+                "adminPassword"
+            ) || "admin123";
+
+
+        if (
+            username === adminUsername
+            &&
+            password === adminPassword
+        ) {
+
+            localStorage.setItem(
+                "loggedIn",
+                "true"
             );
 
+            localStorage.setItem(
+                "userRole",
+                "admin"
+            );
+
+            localStorage.setItem(
+                "currentUser",
+                "Administrator"
+            );
+
+
+            message.className =
+                "message success";
+
+            message.textContent =
+                "Administrator login successful.";
+
+
+            setTimeout(
+                function() {
+
+                    window.location.href =
+                        "index.html";
+
+                },
+                500
+            );
+
+            return;
+
         }
-    );
 
 
-/*
-==================================================
-CHECK STUDENT
-==================================================
-*/
+        message.className =
+            "message error";
 
-if (!student) {
-
-    alert(
-        "Student account could not be found."
-    );
-
-    logout();
-
-}
-
-
-/*
-==================================================
-DISPLAY STUDENT INFORMATION
-==================================================
-*/
-
-function displayStudentInfo() {
-
-    const container =
-        document.getElementById(
-            "studentInfo"
-        );
-
-    container.innerHTML =
-
-        `
-        <div class="infoBox">
-            <strong>Student ID</strong>
-            ${escapeHTML(
-                student.studentId || ""
-            )}
-        </div>
-
-        <div class="infoBox">
-            <strong>Full Name</strong>
-            ${escapeHTML(
-                student.name ||
-                student.fullName ||
-                ""
-            )}
-        </div>
-
-        <div class="infoBox">
-            <strong>Class / Grade</strong>
-            ${escapeHTML(
-                student.className ||
-                "Not provided"
-            )}
-        </div>
-
-        <div class="infoBox">
-            <strong>Gender</strong>
-            ${escapeHTML(
-                student.gender ||
-                "Not provided"
-            )}
-        </div>
-
-        <div class="infoBox">
-            <strong>Date of Birth</strong>
-            ${escapeHTML(
-                student.dateOfBirth ||
-                "Not provided"
-            )}
-        </div>
-
-        <div class="infoBox">
-            <strong>Phone</strong>
-            ${escapeHTML(
-                student.phone ||
-                "Not provided"
-            )}
-        </div>
-        `;
-
-}
-
-
-/*
-==================================================
-LOAD GRADES
-==================================================
-*/
-
-function loadGrades() {
-
-    const container =
-        document.getElementById(
-            "gradesContainer"
-        );
-
-    const allGrades =
-        JSON.parse(
-            localStorage.getItem(
-                "grades"
-            )
-        ) || [];
-
-
-    const myGrades =
-        allGrades.filter(
-            function(grade) {
-
-                return String(
-                    grade.studentId || ""
-                )
-                ===
-                String(
-                    currentStudentId
-                );
-
-            }
-        );
-
-
-    if (
-        myGrades.length === 0
-    ) {
-
-        container.innerHTML =
-            `
-            <p class="empty">
-                No grades have been posted yet.
-            </p>
-            `;
+        message.textContent =
+            "Invalid administrator username or password.";
 
         return;
 
     }
 
 
-    let html =
+    /*
+    ==============================================
+    STUDENT LOGIN
+    ==============================================
+    */
 
-        `
-        <table>
-
-        <thead>
-
-        <tr>
-            <th>Subject</th>
-            <th>Score</th>
-            <th>Grade</th>
-            <th>Term</th>
-        </tr>
-
-        </thead>
-
-        <tbody>
-        `;
-
-
-    myGrades.forEach(
-        function(grade) {
-
-            html +=
-
-                `
-                <tr>
-
-                    <td>
-                        ${escapeHTML(
-                            grade.subject ||
-                            "N/A"
-                        )}
-                    </td>
-
-                    <td>
-                        ${escapeHTML(
-                            grade.score ||
-                            "N/A"
-                        )}
-                    </td>
-
-                    <td>
-                        ${escapeHTML(
-                            grade.grade ||
-                            "N/A"
-                        )}
-                    </td>
-
-                    <td>
-                        ${escapeHTML(
-                            grade.term ||
-                            "N/A"
-                        )}
-                    </td>
-
-                </tr>
-                `;
-
-        }
-    );
-
-
-    html +=
-        `
-        </tbody>
-
-        </table>
-        `;
-
-
-    container.innerHTML =
-        html;
-
-}
-
-
-/*
-==================================================
-LOAD ATTENDANCE
-==================================================
-*/
-
-function loadAttendance() {
-
-    const container =
-        document.getElementById(
-            "attendanceContainer"
-        );
-
-    const allAttendance =
+    const students =
         JSON.parse(
             localStorage.getItem(
-                "attendance"
+                "students"
             )
         ) || [];
 
 
-    const myAttendance =
-        allAttendance.filter(
-            function(record) {
+    /*
+    FIND STUDENT BY ID
+    */
+
+    const student =
+        students.find(
+            function(item) {
 
                 return String(
-                    record.studentId || ""
-                )
+                    item.studentId || ""
+                ).trim()
                 ===
-                String(
-                    currentStudentId
-                );
+                username;
 
             }
         );
 
 
-    if (
-        myAttendance.length === 0
-    ) {
+    if (!student) {
 
-        container.innerHTML =
-            `
-            <p class="empty">
-                No attendance records have been posted yet.
-            </p>
-            `;
+        message.className =
+            "message error";
+
+        message.textContent =
+            "Student ID not found.";
 
         return;
 
     }
 
 
-    let html =
+    /*
+    ==============================================
+    STUDENT PASSWORD
+    ==============================================
+    */
 
-        `
-        <table>
-
-        <thead>
-
-        <tr>
-            <th>Date</th>
-            <th>Status</th>
-        </tr>
-
-        </thead>
-
-        <tbody>
-        `;
+    const studentPassword =
+        String(
+            student.password ||
+            DEFAULT_STUDENT_PASSWORD
+        );
 
 
-    myAttendance.forEach(
-        function(record) {
+    if (
+        password !== studentPassword
+    ) {
 
-            html +=
+        message.className =
+            "message error";
 
-                `
-                <tr>
+        message.textContent =
+            "Incorrect password.";
 
-                    <td>
-                        ${escapeHTML(
-                            record.date ||
-                            "N/A"
-                        )}
-                    </td>
+        return;
 
-                    <td>
-                        ${escapeHTML(
-                            record.status ||
-                            "N/A"
-                        )}
-                    </td>
+    }
 
-                </tr>
-                `;
+
+    /*
+    ==============================================
+    STUDENT LOGIN SUCCESS
+    ==============================================
+    */
+
+    localStorage.setItem(
+        "loggedIn",
+        "true"
+    );
+
+    localStorage.setItem(
+        "userRole",
+        "student"
+    );
+
+    localStorage.setItem(
+        "currentStudentId",
+        String(
+            student.studentId
+        )
+    );
+
+    localStorage.setItem(
+        "currentStudentName",
+        student.name ||
+        student.fullName ||
+        ""
+    );
+
+
+    /*
+    STORE PASSWORD STATUS
+    */
+
+    localStorage.setItem(
+        "studentPasswordChanged",
+        student.passwordChanged === true
+            ? "true"
+            : "false"
+    );
+
+
+    message.className =
+        "message success";
+
+    message.textContent =
+        "Login successful. Opening student portal...";
+
+
+    /*
+    ==============================================
+    IMPORTANT
+    ==============================================
+
+    Your file is called:
+
+    portal.html
+
+    NOT:
+
+    student-portal.html
+    */
+
+    setTimeout(
+        function() {
+
+            window.location.href =
+                "portal.html";
+
+        },
+        500
+    );
+
+}
+
+
+/*
+==================================================
+SHOW / HIDE PASSWORD
+==================================================
+*/
+
+function togglePassword() {
+
+    const password =
+        document.getElementById(
+            "password"
+        );
+
+    const button =
+        document.querySelector(
+            ".showPassword"
+        );
+
+
+    if (
+        password.type === "password"
+    ) {
+
+        password.type =
+            "text";
+
+        button.textContent =
+            "Hide";
+
+    }
+
+    else {
+
+        password.type =
+            "password";
+
+        button.textContent =
+            "Show";
+
+    }
+
+}
+
+
+/*
+==================================================
+ENTER KEY LOGIN
+==================================================
+*/
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key === "Enter"
+        ) {
+
+            login();
 
         }
-    );
 
-
-    html +=
-        `
-        </tbody>
-
-        </table>
-        `;
-
-
-    container.innerHTML =
-        html;
-
-}
-
-
-/*
-==================================================
-LOGOUT
-==================================================
-*/
-
-function logout() {
-
-    localStorage.removeItem(
-        "loggedIn"
-    );
-
-    localStorage.removeItem(
-        "userRole"
-    );
-
-    localStorage.removeItem(
-        "currentStudentId"
-    );
-
-    localStorage.removeItem(
-        "currentStudentName"
-    );
-
-    localStorage.removeItem(
-        "studentPasswordChanged"
-    );
-
-    window.location.href =
-        "login.html";
-
-}
-
-
-/*
-==================================================
-HTML SECURITY
-==================================================
-*/
-
-function escapeHTML(value) {
-
-    return String(
-        value ?? ""
-    )
-
-    .replace(
-        /&/g,
-        "&amp;"
-    )
-
-    .replace(
-        /</g,
-        "&lt;"
-    )
-
-    .replace(
-        />/g,
-        "&gt;"
-    )
-
-    .replace(
-        /"/g,
-        "&quot;"
-    )
-
-    .replace(
-        /'/g,
-        "&#039;"
-    );
-
-}
-
-
-/*
-==================================================
-START
-==================================================
-*/
-
-if (student) {
-
-    displayStudentInfo();
-
-    loadGrades();
-
-    loadAttendance();
-
-}
+    }
+);
 
 </script>
 
